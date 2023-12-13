@@ -1,0 +1,7 @@
+.product-item:hover .product-data{
+    transform: translateY(0);
+}
+
+.product-item:hover .availability{
+    transform: translateX(0);
+}
