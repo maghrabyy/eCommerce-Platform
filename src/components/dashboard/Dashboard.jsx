@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export const Dashboard = ()=>{
   const [navPageTitle,setNavPageTitle] = useState("Sales");
-  const [showToggledSidebar,setShowToggledSidebar] = useState(true);
+  const [showToggledSidebar,setShowToggledSidebar] = useState(false);
   const selectedPage = page =>{
     setNavPageTitle(page)
   }
