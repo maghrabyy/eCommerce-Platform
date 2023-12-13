@@ -37,7 +37,7 @@
 }
 
 .btn{
-  @apply bg-gray-700 hover:bg-gray-500 text-white rounded-lg shadow-lg px-4 py-2;
+  @apply bg-gray-700 hover:bg-gray-500 text-white rounded-lg shadow-lg px-4 py-2 select-none;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
