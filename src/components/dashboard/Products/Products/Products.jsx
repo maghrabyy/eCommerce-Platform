@@ -25,7 +25,7 @@ export const Products = ({catTitle,brandTitle}) =>{
     const [showProdQtyList,setShowProdQtyList] = useState(false);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
     const [selectedImgIndex,setSelectedImgIndex] = useState(0);
-
+    const prodCategoryList = productsList.filter((prodItem)=> (prodItem.prodCat === catTitle || prodItem.prodBrand === brandTitle) ||  catTitle === 'All');
     const sortyByItems = [
         { value:'salesHToL',text:'Sales - High to Low'},
         { value:'salesLToH',text:'Sales - Low to High'},
@@ -56,36 +56,34 @@ export const Products = ({catTitle,brandTitle}) =>{
         setSortBy(e.target.value)
     }
     useEffect(()=>{
-        const prodsList = [...productsList]
         if(sortBy === 'priceHToL'){
-            setProductsList(prodsList.sort((a,b)=>b.prodPrice - a.prodPrice))
+            setProductsList(prodCategoryList.sort((a,b)=>b.prodPrice - a.prodPrice))
         }else if(sortBy === 'priceLToH'){
-            setProductsList(prodsList.sort((a,b)=>a.prodPrice - b.prodPrice))
+            setProductsList(prodCategoryList.sort((a,b)=>a.prodPrice - b.prodPrice))
         }
         else if(sortBy === 'qtyHToL'){
-            setProductsList(prodsList.sort((a,b)=>b.totalProdQty - a.totalProdQty))
+            setProductsList(prodCategoryList.sort((a,b)=>b.totalProdQty - a.totalProdQty))
         }else if(sortBy === 'qtyLToH'){
-            setProductsList(prodsList.sort((a,b)=>a.totalProdQty - b.totalProdQty))
+            setProductsList(prodCategoryList.sort((a,b)=>a.totalProdQty - b.totalProdQty))
         }
         else if(sortBy === 'salesHToL'){
-            setProductsList(prodsList.sort((a,b)=>b.sales - a.sales))
+            setProductsList(prodCategoryList.sort((a,b)=>b.sales - a.sales))
         }else if(sortBy === 'salesLToH'){
-            setProductsList(prodsList.sort((a,b)=>a.sales - b.sales))
+            setProductsList(prodCategoryList.sort((a,b)=>a.sales - b.sales))
         }
         else if(sortBy === 'newToOld'){
-            setProductsList(prodsList.sort((a,b)=>b.creationDate - a.creationDate))
+            setProductsList(prodCategoryList.sort((a,b)=>b.creationDate - a.creationDate))
             console.log('date from new to old')
         }else if(sortBy === 'oldToNew'){
-            setProductsList(prodsList.sort((a,b)=>a.creationDate - b.creationDate))
+            setProductsList(prodCategoryList.sort((a,b)=>a.creationDate - b.creationDate))
             console.log('date from old to new')
         }
         
-    },[sortBy])
+    },[sortBy,prodCategoryList])
     const onProdItemClickHandler = id =>{
         setShowExpandedItem(true);
         setExpandedItemData(productsList[id])
     }
-    const prodCategoryList = productsList.filter((prodItem)=> (prodItem.prodCat === catTitle || prodItem.prodBrand === brandTitle) ||  catTitle === 'All');
     return (
         <div>
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 
@@ -110,7 +108,7 @@ export const Products = ({catTitle,brandTitle}) =>{
                 }
             </div>
             :
-                <div className='empty-list-msg font-bold text-4xl text-gray-700 flex flex-col items-center'>
+                <div className='empty-list-msg font-bold text-4xl text-gray-700 pt-12 xl:pt-0 flex flex-col items-center'>
                     <div className="empty-text">Empty here.</div>
                     <img src={emptyBox} className=" w-96" alt="empty box" />
                 </div>

@@ -9,7 +9,7 @@ export const Sidebar = ({sidebarSelectedPage,showToggledSidebar ,setShowToggledS
         setShowToggledSidebar(false)
     }
     return (
-        <div className={`dashboard-sidebar xl:static fixed top-4 z-50 h-[calc(100%-32px)] xl:h-auto w-72 xl:w-auto ${showToggledSidebar?'translate-x-0':'translate-x-[-120%] xl:translate-x-0'} duration-300 ease-in bg-white col-span-2 rounded-md px-4 shadow-lg overflow-scroll select-none`}>
+        <div className={`dashboard-sidebar xl:static fixed top-4 z-50 xl:z-0 h-[calc(100%-32px)] xl:h-auto w-72 xl:w-auto ${showToggledSidebar?'translate-x-0':'translate-x-[-120%] xl:translate-x-0'} duration-300 ease-in bg-white col-span-2 rounded-md px-4 shadow-lg overflow-scroll select-none`}>
             <div className='sidebar-content flex flex-col justify-between h-full'>
                 <div>
                     <div className='sidebar-header border-b-2 border-b-gray-500 text-center py-6 flex items-center justify-between'>
