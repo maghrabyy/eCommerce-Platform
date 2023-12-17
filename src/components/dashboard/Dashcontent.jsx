@@ -14,18 +14,18 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
     }
     const categories = {
         all:{title:"All",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt},
-        hoodiesNSweatshirt:{title:"Hoodies and Sweatshirts",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt},
+        hoodiesNSweatshirt:{title:"Hoodies and Sweatshirts",content:function(){return<Products catTitle ={this.title} />},icon:faShirt},
         coatsNJackets:{title:"Coats and Jackets",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt},
-        denims:{title:"Denims",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt},
+        denims:{title:"Denims",content:function(){return<Products catTitle ={this.title} />},icon:faShirt},
         trousers:{title:"Trousers",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt}
     }
     const brands = {
         pullNBear:{title:"Pull & Bear",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt},
-        Bershka:{title:"Bershka",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt},
-        americanEagle:{title:"American Eagle",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt},
-        zara:{title:"Zara",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt},
-        defacto:{title:"Defacto",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt},
-        hollister:{title:"Hollister",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt}
+        Bershka:{title:"Bershka",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
+        americanEagle:{title:"American Eagle",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
+        zara:{title:"Zara",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
+        defacto:{title:"Defacto",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
+        hollister:{title:"Hollister",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt}
     }
     const navigatedItem = {
         sales:{title:"Sales",content:function(){return<Sales/>},icon:faChartLine},
@@ -77,11 +77,11 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
             <div className="main-header py-4">
                 <div className="navbar-toggler flex justify-between items-center xl:hidden">
                     <FontAwesomeIcon onClick={()=>setShowToggledSidebar(true)} className='text-gray-700 text-2xl cursor-pointer' icon={faBars} />
-                    {isClothesSection() ? <ProductSearch/> : null}
+                    {isClothesSection() ? <ProductSearch  /> : null}
                 </div>
                 <div className="flex justify-between border-b-2 py-5 border-b-gray-600">
                     <h1 className="font-bold text-gray-700 text-2xl"><FontAwesomeIcon className='me-2' icon={navigateToPageFromTitle(pageTitle).icon} /> {isClothesSection()? 'Clothing': navigateToPageFromTitle(pageTitle).title}</h1>
-                   <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch/> : null}</div> 
+                   <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch /> : null}</div> 
                 </div> 
             </div>
             {navigateToPageFromTitle(pageTitle).content()}

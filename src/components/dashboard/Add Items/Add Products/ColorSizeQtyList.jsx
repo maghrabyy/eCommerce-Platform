@@ -73,7 +73,7 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
                     {isEditing? <input type="number" className='inpt w-12' max="99"  value={editXXLQty} onChange={e=>setEditXXLQty(e.target.value)} /> : <p>{inputtedXXL}</p>}
                 </div>
             </div>
-            {/* <div className="imgsPreview flex items-center">
+            {/* <div className="imgsPreview flex justify-center items-center">
                 <img src={whiteHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2 ' alt="" />
                 <img src={blackHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2' alt="" />
                 <img src={grayHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2' alt="" />

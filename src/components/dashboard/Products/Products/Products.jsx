@@ -1,13 +1,15 @@
 import { DropdownButton } from "../../../util/Dropdown";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './products.css'
 import { ProductItem } from './../ProductItem';
 import { DialogMenu } from '../../../util/Dialog';
 import { ExpandedProductItem } from '../ExpandedProductItem';
 import { productsArray } from "./productsData";
 import emptyBox from '../../../../assets/emptyBox.svg'
+import  SearchInptContext  from "../../../../context/SearchInputContext";
 
 export const Products = ({catTitle,brandTitle}) =>{
+    const [searchInpt,setSearchInpt] = useContext(SearchInptContext)
     const [sortBy,setSortBy] = useState('none');
     const [productsList,setProductsList] = useState([...productsArray]);
     const [showExpandedItem,setShowExpandedItem] = useState(false);
@@ -81,9 +83,15 @@ export const Products = ({catTitle,brandTitle}) =>{
         
     },[sortBy,prodCategoryList])
     const onProdItemClickHandler = id =>{
+        const prodIndex = productsList.map(prod=>prod.prodId).indexOf(id) 
         setShowExpandedItem(true);
-        setExpandedItemData(productsList[id])
+        setExpandedItemData(productsList[prodIndex])
     }
+    const searchResultFilter = prodCategoryList.filter(prod=> 
+                                prod.prodBrand.toUpperCase().includes(searchInpt.toUpperCase()) ||
+                                prod.prodTitle.toUpperCase().includes(searchInpt.toUpperCase()) ||
+                                prod.prodDesc.toUpperCase().includes(searchInpt.toUpperCase())
+                            );
     return (
         <div>
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 
@@ -95,18 +103,28 @@ export const Products = ({catTitle,brandTitle}) =>{
                     <DropdownButton title='Sort by' list={sortyByItems} value={sortBy} onValueChange={sortByChangeHandler}/>                   
                 </div>
             </div>
-            {prodCategoryList.length > 0?
-                <div className="listItems grid grid-cols-2 xl:grid-cols-4 gap-2 py-6">
-                { 
-                prodCategoryList.map((prod,index)=> <ProductItem key={index} 
-                onClick={()=>onProdItemClickHandler(index)} 
-                inStock={prod.totalProdQty > 0 ? true : false} 
-                productImg={prod.prodColorQtyList[0].prodColorImgs.mainImg.src} 
-                productTitle={`${prod.prodBrand} - ${prod.prodTitle}`} 
-                productPrice={prod.prodPrice} 
-                productColors={prod.prodColorQtyList.map(color=>color.prodColor)}/>)
-                }
-            </div>
+            {
+                searchInpt.length > 0?
+                    <div className="clear-searchFilter pt-2">
+                        <span>{searchResultFilter.length} products found - </span>
+                        <span onClick={()=>setSearchInpt('')} className=" cursor-pointer text-blue-900 hover:text-blue-600">Clear search result.</span>
+                    </div>
+                :
+                    null
+            }
+            {
+            prodCategoryList.length > 0?
+                <div className="list-items grid grid-cols-2 xl:grid-cols-4 gap-2 py-6">
+                    {
+                    (searchInpt.length > 0? searchResultFilter : prodCategoryList).map((prod)=> <ProductItem key={prod.prodId} 
+                    onClick={()=>onProdItemClickHandler(prod.prodId)} 
+                    inStock={prod.totalProdQty > 0 ? true : false} 
+                    productImg={prod.prodColorQtyList[0].prodColorImgs.mainImg.src} 
+                    productTitle={`${prod.prodBrand} - ${prod.prodTitle}`} 
+                    productPrice={prod.prodPrice} 
+                    productColors={prod.prodColorQtyList.map(color=>color.prodColor)}/>)}
+                </div>
+                
             :
                 <div className='empty-list-msg font-bold text-4xl text-gray-700 pt-12 xl:pt-0 flex flex-col items-center'>
                     <div className="empty-text">Empty here.</div>
