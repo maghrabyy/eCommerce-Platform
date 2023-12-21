@@ -54,7 +54,7 @@ export const AddProduct = ()=>{
                     <label className="inpt-label">Product Brand</label>
                     <DropdownButton title='Select Brand' value={prodBrand} onValueChange={e=>setProdBrand(e.target.value)}
                     list={[
-                        { value:'pullNBear', text:'Pull&Bear'},
+                        { value:'pullNBear', text:'Pull & Bear'},
                         { value:'bershka',text:'Bershka'},
                         { value:'americanEagle',text:'American Eagle'},
                         { value:'zara',text:'Zara'},

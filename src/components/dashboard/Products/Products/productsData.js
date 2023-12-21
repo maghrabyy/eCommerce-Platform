@@ -24,8 +24,8 @@ import whitePnBHoodie04 from '../../../../assets/White Pull&Bear Hoodie/WhitePul
 
 const greenPnBHoodie = {
     prodId:'PROD' + crypto.randomUUID(),
-    prodCat: 'Hoodies and Sweatshirts',
-    prodBrand: 'Pull & Bear',
+    prodCat: {text:'Hoodies and Sweatshirts',value:'hoodiesNSweatshirts'},
+    prodBrand: {text:'Pull & Bear',value:'pullNBear'},
     prodTitle:'Green Naruto Hoodie',
     prodDesc:'Original Pull and Bear Naruto green hoodie.',
     prodPrice: 780,
@@ -54,8 +54,8 @@ greenPnBHoodie.totalProdCost = parseInt(greenPnBHoodie.prodCost*greenPnBHoodie.t
 
 const whitePnBHoodie = {
     prodId:'PROD' + crypto.randomUUID(),
-    prodCat: 'Hoodies and Sweatshirts',
-    prodBrand: 'Pull & Bear',
+    prodCat: {text:'Hoodies and Sweatshirts',value:'hoodiesNSweatshirts'},
+    prodBrand: {text:'Pull & Bear',value:'pullNBear'},
     prodTitle:'White Hoodie',
     prodDesc:'Original Pull and Bear white hoodie.',
     prodPrice: 750,
@@ -81,8 +81,8 @@ whitePnBHoodie.totalProdCost = parseInt(whitePnBHoodie.prodCost*whitePnBHoodie.t
 
 const blackPnBHoodie01 = {
     prodId:'PROD' + crypto.randomUUID(),
-    prodCat: 'Hoodies and Sweatshirts',
-    prodBrand: 'Pull & Bear',
+    prodCat: {text:'Hoodies and Sweatshirts',value:'hoodiesNSweatshirts'},
+    prodBrand: {text:'Pull & Bear',value:'pullNBear'},
     prodTitle:'Black Hoodie',
     prodDesc:'Original Pull and Bear black hoodie.',
     prodPrice: 650,
@@ -110,8 +110,8 @@ blackPnBHoodie01.totalProdCost = parseInt(blackPnBHoodie01.prodCost*blackPnBHood
 
 const blackPnBHoodie02 = {
     prodId:'PROD' + crypto.randomUUID(),
-    prodCat: 'Hoodies and Sweatshirts',
-    prodBrand: 'Pull & Bear',
+    prodCat: {text:'Hoodies and Sweatshirts',value:'hoodiesNSweatshirts'},
+    prodBrand: {text:'Pull & Bear',value:'pullNBear'},
     prodTitle:'Black Hoodie',
     prodDesc:'Original Pull and Bear black hoodie.',
     prodPrice: 700,

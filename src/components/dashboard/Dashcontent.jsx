@@ -6,6 +6,7 @@ import { ProductSearch } from './Products/ProductSearch';
 import { AddCategory } from './Add Items/AddCategory';
 import { AddProduct } from './Add Items/Add Products/AddProduct'
 import { ActiviyLog } from './Activity Log/ActiviyLog';
+import { ProductsProvider } from '../../context/ProductsContext';
 
 export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
     const addCatProd = {
@@ -72,20 +73,22 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
         else return false;
     }
     return (
-    <div className="dashboard-content col-span-10 xl:col-span-8 rounded-md shadow-lg bg-white overflow-scroll">
-        <div className='px-4'>
-            <div className="main-header py-4">
-                <div className="navbar-toggler flex justify-between items-center xl:hidden">
-                    <FontAwesomeIcon onClick={()=>setShowToggledSidebar(true)} className='text-gray-700 text-2xl cursor-pointer' icon={faBars} />
-                    {isClothesSection() ? <ProductSearch  /> : null}
+    <ProductsProvider>
+        <div className="dashboard-content col-span-10 xl:col-span-8 rounded-md shadow-lg bg-white overflow-scroll">
+            <div className='px-4'>
+                <div className="main-header py-4">
+                    <div className="navbar-toggler flex justify-between items-center xl:hidden">
+                        <FontAwesomeIcon onClick={()=>setShowToggledSidebar(true)} className='text-gray-700 text-2xl cursor-pointer' icon={faBars} />
+                        {isClothesSection() ? <ProductSearch  /> : null}
+                    </div>
+                    <div className="flex justify-between border-b-2 py-5 border-b-gray-600">
+                        <h1 className="font-bold text-gray-700 text-2xl"><FontAwesomeIcon className='me-2' icon={navigateToPageFromTitle(pageTitle).icon} /> {isClothesSection()? 'Clothing': navigateToPageFromTitle(pageTitle).title}</h1>
+                    <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch /> : null}</div> 
+                    </div> 
                 </div>
-                <div className="flex justify-between border-b-2 py-5 border-b-gray-600">
-                    <h1 className="font-bold text-gray-700 text-2xl"><FontAwesomeIcon className='me-2' icon={navigateToPageFromTitle(pageTitle).icon} /> {isClothesSection()? 'Clothing': navigateToPageFromTitle(pageTitle).title}</h1>
-                   <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch /> : null}</div> 
-                </div> 
+                {navigateToPageFromTitle(pageTitle).content()}
             </div>
-            {navigateToPageFromTitle(pageTitle).content()}
         </div>
-    </div>
+    </ProductsProvider>
     );
 }

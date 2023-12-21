@@ -36,6 +36,10 @@
   @apply text-gray-600 font-bold;
 }
 
+.inpt-label-dark{
+  @apply text-white font-bold;
+}
+
 .btn{
   @apply bg-gray-700 hover:bg-gray-500 text-white rounded-lg shadow-lg px-4 py-2 select-none;
 }
