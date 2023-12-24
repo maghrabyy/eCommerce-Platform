@@ -1,32 +1,32 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChartLine, faShirt, faCirclePlus, faClipboardList, faBars } from '@fortawesome/free-solid-svg-icons';
 import { Sales } from './Sales/Sales';
-import { Products } from './Products/Products/Products';
+import { ProductsPage } from '../../pages/Dashboard/Products/ProductsPage';
 import { ProductSearch } from './Products/ProductSearch';
-import { AddCategory } from './Add Items/AddCategory';
-import { AddProduct } from './Add Items/Add Products/AddProduct'
+import { AddCategoryPage } from '../../pages/Dashboard/Data Entry/Add Category/AddCategoryPage'
+import { AddProductPage } from '../../pages/Dashboard/Data Entry/Add Product/AddProductPage';
 import { ActiviyLog } from './Activity Log/ActiviyLog';
 import { ProductsProvider } from '../../context/ProductsContext';
 
 export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
     const addCatProd = {
-        addCategory:{title:"Add Category",content:function(){return<AddCategory/>},icon:faCirclePlus},
-        addProduct: {title:"Add Product",content:function(){return<AddProduct/>},icon:faCirclePlus},
+        addCategory:{title:"Add Category",content:function(){return<AddCategoryPage/>},icon:faCirclePlus},
+        addProduct: {title:"Add Product",content:function(){return<AddProductPage/>},icon:faCirclePlus},
     }
     const categories = {
-        all:{title:"All",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt},
-        hoodiesNSweatshirt:{title:"Hoodies and Sweatshirts",content:function(){return<Products catTitle ={this.title} />},icon:faShirt},
-        coatsNJackets:{title:"Coats and Jackets",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt},
-        denims:{title:"Denims",content:function(){return<Products catTitle ={this.title} />},icon:faShirt},
-        trousers:{title:"Trousers",content:function(){return<Products catTitle ={this.title}/>},icon:faShirt}
+        all:{title:"All",content:function(){return<ProductsPage catTitle ={this.title}/>},icon:faShirt},
+        hoodiesNSweatshirt:{title:"Hoodies and Sweatshirts",content:function(){return<ProductsPage catTitle ={this.title} />},icon:faShirt},
+        coatsNJackets:{title:"Coats and Jackets",content:function(){return<ProductsPage catTitle ={this.title}/>},icon:faShirt},
+        denims:{title:"Denims",content:function(){return<ProductsPage catTitle ={this.title} />},icon:faShirt},
+        trousers:{title:"Trousers",content:function(){return<ProductsPage catTitle ={this.title}/>},icon:faShirt}
     }
     const brands = {
-        pullNBear:{title:"Pull & Bear",content:function(){return<Products brandTitle ={this.title}/>},icon:faShirt},
-        Bershka:{title:"Bershka",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
-        americanEagle:{title:"American Eagle",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
-        zara:{title:"Zara",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
-        defacto:{title:"Defacto",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt},
-        hollister:{title:"Hollister",content:function(){return<Products brandTitle ={this.title} />},icon:faShirt}
+        pullNBear:{title:"Pull & Bear",content:function(){return<ProductsPage brandTitle ={this.title}/>},icon:faShirt},
+        Bershka:{title:"Bershka",content:function(){return<ProductsPage brandTitle ={this.title} />},icon:faShirt},
+        americanEagle:{title:"American Eagle",content:function(){return<ProductsPage brandTitle ={this.title} />},icon:faShirt},
+        zara:{title:"Zara",content:function(){return<ProductsPage brandTitle ={this.title} />},icon:faShirt},
+        defacto:{title:"Defacto",content:function(){return<ProductsPage brandTitle ={this.title} />},icon:faShirt},
+        hollister:{title:"Hollister",content:function(){return<ProductsPage brandTitle ={this.title} />},icon:faShirt}
     }
     const navigatedItem = {
         sales:{title:"Sales",content:function(){return<Sales/>},icon:faChartLine},

@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPenToSquare, faCashRegister, faAngleDown, faAngleRight, faTrash, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { useState, useContext } from 'react';
-import { DropdownButton } from '../../util/Dropdown';
-import { ColorSizeQtyList } from '../Add Items/Add Products/ColorSizeQtyList';
-import { ColorSizeQuantityInput } from '../Add Items/Add Products/ColorSizeQuantityInput';
-import ProductsContext from '../../../context/ProductsContext';
+import { useContext } from 'react';
+import ProductsContext from '../../../../context/ProductsContext';
+import { CustomButton } from '../../../util/Button';
+import { AddProductForum } from '../../Add Items/Add Products/AddProductForm';
 
 export const ExpandedProductItem = ({states})=>{
     const {expandedItemData} = useContext(ProductsContext);
@@ -21,7 +20,7 @@ export const ExpandedProductItem = ({states})=>{
         <div className='expanded-product-content'>
         {
         states.isEditing?
-            <ExpandedProductEdit setIsEditing={states.setIsEditing}/>
+            <ExpandedProductEdit isEditing={states.isEditing} setIsEditing={states.setIsEditing}/>
         :
             <div className="expanded-product-details">
                 <div className="product-imgNDetails grid xl:grid-cols-2 xl:px-2">
@@ -62,12 +61,12 @@ export const ExpandedProductItem = ({states})=>{
                         </div>
                         <div className="prod-action flex gap-2 self-center pt-2">
                             <div className="sell-refund-action flex flex-col gap-2">
-                                <div className="btn cursor-pointer font-semibold flex gap-2 items-center"><FontAwesomeIcon icon={faCashRegister}/><span>Sell product</span></div>
-                                <div className="btn cursor-pointer font-semibold flex gap-2 items-center"><FontAwesomeIcon icon={faArrowRotateLeft}/><span>Refund</span></div>
+                                <CustomButton onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faCashRegister}/><span>Sell product</span></CustomButton>
+                                <CustomButton onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
                             </div>
                             <div className="edit-delete-action flex flex-col gap-2">
-                                <div onClick={()=>states.setIsEditing(true)} className="btn cursor-pointer font-semibold flex gap-2 items-center"><FontAwesomeIcon icon={faPenToSquare}/><span>Edit product</span></div>
-                                <div className="btn cursor-pointer font-semibold flex gap-2 items-center"><FontAwesomeIcon icon={faTrash}/><span>Delete product</span></div>
+                                <CustomButton align={'start'} onClick={()=>states.setIsEditing(true)}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
+                                <CustomButton align={'start'} onClick={()=>{}}><FontAwesomeIcon className='me-2' icon={faTrash}/><span>Delete product</span></CustomButton>
                             </div>
                         </div>
                     </div>
@@ -84,90 +83,20 @@ export const ExpandedProductItem = ({states})=>{
 );
 }
 
-const ExpandedProductEdit = ({setIsEditing})=>{
+const ExpandedProductEdit = ({isEditing,setIsEditing})=>{
     const {expandedItemData} = useContext(ProductsContext);
-    const [newProdTitle,setNewProdTitle]  = useState(expandedItemData.prodTitle);
-    const [newProdDesc,setNewProdDesc] = useState(expandedItemData.prodDesc);
-    const [newProdPrice,setNewProdPrice] = useState(expandedItemData.prodPrice);
-    const [newProdCost,setNewProdCost] = useState(expandedItemData.prodCost);
-    const [newProdCat,setNewProdCat] = useState(expandedItemData.prodCat.value);
-    const [newProdBrand,setNewProdBrand] = useState(expandedItemData.prodBrand.value);
-    const [prodColorSizeQList,setProdColorSizeQList] = useState([...expandedItemData.prodColorQtyList]);
-
-    const editProductHandler = e =>{
-        e.preventDefault();
-        setIsEditing(false);
-    }
-    const submitColorCallbkHandler =  (prodColor,xsQty,sQty,mQty,lQty,xlQty,xxlQty,imgList) =>{
-        const newColorQId = crypto.randomUUID();
-        const totalQty = +xsQty + +sQty + +mQty + +lQty + +xlQty + +xxlQty;
-        setProdColorSizeQList(prodColorQtyList => [...prodColorQtyList,{id:newColorQId,prodColor, xsQty,sQty,mQty,lQty,xlQty,xxlQty,totalQty,imgList}])
-    }
-    const deleteColorCallbkHandler = id =>{ 
-        const colorSizeQtyList = [...prodColorSizeQList];
-        setProdColorSizeQList(colorSizeQtyList.filter(i=> i.id !== id))
-    }  
     return(
         <div className='expanded-product-edit'>
-        <form className="flex flex-col gap-2 px-6 pb-4" action={editProductHandler}>
-            <label className="inpt-label-dark">Product title</label>
-            <input type="text" value={newProdTitle} onChange={e=>setNewProdTitle(e.target.value)} placeholder="Enter the product title." className="inpt" />
-            <label className="inpt-label-dark">Product Description</label>
-            <input type="text" value={newProdDesc} onChange={e=>setNewProdDesc(e.target.value)} placeholder="Enter the product description." className="inpt" />
-            <div className="price-cost flex flex-col xl:flex-row gap-2">
-                <div className='prodPrice flex flex-col flex-grow'>
-                    <label className="inpt-label-dark">Product Price</label>
-                    <input type="number" value={newProdPrice} onChange={e=>setNewProdPrice(e.target.value)} placeholder="Enter the product price." className="inpt" />
-                </div>
-                <div className='prodCost flex flex-col flex-grow'>
-                    <label className="inpt-label-dark">Product Cost</label>
-                    <input type="number" value={newProdCost} onChange={e=>setNewProdCost(e.target.value)} placeholder="Enter the product cost." className="inpt" />
-                </div>
-            </div>
-            <div className='dropdowns flex-col xl:flex-row flex gap-4'>
-                <div className="category-dropdown">
-                    <label className="inpt-label-dark">Product Category</label>
-                    <DropdownButton title='Select Category' value={newProdCat} onValueChange={e=>setNewProdCat(e.target.value)}
-                        list={[
-                            { value:'hoodiesNSweatshirts', text:'Hoodies and Sweatshirts'},
-                            { value:'coatsNJackets',text:'Coats and Jackets'},
-                            { value:'denims',text:'Denims'},
-                            { value:'trousers',text:'Trousers'},]} />
-                </div>
-                <div className="brand-dropdown">
-                    <label className="inpt-label-dark">Product Brand</label>
-                    <DropdownButton title='Select Brand' value={newProdBrand} onValueChange={e=>setNewProdBrand(e.target.value)}
-                    list={[
-                        { value:'pullNBear', text:'Pull & Bear'},
-                        { value:'bershka',text:'Bershka'},
-                        { value:'americanEagle',text:'American Eagle'},
-                        { value:'zara',text:'Zara'},
-                        { value:'defacto',text:'Defacto'},
-                        { value:'hollister',text:'Hollister'},]} />
-                </div>
-            </div>
-        <ColorSizeQuantityInput submitColorCallbk={submitColorCallbkHandler} darkBg={true}/>
-            {prodColorSizeQList.map(item=>
-                <ColorSizeQtyList key={item.id} 
-                id={item.id}
-                inputtedList={[...prodColorSizeQList]}
-                inputtedColor={item.prodColor} 
-                inputtedXS={item.xsQty} 
-                inputtedS={item.sQty} 
-                inputtedM={item.mQty} 
-                inputtedL={item.lQty} 
-                inputtedXL={item.xlQty} 
-                inputtedXXL={item.xxlQty}
-                deleteColorSizeQtyCallbk={()=>deleteColorCallbkHandler(item.id)}
-                modifyColorSizeQtyCallbk={   modifiedList =>
-                    setProdColorSizeQList(modifiedList)} 
-                darkBg={true}/>
-            ).reverse()}
-            <div className="expanded-product-editAction flex gap-4">
-                <button onClick={editProductHandler} className="btn basis-1/2">Save</button>
-                <button onClick={()=>setIsEditing(false)} className="btn basis-1/2">Cancel</button>
-            </div>
-        </form>
+             <AddProductForum
+                prodTitleState={expandedItemData.prodTitle}
+                prodDescState={expandedItemData.prodDesc}
+                prodPriceState={expandedItemData.prodPrice}
+                prodCostState={expandedItemData.prodCost}
+                prodCatState={expandedItemData.prodCat.value}
+                prodBrandState={expandedItemData.prodBrand.value}
+                prodColorSizeQListState={[...expandedItemData.prodColorQtyList]}
+                isEditingState={{isEditing,setIsEditing}}
+             />
         </div>
     );
 }

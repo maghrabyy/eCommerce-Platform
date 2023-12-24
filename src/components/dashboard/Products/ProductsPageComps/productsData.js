@@ -31,7 +31,7 @@ const greenPnBHoodie = {
     prodPrice: 780,
     prodCost: 550,
     prodColorQtyList:[{
-        prodColor:'green-800', xsQty:0,sQty:1,mQty:3,lQty:4,xlQty:0,xxlQty:0,totalQty:8,
+        id:'COL' + crypto.randomUUID(),prodColor:'green-800', xsQty:0,sQty:1,mQty:3,lQty:4,xlQty:0,xxlQty:0,totalQty:8,
         prodColorImgs:{
             mainImg:{src:greenPnBHoodie01,alt:'Green narutu p&b Hoodie'},
             otherImgs:[
@@ -61,7 +61,7 @@ const whitePnBHoodie = {
     prodPrice: 750,
     prodCost: 550,
     prodColorQtyList:[{
-        prodColor:'white', xsQty:0,sQty:1,mQty:4,lQty:4,xlQty:2,xxlQty:0,totalQty:11,
+        id:'COL' + crypto.randomUUID(),prodColor:'white', xsQty:0,sQty:1,mQty:4,lQty:4,xlQty:2,xxlQty:0,totalQty:11,
         prodColorImgs:{
             mainImg:{src:whitePnBHoodie01,alt:'white p&b Hoodie'},
             otherImgs:[
@@ -88,7 +88,7 @@ const blackPnBHoodie01 = {
     prodPrice: 650,
     prodCost: 550,
     prodColorQtyList:[{
-        prodColor:'black', xsQty:0,sQty:1,mQty:2,lQty:2,xlQty:0,xxlQty:0,totalQty:5,
+        id:'COL' + crypto.randomUUID(),prodColor:'black', xsQty:0,sQty:1,mQty:2,lQty:2,xlQty:0,xxlQty:0,totalQty:5,
         prodColorImgs:{
             mainImg:{src:blackPnBHoodie0101,alt:'black p&b Hoodie'},
             otherImgs:[
@@ -117,7 +117,7 @@ const blackPnBHoodie02 = {
     prodPrice: 700,
     prodCost: 550,
     prodColorQtyList:[{
-        prodColor:'black', xsQty:0,sQty:1,mQty:2,lQty:3,xlQty:0,xxlQty:0,totalQty:6,
+        id:'COL' + crypto.randomUUID(),prodColor:'black', xsQty:0,sQty:1,mQty:2,lQty:3,xlQty:0,xxlQty:0,totalQty:6,
         prodColorImgs:{
             mainImg:{src:blackPnBHoodie0201,alt:'black p&b Hoodie'},
             otherImgs:[

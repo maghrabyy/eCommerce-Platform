@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import { CustomButton } from '../../../util/Button';
 
 const captilizeFirstLetter = str =>{
     const firstLetter = str.slice(0,1);
@@ -69,7 +70,7 @@ export const ColorSizeQuantityInput = ({submitColorCallbk,darkBg})=>{
                 </div>
             </div>
             <div className="another-color flex flex-col justify-center">
-                <div onClick={submitColorHandler} className="btn h-12 flex justify-center items-center"><FontAwesomeIcon icon={faPlus} /></div>
+                <CustomButton onClick={submitColorHandler}><FontAwesomeIcon icon={faPlus} /></CustomButton>
             </div>
     </div>
     );

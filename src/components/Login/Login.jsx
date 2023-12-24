@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CustomButton } from "../util/Button";
 
 export const Login = ({headerHeight})=>{
     const loginHandler = event=>{
@@ -17,7 +18,7 @@ export const Login = ({headerHeight})=>{
               <label className='inpt-label'>Password</label>
               <input type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Enter your password." required className='inpt'/>
             </div>
-            <button onClick={loginHandler} className='btn'>Login</button>
+            <CustomButton onClick={loginHandler} >Login</CustomButton>
           </form>
       </div>
     );

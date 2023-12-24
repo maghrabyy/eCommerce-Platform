@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare,faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { CustomButton } from '../../../util/Button';
 // import whiteHoodie from '../../../../assets/whiteHoodie.png'
 // import blackHoodie from '../../../../assets/blackHoodie.png'
 // import grayHoodie from '../../../../assets/grayHoodie.png'
@@ -44,7 +45,7 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
         <div className="added-color-size-qty rounded-lg border-2 border-gray-700 px-6 py-2 flex flex-col xl:flex-row gap-4 xl:gap-0 justify-between">
             <div className={`prodColor flex flex-wrap flex-row xl:flex-col items-center xl:items-start justify-between xl:flew-col`}>
                 <h1 className={`text-lg ${darkBg? 'inpt-label-dark' :'inpt-label'}`}>Product Color</h1>
-                {isEditing? <input type="text" className='inpt' placeholder="Enter the product color." value={editProdColor} onChange={e=>setEditProdColor(e.target.value)}/> : <p className={`ms-0 xl:ms-2 ${darkBg? 'text-white' :null}`}>{inputtedColor}</p>}
+                {isEditing? <input type="text" className='inpt' placeholder="Enter the product color." value={editProdColor} onChange={e=>setEditProdColor(e.target.value)}/> : <p className={`ms-0 xl:ms-2 font-semibold ${darkBg? 'text-white' : 'text-slate-700'}`}>{inputtedColor}</p>}
                 
             </div>
             <div className={`prodSize flex justify-center flex-wrap xl:justify-start gap-4 `}>
@@ -81,13 +82,14 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
             </div> */}
             {isEditing?
             <div className="edit-delete-container editing flex justify-center xl:justify-start gap-2">
-                <div onClick={editColorSizeQtyHandler} className="save-btn btn flex justify-center items-center"><FontAwesomeIcon icon={faPenToSquare}/></div>
-                <div onClick={()=>setIsEditing(false)} className="cancel-btn btn hover:text-red-500 flex justify-center items-center"><FontAwesomeIcon icon={faXmark}/></div>
+                <CustomButton onClick={editColorSizeQtyHandler}><FontAwesomeIcon icon={faPenToSquare}/></CustomButton>
+                <CustomButton onClick={()=>setIsEditing(false)}><FontAwesomeIcon icon={faXmark}/></CustomButton>
             </div>
             :            
              <div className="edit-delete-container nonEditing flex justify-center xl:justify-start gap-2">
-                <div onClick={()=>setIsEditing(true)} className="edit-btn btn flex justify-center items-center"><FontAwesomeIcon icon={faPenToSquare}/></div>
-                <div onClick={deleteColorSizeQtyCallbk} className="delete-btn btn hover:text-red-500 flex justify-center items-center"><FontAwesomeIcon icon={faTrash}/></div>
+                <CustomButton onClick={()=>setIsEditing(true)}><FontAwesomeIcon icon={faPenToSquare}/></CustomButton>
+                {inputtedList.length > 1? <CustomButton onClick={deleteColorSizeQtyCallbk}><FontAwesomeIcon icon={faTrash}/></CustomButton> : null}
+                
             </div>}
 
     </div>

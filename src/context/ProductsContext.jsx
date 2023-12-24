@@ -1,5 +1,5 @@
 import { createContext, useState} from "react";
-import { productsArray } from "../components/dashboard/Products/Products/productsData";
+import {productsArray} from '../components/dashboard/Products/ProductsPageComps/productsData'
 
 const ProductsContext = createContext({});
 
