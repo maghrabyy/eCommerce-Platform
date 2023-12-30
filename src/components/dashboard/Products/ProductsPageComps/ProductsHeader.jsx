@@ -1,41 +1,39 @@
-import { DropdownButton } from '../../../util/Dropdown';
-import { useState, useEffect, useContext } from 'react';
+import { CustomDropdown } from '../../../util/Dropdown';
+import { useState, useContext } from 'react';
 import  SearchInptContext  from "../../../../context/SearchInputContext";
 import ProductsContext from "../../../../context/ProductsContext";
 
 export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFilter})=>{
-    const [sortBy,setSortBy] = useState('none');
+    const [sortBy,setSortBy] = useState(null);
     const [searchInpt,setSearchInpt] = useContext(SearchInptContext)
     const {setProductsList} = useContext(ProductsContext);
-
-    useEffect(()=>{
-        if(prodsCatList.length > 0){
-            if(sortBy === 'priceHToL'){
-                setProductsList(prodsCatList.sort((a,b)=>b.prodPrice - a.prodPrice))
-            }else if(sortBy === 'priceLToH'){
-                setProductsList(prodsCatList.sort((a,b)=>a.prodPrice - b.prodPrice))
-            }
-            else if(sortBy === 'qtyHToL'){
-                setProductsList(prodsCatList.sort((a,b)=>b.totalProdQty - a.totalProdQty))
-            }else if(sortBy === 'qtyLToH'){
-                setProductsList(prodsCatList.sort((a,b)=>a.totalProdQty - b.totalProdQty))
-            }
-            else if(sortBy === 'salesHToL'){
-                setProductsList(prodsCatList.sort((a,b)=>b.sales - a.sales))
-            }else if(sortBy === 'salesLToH'){
-                setProductsList(prodsCatList.sort((a,b)=>a.sales - b.sales))
-            }
-            else if(sortBy === 'newToOld'){
-                setProductsList(prodsCatList.sort((a,b)=>b.creationDate - a.creationDate))
-                console.log('date from new to old')
-            }
-            else if(sortBy === 'oldToNew'){
-                setProductsList(prodsCatList.sort((a,b)=>a.creationDate - b.creationDate))
-                console.log('date from old to new')
-            }
+    const customSortByHandler = (selected) =>{
+        setSortBy(selected);
+        const newSortValue = selected?.value;
+        if(newSortValue === 'priceHToL'){
+            setProductsList(prodsCatList.sort((a,b)=>b.prodPrice - a.prodPrice))
+        }else if(newSortValue === 'priceLToH'){
+            setProductsList(prodsCatList.sort((a,b)=>a.prodPrice - b.prodPrice))
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[sortBy]);
+        else if(newSortValue === 'qtyHToL'){
+            setProductsList(prodsCatList.sort((a,b)=>b.totalProdQty - a.totalProdQty))
+        }else if(newSortValue === 'qtyLToH'){
+            setProductsList(prodsCatList.sort((a,b)=>a.totalProdQty - b.totalProdQty))
+        }
+        else if(newSortValue === 'salesHToL'){
+            setProductsList(prodsCatList.sort((a,b)=>b.sales - a.sales))
+        }else if(newSortValue === 'salesLToH'){
+            setProductsList(prodsCatList.sort((a,b)=>a.sales - b.sales))
+        }
+        else if(newSortValue === 'newToOld'){
+            setProductsList(prodsCatList.sort((a,b)=>b.creationDate - a.creationDate))
+            console.log('date from new to old')
+        }
+        else if(newSortValue === 'oldToNew'){
+            setProductsList(prodsCatList.sort((a,b)=>a.creationDate - b.creationDate))
+            console.log('date from old to new')
+        }
+    }
     const sortyByItems = [
         { value:'salesHToL',text:'Sales - High to Low'},
         { value:'salesLToH',text:'Sales - Low to High'},
@@ -54,7 +52,11 @@ export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFil
                     <span> - {prodsCatList.length} out of {prodsCatList.length} </span>
                 </div>
                 <div className="sortby-dropdown self-end">
-                    <DropdownButton title='Sort by' list={sortyByItems} value={sortBy} onValueChange={e=>setSortBy(e.target.value)}/>                   
+                    <CustomDropdown title='Sort by'
+                    value={sortBy}
+                    onChange={customSortByHandler}
+                    options={sortyByItems} 
+                    width={220}/>
                 </div>
             </div>
             {

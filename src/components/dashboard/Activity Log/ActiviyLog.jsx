@@ -1,4 +1,4 @@
-export const ActiviyLog = ()=>{
+export const ActivityLog = ()=>{
     return(
         <div></div>
     );

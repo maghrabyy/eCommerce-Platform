@@ -1,43 +1,47 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPenToSquare, faCashRegister, faAngleDown, faAngleRight, faTrash, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import ProductsContext from '../../../../context/ProductsContext';
 import { CustomButton } from '../../../util/Button';
 import { AddProductForum } from '../../Add Items/Add Products/AddProductForm';
 
-export const ExpandedProductItem = ({states})=>{
+export const ExpandedProductItem = ()=>{
+    const [showProdQtyList,setShowProdQtyList] = useState(false);
+    const [selectedColorIndex,setSelectedColorIndex] = useState(0);
+    const [selectedImgIndex,setSelectedImgIndex] = useState(0);
+    const [isEditing,setIsEditing] = useState(false);
     const {expandedItemData} = useContext(ProductsContext);
     const showProdQtyListHandler = ()=>{
-        states.setShowProdQtyList(!states.showProdQtyList);
+        setShowProdQtyList(!showProdQtyList);
     }
     const onColorClickHandler = index =>{
-        states.setSelectedColorIndex(index);
+        setSelectedColorIndex(index);
     }
     const onImgClickHandler = index =>{
-        states.setSelectedImgIndex(index);
+        setSelectedImgIndex(index);
     }
     return(
         <div className='expanded-product-content'>
         {
-        states.isEditing?
-            <ExpandedProductEdit isEditing={states.isEditing} setIsEditing={states.setIsEditing}/>
+        isEditing?
+            <ExpandedProductEdit isEditing={isEditing} setIsEditing={setIsEditing}/>
         :
             <div className="expanded-product-details">
                 <div className="product-imgNDetails grid xl:grid-cols-2 xl:px-2">
                     {expandedItemData.prodColorQtyList.length > 0?                
                     <div className="product-imgs flex flex-col xl:flex-row xl:p-2 gap-2 xl:gap-0">
                         <div className="imgs-list flex flex-row xl:flex-col justify-center xl:justify-start gap-2 h-[40px] xl:w-44 xl:h-[380px] xl:overflow-y-auto px-1 order-2 xl:order-1">
-                            {expandedItemData.prodColorQtyList[states.selectedColorIndex].prodColorImgs.otherImgs.map((prodImg,index)=><img key={index} onClick={()=>onImgClickHandler(index)} className='cursor-pointer w-6 xl:w-auto hover:scale-105 rounded-lg shadow-xl' src={prodImg.src} alt={prodImg.alt} />)}
+                            {expandedItemData.prodColorQtyList[selectedColorIndex].prodColorImgs.otherImgs.map((prodImg,index)=><img key={index} onClick={()=>onImgClickHandler(index)} className='cursor-pointer w-6 xl:w-auto hover:scale-105 rounded-lg shadow-xl' src={prodImg.src} alt={prodImg.alt} />)}
                         </div>
                         <div className="main-img px-4 xl:order-2 order-1">
                             <img className=' w-[900px] h-[350px] object-cover rounded-lg shadow-xl' 
-                            src={states.selectedImgIndex === 0? 
-                                expandedItemData.prodColorQtyList[states.selectedColorIndex].prodColorImgs.mainImg.src
+                            src={selectedImgIndex === 0? 
+                                expandedItemData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.src
                                 : 
-                                expandedItemData.prodColorQtyList[states.selectedColorIndex].prodColorImgs.otherImgs[states.selectedImgIndex].src} 
-                                alt={states.selectedImgIndex === 0? 
-                                    expandedItemData.prodColorQtyList[states.selectedColorIndex].prodColorImgs.mainImg.alt
-                                : expandedItemData.prodColorQtyList[states.selectedColorIndex].prodColorImgs.otherImgs[states.selectedImgIndex].alt} />
+                                expandedItemData.prodColorQtyList[selectedColorIndex].prodColorImgs.otherImgs[selectedImgIndex].src} 
+                                alt={selectedImgIndex === 0? 
+                                    expandedItemData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.alt
+                                : expandedItemData.prodColorQtyList[selectedColorIndex].prodColorImgs.otherImgs[selectedImgIndex].alt} />
                         </div>
                     </div> :
                     null
@@ -65,15 +69,15 @@ export const ExpandedProductItem = ({states})=>{
                                 <CustomButton onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
                             </div>
                             <div className="edit-delete-action flex flex-col gap-2">
-                                <CustomButton align={'start'} onClick={()=>states.setIsEditing(true)}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
+                                <CustomButton align={'start'} onClick={()=>setIsEditing(true)}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
                                 <CustomButton align={'start'} onClick={()=>{}}><FontAwesomeIcon className='me-2' icon={faTrash}/><span>Delete product</span></CustomButton>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="sizeQty px-10 py-4">
-                    <div onClick={showProdQtyListHandler} className="section-title select-none cursor-pointer text-white font-semibold text-xl pb-4 px-2 border-b-2 border-b-white flex justify-between items-center"><span>Product Quantity</span> <FontAwesomeIcon icon={states.showProdQtyList? faAngleDown : faAngleRight}/></div>
-                    <div className={`colorSize-list ${states.showProdQtyList?'flex': 'hidden'} flex-col gap-2 pt-4`}>
+                    <div onClick={showProdQtyListHandler} className="section-title select-none cursor-pointer text-white font-semibold text-xl pb-4 px-2 border-b-2 border-b-white flex justify-between items-center"><span>Product Quantity</span> <FontAwesomeIcon icon={showProdQtyList? faAngleDown : faAngleRight}/></div>
+                    <div className={`colorSize-list ${showProdQtyList?'flex': 'hidden'} flex-col gap-2 pt-4`}>
                         {expandedItemData.prodColorQtyList.map((colorQty,index)=> <ProdColorQty key={index} color={colorQty.prodColor} xsQty={colorQty.xsQty} sQty={colorQty.sQty} mQty={colorQty.mQty} lQty={colorQty.lQty} xlQty={colorQty.xlQty} xxlQty={colorQty.xxlQty}/>)}
                     </div>
                 </div>

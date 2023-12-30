@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChartLine, faShirt, faCirclePlus, faClipboardList, faBars } from '@fortawesome/free-solid-svg-icons';
-import { Sales } from './Sales/Sales';
+import { SalesPage } from '../../pages/Dashboard/Sales/SalesPage';
 import { ProductsPage } from '../../pages/Dashboard/Products/ProductsPage';
 import { ProductSearch } from './Products/ProductSearch';
 import { AddCategoryPage } from '../../pages/Dashboard/Data Entry/Add Category/AddCategoryPage'
 import { AddProductPage } from '../../pages/Dashboard/Data Entry/Add Product/AddProductPage';
-import { ActiviyLog } from './Activity Log/ActiviyLog';
+import { ActivityLogPage } from '../../pages/Dashboard/Activity Log/ActivityLogPage';
 import { ProductsProvider } from '../../context/ProductsContext';
+
+
+export const dashcontentRef = { current: null };
 
 export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
     const addCatProd = {
@@ -29,10 +32,10 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
         hollister:{title:"Hollister",content:function(){return<ProductsPage brandTitle ={this.title} />},icon:faShirt}
     }
     const navigatedItem = {
-        sales:{title:"Sales",content:function(){return<Sales/>},icon:faChartLine},
+        sales:{title:"Sales",content:function(){return<SalesPage/>},icon:faChartLine},
         products:{categories,brands},
         addItems:addCatProd,
-        activityLog: {title:"Activity Log",content:function(){return<ActiviyLog/>},icon:faClipboardList}
+        activityLog: {title:"Activity Log",content:function(){return<ActivityLogPage/>},icon:faClipboardList}
     }
     const navigateToPageFromTitle = pageTitle =>{
         if(pageTitle === "Sales")
@@ -74,16 +77,17 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
     }
     return (
     <ProductsProvider>
-        <div className="dashboard-content col-span-10 xl:col-span-8 rounded-md shadow-lg bg-white overflow-scroll">
+        <div ref={dashcontentRef} className="dashboard-content col-span-10 xl:col-span-8 rounded-md shadow-lg bg-white overflow-scroll">
             <div className='px-4'>
                 <div className="main-header py-4">
-                    <div className="navbar-toggler flex justify-between items-center xl:hidden">
+                    {isClothesSection() && <div className="sidebar-toggler flex justify-between items-center xl:hidden">
                         <FontAwesomeIcon onClick={()=>setShowToggledSidebar(true)} className='text-gray-700 text-2xl cursor-pointer' icon={faBars} />
                         {isClothesSection() ? <ProductSearch  /> : null}
-                    </div>
+                    </div>}
                     <div className="flex justify-between border-b-2 py-5 border-b-gray-600">
                         <h1 className="font-bold text-gray-700 text-2xl"><FontAwesomeIcon className='me-2' icon={navigateToPageFromTitle(pageTitle).icon} /> {isClothesSection()? 'Clothing': navigateToPageFromTitle(pageTitle).title}</h1>
-                    <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch /> : null}</div> 
+                        {!isClothesSection() && <FontAwesomeIcon onClick={()=>setShowToggledSidebar(true)} className='text-gray-700 text-2xl cursor-pointer xl:hidden' icon={faBars} />}
+                        <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch /> : null}</div> 
                     </div> 
                 </div>
                 {navigateToPageFromTitle(pageTitle).content()}

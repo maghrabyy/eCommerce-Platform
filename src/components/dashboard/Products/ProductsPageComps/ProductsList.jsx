@@ -1,7 +1,12 @@
 import { ProductItem } from "../ProductItem";
 import emptyBox from '../../../../assets/emptyBox.svg'
+import { useContext } from 'react';
+import SearchInptContext from "../../../../context/SearchInputContext";
+import ProductsContext from "../../../../context/ProductsContext";
 
-export const ProductsList = ({prodsList,searchInpt,searchResultFilter,onProductSelect})=>{
+export const ProductsList = ({prodsList,searchResultFilter})=>{
+    const [searchInpt] = useContext(SearchInptContext);
+    const {onProductSelect}= useContext(ProductsContext);
     return (
         <div className="ProductsList">
             {prodsList.length > 0?

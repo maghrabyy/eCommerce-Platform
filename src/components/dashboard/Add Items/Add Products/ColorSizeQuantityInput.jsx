@@ -32,7 +32,7 @@ export const ColorSizeQuantityInput = ({submitColorCallbk,darkBg})=>{
         }
     }
     return(
-        <div className='flex flex-col xl:flex-row gap-2 xl:gap-0 justify-between p-2 xl:p-4 color-size-qty border-2 border-gray-700  rounded-lg'>
+        <div className={`flex flex-col xl:flex-row gap-2 xl:gap-0 justify-between p-2 xl:p-4 color-size-qty border-2 ${darkBg? 'border-gray-500' : 'border-gray-700'}  rounded-lg`}>
             <div className="colorSizeQty-input flex flex-col xl:flex-row flex-wrap gap-2">
                 <div className='prod-color flex flex-col'>
                     <label className={`${darkBg? 'inpt-label-dark' :'inpt-label'}`}>Product Color</label>

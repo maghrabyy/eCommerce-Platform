@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CustomButton } from '../../../util/Button';
 import { ColorSizeQuantityInput } from './ColorSizeQuantityInput';
 import { ColorSizeQtyList } from './ColorSizeQtyList';
-import { DropdownButton } from '../../../util/Dropdown';
+import { CustomDropdown } from '../../../util/Dropdown';
 
 export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditingState})=>{
     const [prodTitle, setProdTitle] = useState(prodTitleState);
@@ -22,7 +22,7 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
         setProdColorSizeQList(colorSizeQtyList.filter(i=> i.id !== id))
     }  
     return(
-        <div className={`flex flex-col gap-2 ${isEditingState.isEditing? 'px-6 pb-4' : null}`}>
+    <div className={`addProd-form flex flex-col gap-2 ${isEditingState.isEditing? 'px-6 pb-4' : null}`}>
         <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product title</label>
         <input type="text" value={prodTitle} onChange={e=>setProdTitle(e.target.value)} placeholder="Enter the product title." className="inpt" />
         <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Description</label>
@@ -37,26 +37,26 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
                 <input type="number" value={prodCost} onChange={e=>setProdCost(e.target.value)} placeholder="Enter the product cost." className="inpt" />
             </div>
         </div>
-        <div className='dropdowns flex-col xl:flex-row flex gap-4'>
+        <div className='dropdowns flex flex-col md:flex-row gap-4'>
             <div className="category-dropdown">
                 <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Category</label>
-                <DropdownButton title='Select Category' value={prodCat} onValueChange={e=>setProdCat(e.target.value)}
-                    list={[
-                        { value:'hoodiesNSweatshirts', text:'Hoodies and Sweatshirts'},
-                        { value:'coatsNJackets',text:'Coats and Jackets'},
-                        { value:'denims',text:'Denims'},
-                        { value:'trousers',text:'Trousers'},]} />
+                <CustomDropdown title='Select Category' value={prodCat} onChange={setProdCat} width={240}
+                options={[
+                    { value:'hoodiesNSweatshirts', text:'Hoodies and Sweatshirts'},
+                    { value:'coatsNJackets',text:'Coats and Jackets'},
+                    { value:'denims',text:'Denims'},
+                    { value:'trousers',text:'Trousers'},]}/>
             </div>
             <div className="brand-dropdown">
                 <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Brand</label>
-                <DropdownButton title='Select Brand' value={prodBrand} onValueChange={e=>setProdBrand(e.target.value)}
-                list={[
-                    { value:'pullNBear', text:'Pull & Bear'},
-                    { value:'bershka',text:'Bershka'},
-                    { value:'americanEagle',text:'American Eagle'},
-                    { value:'zara',text:'Zara'},
-                    { value:'defacto',text:'Defacto'},
-                    { value:'hollister',text:'Hollister'},]} />
+                <CustomDropdown title='Select Brand' value={prodBrand} onChange={setProdBrand} width={180}
+                    options={[
+                        { value:'pullNBear', text:'Pull & Bear'},
+                        { value:'bershka',text:'Bershka'},
+                        { value:'americanEagle',text:'American Eagle'},
+                        { value:'zara',text:'Zara'},
+                        { value:'defacto',text:'Defacto'},
+                        { value:'hollister',text:'Hollister'},]}/>
             </div>
 
         </div>

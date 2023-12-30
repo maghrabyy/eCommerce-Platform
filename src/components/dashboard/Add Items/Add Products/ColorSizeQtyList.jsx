@@ -42,7 +42,7 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
         }
     }
     return (
-        <div className="added-color-size-qty rounded-lg border-2 border-gray-700 px-6 py-2 flex flex-col xl:flex-row gap-4 xl:gap-0 justify-between">
+        <div className={`added-color-size-qty rounded-lg border-2 ${darkBg? 'border-gray-500' : 'border-gray-700'} px-6 py-2 flex flex-col xl:flex-row gap-4 xl:gap-0 justify-between`}>
             <div className={`prodColor flex flex-wrap flex-row xl:flex-col items-center xl:items-start justify-between xl:flew-col`}>
                 <h1 className={`text-lg ${darkBg? 'inpt-label-dark' :'inpt-label'}`}>Product Color</h1>
                 {isEditing? <input type="text" className='inpt' placeholder="Enter the product color." value={editProdColor} onChange={e=>setEditProdColor(e.target.value)}/> : <p className={`ms-0 xl:ms-2 font-semibold ${darkBg? 'text-white' : 'text-slate-700'}`}>{inputtedColor}</p>}

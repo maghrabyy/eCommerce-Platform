@@ -20,34 +20,34 @@ export const Sidebar = ({sidebarSelectedPage,showToggledSidebar ,setShowToggledS
                     </div>
                     <ul className='sidebar-action flex flex-col gap-2 py-4'>
                         <li onClick={()=>handlePageClick("Sales")} className='sidebar-btn'><FontAwesomeIcon className='me-2' icon={faChartLine} /> Sales</li>
-                            <li>
-                                <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
-                                    {onItemClicked:()=>handlePageClick("All"), text: 'All'},
-                                    {onItemClicked:()=>handlePageClick("HoodiesNSweatshirt"), text: 'Hoodies and Sweatshirts'},
-                                    {onItemClicked:()=>handlePageClick("CoatsNJackets"), text: 'Coats and Jackets'},
-                                    {onItemClicked:()=>handlePageClick("Denim"), text: 'Denims'},
-                                    {onItemClicked:()=>handlePageClick("Trousers"), text: 'Trousers'},
-                                    {subMenu: true}
-                                    ]} > 
-                                        <ExpandableMenu title='Brands'  menuList={[
-                                            {onItemClicked:()=>handlePageClick("PullNBear"), text: 'Pull & Bear'},
-                                            {onItemClicked:()=>handlePageClick("Bershka"), text: 'Bershka'},
-                                            {onItemClicked:()=>handlePageClick("AmericanEagle"), text: 'American Eagle'},
-                                            {onItemClicked:()=>handlePageClick("Zara"), text: 'Zara'},
-                                            {onItemClicked:()=>handlePageClick("Defacto"), text: 'Defacto'},
-                                            {onItemClicked:()=>handlePageClick("Hollister"), text: 'Hollister'},
-                                        ]} /> 
-                                </ExpandableMenu>
-                            </li>
-                            <li>
-                                <ExpandableMenu title='Add Item' menuIcon={faCirclePlus}
-                                    menuList={[
-                                        {onItemClicked:()=>handlePageClick("AddCategory"), text: 'Add Category'},
-                                        {onItemClicked:()=>handlePageClick("AddProd"), text: 'Add Product'}
-                                    ]}
-                                />
-                            </li>
-                            <li onClick={()=>handlePageClick("ActivityLog")} className='sidebar-btn'><FontAwesomeIcon className='me-2' icon={faClipboardList} /> Activity Log</li>
+                        <li>
+                            <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
+                                {onItemClicked:()=>handlePageClick("All"), text: 'All'},
+                                {onItemClicked:()=>handlePageClick("HoodiesNSweatshirt"), text: 'Hoodies and Sweatshirts'},
+                                {onItemClicked:()=>handlePageClick("CoatsNJackets"), text: 'Coats and Jackets'},
+                                {onItemClicked:()=>handlePageClick("Denim"), text: 'Denims'},
+                                {onItemClicked:()=>handlePageClick("Trousers"), text: 'Trousers'},
+                                {subMenu: true}
+                                ]} > 
+                                    <ExpandableMenu title='Brands'  menuList={[
+                                        {onItemClicked:()=>handlePageClick("PullNBear"), text: 'Pull & Bear'},
+                                        {onItemClicked:()=>handlePageClick("Bershka"), text: 'Bershka'},
+                                        {onItemClicked:()=>handlePageClick("AmericanEagle"), text: 'American Eagle'},
+                                        {onItemClicked:()=>handlePageClick("Zara"), text: 'Zara'},
+                                        {onItemClicked:()=>handlePageClick("Defacto"), text: 'Defacto'},
+                                        {onItemClicked:()=>handlePageClick("Hollister"), text: 'Hollister'},
+                                    ]} /> 
+                            </ExpandableMenu>
+                        </li>
+                        <li>
+                            <ExpandableMenu title='Add Item' menuIcon={faCirclePlus}
+                                menuList={[
+                                    {onItemClicked:()=>handlePageClick("AddCategory"), text: 'Add Category'},
+                                    {onItemClicked:()=>handlePageClick("AddProd"), text: 'Add Product'}
+                                ]}
+                            />
+                        </li>
+                        <li onClick={()=>handlePageClick("ActivityLog")} className='sidebar-btn'><FontAwesomeIcon className='me-2' icon={faClipboardList} /> Activity Log</li>
                     </ul>
                 </div>
                 <div className='sidebar-logout sidebar-btn'><FontAwesomeIcon className='me-2' icon={faRightFromBracket} /> Logout</div>

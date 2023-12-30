@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const CustomButton = ({children, onClick,rounded,outlined,color, align,...rest})=>{
+export const CustomButton = ({children,className, onClick,rounded,outlined,color, align,...rest})=>{
     const solidColorStyles = {
         primary:{bg:'bg-slate-700',bgHover:'hover:bg-slate-600'},
         secondary:{bg:'bg-blue-950',bgHover:'hover:bg-blue-900'},
@@ -29,7 +29,7 @@ export const CustomButton = ({children, onClick,rounded,outlined,color, align,..
      ${solidColorStyles[color].bgHover} text-white`} 
      shadow-lg font-semibold py-2 px-4`;
     return(
-        <button {...rest} onClick={onClick} className={rest.className + buttonClasses}>
+        <button {...rest} onClick={onClick} className={className + buttonClasses}>
             {children}
         </button>
     );
