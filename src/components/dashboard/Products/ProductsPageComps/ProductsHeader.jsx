@@ -2,6 +2,8 @@ import { CustomDropdown } from '../../../util/Dropdown';
 import { useState, useContext } from 'react';
 import  SearchInptContext  from "../../../../context/SearchInputContext";
 import ProductsContext from "../../../../context/ProductsContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFilter})=>{
     const [sortBy,setSortBy] = useState(null);
@@ -48,7 +50,10 @@ export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFil
         <div className="productsHeader">
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 
                 <div className="flex flex-col md:flex-row md:items-center">
-                    <span className='category font-bold text-gray-800 text-lg'>{brandTitle? `Brand / ${brandTitle}` : catTitle === 'All'? catTitle : `Category /  ${catTitle}`}</span> 
+                    <span className='category font-bold text-gray-800 text-lg flex items-center gap-1'>
+                        {brandTitle? `Brand` : `Category` } 
+                            <FontAwesomeIcon className='text-xs' icon={faAngleRight}/> 
+                            {brandTitle || catTitle} </span> 
                     <span> - {prodsCatList.length} out of {prodsCatList.length} </span>
                 </div>
                 <div className="sortby-dropdown self-end">
