@@ -9,10 +9,13 @@ import { ActivityLogPage } from '../../pages/Dashboard/Activity Log/ActivityLogP
 import { ProductsProvider } from '../../context/ProductsContext';
 import { MainDashboard } from '../../pages/Dashboard/Dashboard Main/MainDashboardPage';
 import { MdDashboard } from "react-icons/md";
+import { useContext } from 'react';
+import NavigationContext from '../../context/NavigationContext';
 
 export const dashcontentRef = { current: null };
 
-export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
+export const Dashcontent = ({setShowToggledSidebar})=>{
+    const { currentPath } = useContext(NavigationContext);
     const addCatProd = {
         addCategory:{title:"Add Category",content:function(){return<AddCategoryPage/>},icon:faCirclePlus},
         addProduct: {title:"Add Product",content:function(){return<AddProductPage/>},icon:faCirclePlus},
@@ -39,42 +42,42 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
         addItems:addCatProd,
         activityLog: {title:"Activity Log",content:function(){return<ActivityLogPage/>},icon:faClipboardList}
     }
-    const navigateToPageFromTitle = pageTitle =>{
-       if(pageTitle === "Main")
+    const navigateToPageFromTitle = () =>{
+       if(currentPath === "/home")
             return navigatedItem.main;
-        else if(pageTitle === "Sales")
+        else if(currentPath === "/sales")
             return navigatedItem.sales;
-        else if(pageTitle === "All")
+        else if(currentPath === "/all")
             return navigatedItem.products.categories.all;
-        else if(pageTitle === "HoodiesNSweatshirt")
+        else if(currentPath === "/hoodiesNSweatshirt")
             return navigatedItem.products.categories.hoodiesNSweatshirt;
-        else if(pageTitle === "CoatsNJackets")
+        else if(currentPath === "/coatsNJackets")
             return navigatedItem.products.categories.coatsNJackets;
-        else if(pageTitle === "Denim")
+        else if(currentPath === "/denim")
             return navigatedItem.products.categories.denims;
-        else if(pageTitle === "Trousers")
+        else if(currentPath === "/trousers")
             return navigatedItem.products.categories.trousers;
-        else if(pageTitle === "PullNBear")
+        else if(currentPath === "/pullNBear")
             return navigatedItem.products.brands.pullNBear;     
-        else if(pageTitle === "Bershka")
+        else if(currentPath === "/bershka")
             return navigatedItem.products.brands.Bershka;     
-        else if(pageTitle === "AmericanEagle")
+        else if(currentPath === "/americanEagle")
             return navigatedItem.products.brands.americanEagle;     
-        else if(pageTitle === "Zara")
+        else if(currentPath === "/zara")
             return navigatedItem.products.brands.zara;     
-        else if(pageTitle === "Defacto")
+        else if(currentPath === "/defacto")
             return navigatedItem.products.brands.defacto;     
-        else if(pageTitle === "Hollister")
+        else if(currentPath === "/hollister")
             return navigatedItem.products.brands.hollister;     
-        else if(pageTitle === "AddCategory")
+        else if(currentPath === "/addCategory")
             return navigatedItem.addItems.addCategory;
-        else if(pageTitle === "AddProd")
+        else if(currentPath === "/addProd")
             return navigatedItem.addItems.addProduct;
-        else if(pageTitle === "ActivityLog")
+        else if(currentPath === "/activityLog")
             return navigatedItem.activityLog;
     }
     const isClothesSection = ()=>{
-        if(pageTitle !== "Sales" && pageTitle !== "AddCategory" && pageTitle !== "AddProd" && pageTitle !== "ActivityLog" && pageTitle !== "Main" ){
+        if(currentPath !== "/sales" && currentPath !== "/addCategory" && currentPath !== "/addProd" && currentPath !== "/activityLog" && currentPath !== "/home" ){
             return true
         }
         else return false;
@@ -90,13 +93,13 @@ export const Dashcontent = ({pageTitle, setShowToggledSidebar})=>{
                     </div>}
                     <div className="flex justify-between border-b-2 py-5 border-b-gray-600">
                         <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">
-                            {pageTitle === 'Main'? <MdDashboard className='text-3xl' />: <FontAwesomeIcon className='me-2' icon={navigateToPageFromTitle(pageTitle).icon} />} 
-                            {isClothesSection()? 'Clothing': navigateToPageFromTitle(pageTitle).title}</span>
+                            {currentPath === '/home'? <MdDashboard className='text-3xl' />: <FontAwesomeIcon className='me-2' icon={navigateToPageFromTitle().icon} />} 
+                            {isClothesSection()? 'Clothing': navigateToPageFromTitle().title}</span>
                         {!isClothesSection() && <FontAwesomeIcon onClick={()=>setShowToggledSidebar(true)} className='text-gray-700 text-2xl cursor-pointer xl:hidden hover:text-slate-600' icon={faBars} />}
                         <div className='basis-1/2 hidden xl:block'>{isClothesSection() ? <ProductSearch /> : null}</div> 
                     </div> 
                 </div>
-                {navigateToPageFromTitle(pageTitle).content()}
+                {navigateToPageFromTitle().content()}
             </div>
         </div>
     </ProductsProvider>
