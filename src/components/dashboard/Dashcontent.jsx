@@ -13,7 +13,7 @@ export const Dashcontent = ()=>{
     const { currentPath, pathNavigation } = useContext(NavigationContext);
     const {showSidebar} = useContext(SidebarTogglerContext);
     const isClothesSection = ()=>{
-        if(currentPath !== "/sales" && currentPath !== "/addCategory" && currentPath !== "/addProd" && currentPath !== "/activityLog" && currentPath !== "/home" ){
+        if(currentPath !== "/sales" && currentPath !== "/addItems/addProd" && currentPath !== "/addItems/addCategory" && currentPath !== "/activityLog" && currentPath !== "/home" ){
             return true
         }
         else return false;
