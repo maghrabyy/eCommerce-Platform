@@ -4,12 +4,12 @@ import { useContext, useState } from 'react';
 import NavigationContext from '../../../context/NavigationContext';
 
 export const MainDashboard = ()=>{
-    const { navigate } = useContext(NavigationContext);
+    const { navigate, routes } = useContext(NavigationContext);
     return <div className="grid xl:grid-cols-2 gap-5 xl:px-14 py-2">
-        <DashboardItem onClick={()=>navigate('/sales')} icon={faChartLine} title={'Sales'}/>
-        <DashboardItem onClick={()=>navigate('/all')} icon={faShirt} title={'Products'}/>
-        <DashboardItem onClick={()=>navigate('/addProd')} icon={faCirclePlus} title={'Data Entry'}/>
-        <DashboardItem onClick={()=>navigate('/activityLog')} icon={faClipboardList} title={'Activity Log'}/>
+        <DashboardItem onClick={()=>navigate(routes.sales.path)} icon={faChartLine} title={'Sales'}/>
+        <DashboardItem onClick={()=>navigate(routes.products.categoriesRoutes.all.path)} icon={faShirt} title={'Products'}/>
+        <DashboardItem onClick={()=>navigate(routes.dataEntry.addProduct.path)} icon={faCirclePlus} title={'Data Entry'}/>
+        <DashboardItem onClick={()=>navigate(routes.activityLog.path)} icon={faClipboardList} title={'Activity Log'}/>
     </div>
 }
 

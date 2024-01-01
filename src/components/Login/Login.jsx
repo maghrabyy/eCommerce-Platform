@@ -4,12 +4,12 @@ import AuthContext from "../../context/AuthContext";
 import NavigationContext from "../../context/NavigationContext";
 
 export const Login = ({headerHeight})=>{
+    const {routes, navigate} = useContext(NavigationContext);
     const { loginUser } = useContext(AuthContext);
-    const { navigate } = useContext(NavigationContext);
     const loginHandler = event=>{
         event.preventDefault();
         loginUser();
-        navigate('/home')
+        navigate(routes.homePage.path);
     }
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');

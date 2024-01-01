@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import { NavigationProvider } from './context/NavigationContext';
 import { AuthProvider } from './context/AuthContext';
+import { SidebarTogglerProvider } from './context/SidebarTogglerContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthProvider>
-        <NavigationProvider>
-            <App />
-        </NavigationProvider>
+        <SidebarTogglerProvider>
+            <NavigationProvider>
+                <App />
+            </NavigationProvider>
+        </SidebarTogglerProvider>
     </AuthProvider>
 );
