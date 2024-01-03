@@ -1,15 +1,12 @@
 import { useState, useContext } from "react";
 import { CustomButton } from "../util/Button";
 import AuthContext from "../../context/AuthContext";
-import NavigationContext from "../../context/NavigationContext";
 
 export const Login = ({headerHeight})=>{
-    const {routes, navigate} = useContext(NavigationContext);
     const { loginUser } = useContext(AuthContext);
     const loginHandler = event=>{
         event.preventDefault();
         loginUser();
-        navigate(routes.homePage.path);
     }
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');

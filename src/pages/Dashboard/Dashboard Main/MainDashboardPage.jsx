@@ -1,15 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faShirt, faCirclePlus, faClipboardList} from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState } from 'react';
-import NavigationContext from '../../../context/NavigationContext';
+import NavigationsRoutesContext from '../../../context/NavigationRoutesContext';
+import { useNavigate } from 'react-router-dom';
 
 export const MainDashboard = ()=>{
-    const { navigate, routes } = useContext(NavigationContext);
+    const navigate = useNavigate();
+    const {  routes ,categoriesRoutes} = useContext(NavigationsRoutesContext);
     return <div className="grid xl:grid-cols-2 gap-5 xl:px-14 py-2">
-        <DashboardItem onClick={()=>navigate(routes.sales.path)} icon={faChartLine} title={'Sales'}/>
-        <DashboardItem onClick={()=>navigate(routes.products.categoriesRoutes.all.path)} icon={faShirt} title={'Products'}/>
-        <DashboardItem onClick={()=>navigate(routes.dataEntry.addProduct.path)} icon={faCirclePlus} title={'Data Entry'}/>
-        <DashboardItem onClick={()=>navigate(routes.activityLog.path)} icon={faClipboardList} title={'Activity Log'}/>
+        <DashboardItem onClick={()=>navigate(routes.sales)} icon={faChartLine} title={'Sales'}/>
+        <DashboardItem onClick={()=>navigate(categoriesRoutes.all)} icon={faShirt} title={'Products'}/>
+        <DashboardItem onClick={()=>navigate(routes.dataEntry.addProduct)} icon={faCirclePlus} title={'Data Entry'}/>
+        <DashboardItem onClick={()=>navigate(routes.activityLog)} icon={faClipboardList} title={'Activity Log'}/>
     </div>
 }
 

@@ -12,28 +12,30 @@ export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFil
     const customSortByHandler = (selected) =>{
         setSortBy(selected);
         const newSortValue = selected?.value;
-        if(newSortValue === 'priceHToL'){
-            setProductsList(prodsCatList.sort((a,b)=>b.prodPrice - a.prodPrice))
-        }else if(newSortValue === 'priceLToH'){
-            setProductsList(prodsCatList.sort((a,b)=>a.prodPrice - b.prodPrice))
-        }
-        else if(newSortValue === 'qtyHToL'){
-            setProductsList(prodsCatList.sort((a,b)=>b.totalProdQty - a.totalProdQty))
-        }else if(newSortValue === 'qtyLToH'){
-            setProductsList(prodsCatList.sort((a,b)=>a.totalProdQty - b.totalProdQty))
-        }
-        else if(newSortValue === 'salesHToL'){
-            setProductsList(prodsCatList.sort((a,b)=>b.sales - a.sales))
-        }else if(newSortValue === 'salesLToH'){
-            setProductsList(prodsCatList.sort((a,b)=>a.sales - b.sales))
-        }
-        else if(newSortValue === 'newToOld'){
-            setProductsList(prodsCatList.sort((a,b)=>b.creationDate - a.creationDate))
-            console.log('date from new to old')
-        }
-        else if(newSortValue === 'oldToNew'){
-            setProductsList(prodsCatList.sort((a,b)=>a.creationDate - b.creationDate))
-            console.log('date from old to new')
+        if(prodsCatList.length > 0){
+            if(newSortValue === 'priceHToL'){
+                setProductsList(prodsCatList.sort((a,b)=>b.prodPrice - a.prodPrice))
+            }else if(newSortValue === 'priceLToH'){
+                setProductsList(prodsCatList.sort((a,b)=>a.prodPrice - b.prodPrice))
+            }
+            else if(newSortValue === 'qtyHToL'){
+                setProductsList(prodsCatList.sort((a,b)=>b.totalProdQty - a.totalProdQty))
+            }else if(newSortValue === 'qtyLToH'){
+                setProductsList(prodsCatList.sort((a,b)=>a.totalProdQty - b.totalProdQty))
+            }
+            else if(newSortValue === 'salesHToL'){
+                setProductsList(prodsCatList.sort((a,b)=>b.sales - a.sales))
+            }else if(newSortValue === 'salesLToH'){
+                setProductsList(prodsCatList.sort((a,b)=>a.sales - b.sales))
+            }
+            else if(newSortValue === 'newToOld'){
+                setProductsList(prodsCatList.sort((a,b)=>b.creationDate - a.creationDate))
+                console.log('date from new to old')
+            }
+            else if(newSortValue === 'oldToNew'){
+                setProductsList(prodsCatList.sort((a,b)=>a.creationDate - b.creationDate))
+                console.log('date from old to new')
+            }
         }
     }
     const sortyByItems = [
@@ -65,13 +67,11 @@ export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFil
                 </div>
             </div>
             {
-                searchInpt.length > 0?
+                searchInpt.length > 0 &&
                     <div className="clear-searchFilter pt-2">
                         <span>{searchResultFilter.length} products found - </span>
                         <span onClick={()=>setSearchInpt('')} className=" cursor-pointer text-blue-900 hover:text-blue-600">Clear search result.</span>
                     </div>
-                :
-                    null
             }
         </div>
     );
