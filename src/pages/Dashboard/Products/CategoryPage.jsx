@@ -22,7 +22,7 @@ export const CategoriesPage = ()=>{
             <div className="font-semibold text-2xl px-6">{prodCat.title}</div>
         </Panel>
         );
-    return <DashboardContent className={'grid xl:grid-cols-3 gap-4 px-4'} title={'Categories'} icon={faShirt}>
+    return <DashboardContent className={'grid xl:grid-cols-3 gap-4 p-4'} title={'Categories'} icon={faShirt}>
         {renderedProductCategories}
     </DashboardContent>
 }

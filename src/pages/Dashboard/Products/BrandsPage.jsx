@@ -25,7 +25,7 @@ export const BrandsPage = ()=>{
             <div className="font-semibold text-4xl px-6">{prodBrand.title}</div>
         </Panel>
         );
-    return <DashboardContent className={'grid xl:grid-cols-3 gap-4 px-4'} title={'Brands'} icon={faShirt}>
+    return <DashboardContent className={'grid xl:grid-cols-3 gap-4 p-4'} title={'Brands'} icon={faShirt}>
         {renderedProductBrands}
     </DashboardContent>
 }
