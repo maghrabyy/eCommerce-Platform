@@ -37,6 +37,10 @@
   @apply border-2 border-gray-700 rounded-lg py-2 ps-3 appearance-none outline-none;
 }
 
+.inpt.center{
+  @apply ps-0 text-center;
+}
+
 .inpt-label{
   @apply text-gray-600 font-bold;
 }
