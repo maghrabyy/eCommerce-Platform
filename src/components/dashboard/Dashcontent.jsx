@@ -10,13 +10,13 @@ import SidebarTogglerContext from '../../context/SidebarTogglerContext';
 
 export const dashcontentRef = { current: null };
 
-export const DashboardContent = ({icon,title,showSearchInput,children})=>{
+export const DashboardContent = ({icon,title,showSearchInput,className,children})=>{
     const {showSidebar} = useContext(SidebarTogglerContext);
     const {routes} = useContext(NavigationsRoutesContext);
     const isHomeage = useLocation().pathname === routes.homePage;
     return (
     <ProductsProvider>
-        <div ref={dashcontentRef} className="dashboard-content col-span-12 xl:col-span-10 px-4 bg-white overflow-scroll">
+        <div ref={dashcontentRef} className={`dashboard-content col-span-12 xl:col-span-10 px-4 bg-white overflow-scroll`}>
                 <div className="main-header py-4">
                     <div className="flex justify-between items-center border-b-2 py-5 border-b-gray-600">
                         <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">
@@ -27,7 +27,9 @@ export const DashboardContent = ({icon,title,showSearchInput,children})=>{
                         <FontAwesomeIcon onClick={showSidebar} className='text-gray-700 text-2xl cursor-pointer xl:hidden hover:text-slate-600' icon={faBars} />
                     </div> 
                 </div>
-                {children}
+                <div className={className}>
+                    {children}
+                </div>
         </div>
     </ProductsProvider>
     );
