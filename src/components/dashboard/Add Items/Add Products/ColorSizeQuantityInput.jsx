@@ -64,7 +64,7 @@ export const ColorSizeQuantityInput = ({submitColorCallbk,darkBg})=>{
                         <input type="number" className='inpt w-12' max="99" value={xxlQty} onChange={e=>setXXLQty(e.target.value)} />
                     </div>
                 </div>
-                <div className="imgs self-center">
+                <div className="imgs flex xl:flex-col xl:items-start gap-2 items-center">
                     <label className={`${darkBg? 'inpt-label-dark' :'inpt-label'} me-2`}>Product Images</label>
                     <input onChange={e=>setImageList(e.target.files)} className={`${darkBg? 'text-white' :null}`} type="file" multiple accept='image/*'/>
                 </div>

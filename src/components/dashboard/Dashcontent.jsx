@@ -21,8 +21,9 @@ export const DashboardContent = ({icon,title,showSearchInput,children})=>{
                     <div className="flex justify-between items-center border-b-2 py-5 border-b-gray-600">
                         <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">
                             {isHomeage? <MdDashboard/> : <FontAwesomeIcon className='me-2' icon={icon} />}
-                            {title}</span>
-                        <div className='w-full px-6 xl:basis-1/2'>{showSearchInput && <ProductSearch />}</div> 
+                            {title}
+                        </span>
+                        <div className='px-6 xl:basis-1/2'>{showSearchInput && <ProductSearch />}</div> 
                         <FontAwesomeIcon onClick={showSidebar} className='text-gray-700 text-2xl cursor-pointer xl:hidden hover:text-slate-600' icon={faBars} />
                     </div> 
                 </div>
