@@ -29,7 +29,7 @@
 }
 
 .sidebar-btn.active{
-  @apply border-l-2 border-l-slate-700 hover:border-l-0 font-semibold;
+  @apply border-l-4 border-l-slate-700 hover:border-l-0 font-semibold;
 }
 
 
