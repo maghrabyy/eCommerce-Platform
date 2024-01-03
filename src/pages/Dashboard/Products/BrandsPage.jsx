@@ -21,9 +21,7 @@ export const BrandsPage = ()=>{
         {path:'hollister',title:"Hollister",img:hollisterLogo}
       ]
       const renderedProductBrands = productBrands.map(prodBrand =>
-        <Panel onClick={()=>navigate(prodBrand.path)} topImg={prodBrand.img}>
-            <div className="font-semibold text-4xl px-6">{prodBrand.title}</div>
-        </Panel>
+        <Panel onClick={()=>navigate(prodBrand.path)} topImg={prodBrand.img}  height={'200px'}/>
         );
     return <DashboardContent className={'grid xl:grid-cols-3 gap-4 p-4'} title={'Brands'} icon={faShirt}>
         {renderedProductBrands}

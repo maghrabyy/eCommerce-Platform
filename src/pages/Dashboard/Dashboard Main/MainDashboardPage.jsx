@@ -17,7 +17,7 @@ export const MainDashboard = ()=>{
 }
 
 const DashboardItem = ({icon,title,onClick})=>{
-    return <Panel onClick={onClick}>
+    return <Panel onClick={onClick} animation>
             <FontAwesomeIcon className='text-9xl' icon={icon}/>
             <div className="title text-5xl">{title}</div>
     </Panel>}
