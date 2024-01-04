@@ -71,12 +71,12 @@ export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
                         </div>
                         <div className="prod-action flex gap-2 self-center pt-2">
                             <div className="sell-refund-action flex flex-col gap-2">
-                                <CustomButton onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faCashRegister}/><span>Sell product</span></CustomButton>
-                                <CustomButton onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'} onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faCashRegister}/><span>Sell product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'} onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
                             </div>
                             <div className="edit-delete-action flex flex-col gap-2">
-                                <CustomButton align={'start'} onClick={()=>navigate('edit-product')}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
-                                <CustomButton align={'start'} onClick={()=>{}}><FontAwesomeIcon className='me-2' icon={faTrash}/><span>Delete product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'}  align={'start'} onClick={()=>navigate('edit-product')}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'} align={'start'} onClick={()=>{}}><FontAwesomeIcon className='me-2' icon={faTrash}/><span>Delete product</span></CustomButton>
                             </div>
                         </div>
                     </div>
