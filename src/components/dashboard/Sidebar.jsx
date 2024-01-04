@@ -37,28 +37,28 @@ export const Sidebar = () =>{
                         <PageLink pageTitle={'Sales'} pagePath={routes.sales} icon={faChartLine}/>
                         <li>
                             <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
-                                {path:categoriesRoutes.all ,title: 'All'},
-                                {path:categoriesRoutes.hoodiesNSweatshirt, title: 'Hoodies and Sweatshirts'},
-                                {path:categoriesRoutes.coatsNJackets, title: 'Coats and Jackets'},
-                                {path:categoriesRoutes.denims, title: 'Denims'},
-                                {path:categoriesRoutes.trousers, title: 'Trousers'},
+                                {path:'products/categories/' + categoriesRoutes.all ,title: 'All'},
+                                {path:'products/categories/' + categoriesRoutes.hoodiesNSweatshirt, title: 'Hoodies and Sweatshirts'},
+                                {path:'products/categories/' + categoriesRoutes.coatsNJackets, title: 'Coats and Jackets'},
+                                {path:'products/categories/' + categoriesRoutes.denims, title: 'Denims'},
+                                {path:'products/categories/' + categoriesRoutes.trousers, title: 'Trousers'},
                                 {subMenu: true}
                                 ]} > 
                                     <ExpandableMenu title='Brands'  menuList={[
-                                        {path:brandsRoutes.pullNBear, title: 'Pull & Bear'},
-                                        {path:brandsRoutes.bershka, title: 'Bershka'},
-                                        {path:brandsRoutes.americanEagle, title: 'American Eagle'},
-                                        {path:brandsRoutes.zara, title: 'Zara'},
-                                        {path:brandsRoutes.defacto, title: 'Defacto'},
-                                        {path:brandsRoutes.hollister, title: 'Hollister'},
+                                        {path:'products/brands/' + brandsRoutes.pullNBear, title: 'Pull & Bear'},
+                                        {path:'products/brands/' + brandsRoutes.bershka, title: 'Bershka'},
+                                        {path:'products/brands/' + brandsRoutes.americanEagle, title: 'American Eagle'},
+                                        {path:'products/brands/' + brandsRoutes.zara, title: 'Zara'},
+                                        {path:'products/brands/' + brandsRoutes.defacto, title: 'Defacto'},
+                                        {path:'products/brands/' + brandsRoutes.hollister, title: 'Hollister'},
                                     ]} /> 
                             </ExpandableMenu>
                         </li>
                         <li>
                             <ExpandableMenu title='Add Item' menuIcon={faCirclePlus}
                                 menuList={[
-                                    {path:routes.dataEntry.addProduct, title: 'Add Product'},
-                                    {path:routes.dataEntry.addCategory, title: 'Add Category'}
+                                    {path: 'dataEntry/' + routes.dataEntry.addProduct, title: 'Add Product'},
+                                    {path: 'dataEntry/' + routes.dataEntry.addCategory, title: 'Add Category'}
                                 ]}
                             />
                         </li>

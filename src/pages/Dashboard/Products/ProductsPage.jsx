@@ -1,7 +1,5 @@
 import { useContext } from 'react';
 import './products.css';
-import { DialogMenu } from '../../../components/util/Dialog';
-import { ExpandedProductItem }from '../../../components/dashboard/Products/ProductsPageComps/ExpandedProductItem';
 import SearchInptContext from '../../../context/SearchInputContext';
 import ProductsContext from '../../../context/ProductsContext';
 import { ProductsList } from '../../../components/dashboard/Products/ProductsPageComps/ProductsList'
@@ -10,8 +8,8 @@ import { ProductsHeader } from '../../../components/dashboard/Products/ProductsP
 export const ProductsPage = ({catTitle,brandTitle}) =>{
     const [searchInpt] = useContext(SearchInptContext)
     const {productsList} = useContext(ProductsContext);
-    const {showExpandedItem,setShowExpandedItem} = useContext(ProductsContext);
-    const prodCategoryList = productsList.filter((prodItem)=> (prodItem.prodCat.text === catTitle || prodItem.prodBrand.text === brandTitle) ||  catTitle === 'All');
+    console.log(catTitle?.title,brandTitle?.title)
+    const prodCategoryList = productsList.filter((prodItem)=> (prodItem.prodCat.text === catTitle?.title || prodItem.prodBrand.text === brandTitle?.title) ||  catTitle?.title === 'All');
     const searchResultFilter = prodCategoryList.filter(prod=> 
                                 prod.prodBrand.text.toUpperCase().includes(searchInpt.toUpperCase()) ||
                                 prod.prodTitle.toUpperCase().includes(searchInpt.toUpperCase()) ||
@@ -22,9 +20,6 @@ export const ProductsPage = ({catTitle,brandTitle}) =>{
             <ProductsList 
                 prodsList={prodCategoryList} 
                 searchResultFilter={searchResultFilter}/>
-            <DialogMenu showDialog={showExpandedItem} setShowDialog={setShowExpandedItem} >
-                <ExpandedProductItem/>
-            </DialogMenu>
         </div>
     );
 }

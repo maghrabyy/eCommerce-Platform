@@ -5,27 +5,27 @@ const NavigationsRoutesContext = createContext();
 
 export const NavigationRoutesProvider = ({children})=>{
     const categoriesRoutes = {
-        all:'products/categories/all',
-        hoodiesNSweatshirt:'products/categories/hoodiesNSweatshirt',
-        coatsNJackets:'products/categories/coatsNJackets',
-        denims:'products/categories/denims',
-        trousers:'products/categories/trousers',
+        all:'all',
+        hoodiesNSweatshirt:'hoodiesNSweatshirt',
+        coatsNJackets:'coatsNJackets',
+        denims:'denims',
+        trousers:'trousers',
     }
     const brandsRoutes = {
-        pullNBear:'products/brands/pullNBear',
-        bershka:'products/brands/bershka',
-        americanEagle:'/products/brands/americanEagle',
-        zara:'products/brands/zara',
-        defacto:'products/brands/defacto',
-        hollister:'products/brands/hollister',
+        pullNBear:'pullNBear',
+        bershka:'bershka',
+        americanEagle:'americanEagle',
+        zara:'zara',
+        defacto:'defacto',
+        hollister:'hollister',
     }
     const routes = {
         homePage:'/',
         sales:'sales',
         products:{categoriesRoutes,brandsRoutes},
         dataEntry:{
-            addCategory:'dataEntry/addCategory',
-            addProduct: 'dataEntry/addProd',
+            addCategory:'addCategory',
+            addProduct: 'addProd',
         },
         activityLog: 'activityLog',
     }

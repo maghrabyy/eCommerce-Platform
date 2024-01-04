@@ -7,6 +7,7 @@ import NavigationsRoutesContext from '../../context/NavigationRoutesContext';
 import { useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import SidebarTogglerContext from '../../context/SidebarTogglerContext';
+import { useOutlet } from 'react-router-dom';
 
 export const dashcontentRef = { current: null };
 
@@ -14,6 +15,7 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
     const {showSidebar} = useContext(SidebarTogglerContext);
     const {routes} = useContext(NavigationsRoutesContext);
     const isHomeage = useLocation().pathname === routes.homePage;
+    const outlet = useOutlet();
     return (
     <ProductsProvider>
         <div ref={dashcontentRef} className={`dashboard-content col-span-12 xl:col-span-10 px-4 bg-white overflow-scroll`}>
@@ -23,12 +25,12 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
                             {isHomeage? <MdDashboard/> : <FontAwesomeIcon className='me-2' icon={icon} />}
                             {title}
                         </span>
-                        <div className='px-6 xl:basis-1/2'>{showSearchInput && <ProductSearch />}</div> 
+                        <div className='px-6 xl:basis-1/2 hidden md:block'>{showSearchInput && <ProductSearch />}</div> 
                         <FontAwesomeIcon onClick={showSidebar} className='text-gray-700 text-2xl cursor-pointer xl:hidden hover:text-slate-600' icon={faBars} />
                     </div> 
                 </div>
                 <div className={className}>
-                    {children}
+                    {outlet || children}
                 </div>
         </div>
     </ProductsProvider>

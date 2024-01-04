@@ -17,6 +17,8 @@ import { BrandsCategoryPage } from './pages/Dashboard/Products/BrandsCategoryPag
 import { BrandsPage } from './pages/Dashboard/Products/BrandsPage';
 import { CategoriesPage } from './pages/Dashboard/Products/CategoryPage';
 import { ProductsPage } from "./pages/Dashboard/Products/ProductsPage";
+import { ProductDetails } from './pages/Dashboard/Products/ProductDetails';
+import { ExpandedProductEdit } from './components/dashboard/Products/ProductsPageComps/ExpandedProductItem';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { LoginPage } from './pages/Auth/LoginPage';
 import { PageNotFound } from './pages/PageNotFound';
@@ -32,10 +34,15 @@ function App() {
     {path:categoriesRoutes.trousers,title:"Trousers"}
   ]
   const renderedCategoryRoutes = productCategories.map(category =>
-    <Route path={category.path} element={
+    <Route key={category.path} path={category.path} element={
       <DashboardContent title='Clothes' icon={faShirt} showSearchInput>
-        <ProductsPage catTitle={category.title}/>
-      </DashboardContent>} />
+        <ProductsPage catTitle={category}/>
+      </DashboardContent>} >
+        <Route path=':prod'
+          element={<ProductDetails catTitle={category}/>}>
+            <Route path='edit-product' element={<ExpandedProductEdit />} />
+        </Route>
+      </Route>
     );
     const productBrands = [
       {path:brandsRoutes.pullNBear,title:"Pull & Bear"},
@@ -46,10 +53,15 @@ function App() {
       {path:brandsRoutes.hollister,title:"Hollister"}
     ]
     const renderedBrandRoutes = productBrands.map(brand =>
-      <Route path={brand.path} element={
+      <Route key={brand.path} path={brand.path} element={
         <DashboardContent title='Clothes' icon={faShirt} showSearchInput>
-          <ProductsPage brandTitle={brand.title}/>
-        </DashboardContent>} />
+          <ProductsPage brandTitle={brand}/>
+          </DashboardContent>} >
+        <Route path=':prod'
+          element={<ProductDetails brandTitle={brand}/>}>
+            <Route path='edit-product' element={<ExpandedProductEdit/>} />
+        </Route>
+      </Route>
       );
   const router = createBrowserRouter(createRoutesFromElements(
       <Route path={routes.homePage} element={authUser? <Dashboard /> : <LoginPage/>} >
@@ -61,20 +73,24 @@ function App() {
           <DashboardContent title='Sales' icon={faChartLine}>
             <SalesPage/>
           </DashboardContent>} />
-        <Route path='products' element={ <BrandsCategoryPage/>} />
-        <Route path='products/brands' element={<BrandsPage/>} / >
-        <Route path='products/categories' element={<CategoriesPage/>} / >
-        {renderedCategoryRoutes}
-        {renderedBrandRoutes}
-        <Route path='dataEntry' element={<DataEntryPage/>} / >
-        <Route path={routes.dataEntry.addProduct} element={
-            <DashboardContent title='Add Product' icon={faCirclePlus}>
-              <AddProductPage/>
+        <Route path='products' element={ <BrandsCategoryPage/>} >
+          <Route path='brands' element={<BrandsPage/>}  >
+            {renderedBrandRoutes}
+          </Route>
+          <Route path='categories' element={<CategoriesPage/>} >
+            {renderedCategoryRoutes}
+          </Route>
+        </Route>
+        <Route path='dataEntry' element={<DataEntryPage/>}  >
+          <Route path={routes.dataEntry.addProduct} element={
+              <DashboardContent title='Add Product' icon={faCirclePlus}>
+                <AddProductPage/>
+              </DashboardContent>} />
+          <Route path={routes.dataEntry.addCategory} element={
+            <DashboardContent title='Add Category' icon={faCirclePlus}>
+              <AddCategoryPage/>
             </DashboardContent>} />
-        <Route path={routes.dataEntry.addCategory} element={
-          <DashboardContent title='Add Category' icon={faCirclePlus}>
-            <AddCategoryPage/>
-          </DashboardContent>} />
+        </Route>
         <Route path={routes.activityLog} element={
           <DashboardContent title='ActivityLog' icon={faClipboardList}>
             <ActivityLogPage/>

@@ -3,8 +3,10 @@ import { CustomButton } from '../../../util/Button';
 import { ColorSizeQuantityInput } from './ColorSizeQuantityInput';
 import { ColorSizeQtyList } from './ColorSizeQtyList';
 import { CustomDropdown } from '../../../util/Dropdown';
+import { useNavigate } from 'react-router-dom';
 
-export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditingState})=>{
+export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditing})=>{
+    const navigate = useNavigate();
     const [prodTitle, setProdTitle] = useState(prodTitleState);
     const [prodDesc,setProdDesc] = useState(prodDescState)
     const [prodPrice,setProdPrice] = useState(prodPriceState);
@@ -22,24 +24,24 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
         setProdColorSizeQList(colorSizeQtyList.filter(i=> i.id !== id))
     }  
     return(
-    <div className={`addProd-form flex flex-col gap-2 ${isEditingState.isEditing? 'px-6 pb-4' : null}`}>
-        <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product title</label>
+    <div className={`addProd-form flex flex-col gap-2`}>
+        <label className='inpt-label'>Product title</label>
         <input type="text" value={prodTitle} onChange={e=>setProdTitle(e.target.value)} placeholder="Enter the product title." className="inpt" />
-        <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Description</label>
+        <label className='inpt-label'>Product Description</label>
         <input type="text" value={prodDesc} onChange={e=>setProdDesc(e.target.value)} placeholder="Enter the product description." className="inpt" />
         <div className="price-cost flex flex-col xl:flex-row gap-2">
             <div className='prodPrice flex flex-col flex-grow'>
-                <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Price</label>
+                <label className='inpt-label'>Product Price</label>
                 <input type="number" value={prodPrice} onChange={e=>setProdPrice(e.target.value)} placeholder="Enter the product price." className="inpt" />
             </div>
             <div className='prodCost flex flex-col flex-grow'>
-                <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Cost</label>
+                <label className='inpt-label'>Product Cost</label>
                 <input type="number" value={prodCost} onChange={e=>setProdCost(e.target.value)} placeholder="Enter the product cost." className="inpt" />
             </div>
         </div>
         <div className='dropdowns flex flex-col md:flex-row gap-4'>
             <div className="category-dropdown">
-                <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Category</label>
+                <label className='inpt-label'>Product Category</label>
                 <CustomDropdown title='Select Category' value={prodCat} onChange={setProdCat} width={240}
                 options={[
                     { value:'hoodiesNSweatshirts', text:'Hoodies and Sweatshirts'},
@@ -48,7 +50,7 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
                     { value:'trousers',text:'Trousers'},]}/>
             </div>
             <div className="brand-dropdown">
-                <label className={isEditingState.isEditing? 'inpt-label-dark' :'inpt-label'}>Product Brand</label>
+                <label className='inpt-label'>Product Brand</label>
                 <CustomDropdown title='Select Brand' value={prodBrand} onChange={setProdBrand} width={180}
                     options={[
                         { value:'pullNBear', text:'Pull & Bear'},
@@ -60,7 +62,7 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
             </div>
 
         </div>
-        <ColorSizeQuantityInput submitColorCallbk={submitColorCallbkHandler} darkBg={isEditingState.isEditing}/>
+        <ColorSizeQuantityInput submitColorCallbk={submitColorCallbkHandler} />
         {prodColorSizeQList.map(item=>
             <ColorSizeQtyList key={item.id} 
             id={item.id}
@@ -74,14 +76,13 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
             inputtedXXL={item.xxlQty}
             deleteColorSizeQtyCallbk={()=>deleteColorCallbkHandler(item.id)}
             modifyColorSizeQtyCallbk={   modifiedList =>
-                setProdColorSizeQList(modifiedList)}
-            darkBg={isEditingState.isEditing} />
+                setProdColorSizeQList(modifiedList)} />
         ).reverse()}
         {
-            isEditingState.isEditing? 
+            isEditing? 
             <div className="flex justify-end gap-2">
-                <CustomButton onClick={()=>isEditingState.setIsEditing(false)}>Save</CustomButton>
-                <CustomButton onClick={()=>isEditingState.setIsEditing(false)}>Cancel</CustomButton>
+                <CustomButton onClick={()=>navigate(-1)}>Save</CustomButton>
+                <CustomButton onClick={()=>navigate(-1)}>Cancel</CustomButton>
             </div>
             :
             <CustomButton onClick={()=>{}}>Add Product</CustomButton>
@@ -99,5 +100,5 @@ AddProductForum.defaultProps = {
     prodCatState:'none',
     prodBrandState:'none',
     prodColorSizeQListState:[],
-    isEditingState:{}
+    isEditing:false
 }

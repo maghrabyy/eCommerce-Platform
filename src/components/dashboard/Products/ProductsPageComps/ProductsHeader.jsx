@@ -2,8 +2,8 @@ import { CustomDropdown } from '../../../util/Dropdown';
 import { useState, useContext } from 'react';
 import  SearchInptContext  from "../../../../context/SearchInputContext";
 import ProductsContext from "../../../../context/ProductsContext";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { ProductSearch } from '../../Products/ProductSearch';
+import { ProductsNavs } from './ProductNavs';
 
 export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFilter})=>{
     const [sortBy,setSortBy] = useState(null);
@@ -49,13 +49,13 @@ export const ProductsHeader = ({brandTitle,catTitle,prodsCatList,searchResultFil
         { value:'qtyLToH', text:'Quantity - Low to High'},
     ]
     return(
-        <div className="productsHeader">
+        <div className="productsHeader flex flex-col">
+            <div className="py-2 md:hidden">
+                <ProductSearch />
+            </div>
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 
                 <div className="flex flex-col md:flex-row md:items-center">
-                    <span className='category font-bold text-gray-800 text-lg flex items-center gap-1'>
-                        {brandTitle? `Brand` : `Category` } 
-                            <FontAwesomeIcon className='text-xs' icon={faAngleRight}/> 
-                            {brandTitle || catTitle} </span> 
+                    <ProductsNavs catTitle={catTitle} brandTitle={brandTitle} />
                     <span> - {prodsCatList.length} out of {prodsCatList.length} </span>
                 </div>
                 <div className="sortby-dropdown self-end">
