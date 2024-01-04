@@ -8,7 +8,6 @@ export const ProductsHeader = ({brandTitle,catTitle,initialprodsList,searchResul
     const [sortBy,setSortBy] = useState(null);
     const [searchInpt,setSearchInpt] = useContext(SearchInptContext)
     useEffect(()=>{
-        console.log(sortBy);
         if(prodsList.length > 0){
             if(sortBy === null){
                 setProdsList([...initialprodsList])

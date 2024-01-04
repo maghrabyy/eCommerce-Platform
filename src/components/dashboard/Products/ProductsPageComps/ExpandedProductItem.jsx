@@ -107,8 +107,8 @@ export const ExpandedProductEdit = ()=>{
                 prodDescState={productItemData.prodDesc}
                 prodPriceState={productItemData.prodPrice}
                 prodCostState={productItemData.prodCost}
-                prodCatState={productItemData.prodCat.value}
-                prodBrandState={productItemData.prodBrand.value}
+                prodCatState={productItemData.prodCat}
+                prodBrandState={productItemData.prodBrand}
                 prodColorSizeQListState={[...productItemData.prodColorQtyList]}
                 isEditing
              />
