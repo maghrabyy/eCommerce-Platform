@@ -1,5 +1,5 @@
 import './App.css';
-import {faChartLine, faShirt, faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import {faChartLine, faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
@@ -34,10 +34,7 @@ function App() {
     {path:categoriesRoutes.trousers,title:"Trousers"}
   ]
   const renderedCategoryRoutes = productCategories.map(category =>
-    <Route key={category.path} path={category.path} element={
-      <DashboardContent title='Clothes' icon={faShirt} showSearchInput>
-        <ProductsPage catTitle={category}/>
-      </DashboardContent>} >
+    <Route key={category.path} path={category.path} element={<ProductsPage catTitle={category}/>} >
         <Route path=':prod'
           element={<ProductDetails catTitle={category}/>}>
             <Route path='edit-product' element={<ExpandedProductEdit />} />
@@ -53,10 +50,7 @@ function App() {
       {path:brandsRoutes.hollister,title:"Hollister"}
     ]
     const renderedBrandRoutes = productBrands.map(brand =>
-      <Route key={brand.path} path={brand.path} element={
-        <DashboardContent title='Clothes' icon={faShirt} showSearchInput>
-          <ProductsPage brandTitle={brand}/>
-          </DashboardContent>} >
+      <Route key={brand.path} path={brand.path} element={<ProductsPage brandTitle={brand}/>} >
         <Route path=':prod'
           element={<ProductDetails brandTitle={brand}/>}>
             <Route path='edit-product' element={<ExpandedProductEdit />} />
@@ -65,7 +59,7 @@ function App() {
       );
   const router = createBrowserRouter(createRoutesFromElements(
       <Route path={routes.homePage} element={authUser? <Dashboard /> : <LoginPage/>} >
-        <Route path={routes.homePage} element={
+        <Route index element={
           <DashboardContent title='Dashboard' >
             <MainDashboard/>
           </DashboardContent>} />
@@ -74,6 +68,9 @@ function App() {
             <SalesPage/>
           </DashboardContent>} />
         <Route path='products' element={ <BrandsCategoryPage/>} >
+          <Route path=':prod' element={ <ProductDetails /> }>
+              <Route path='edit-product' element={<ExpandedProductEdit />} />
+          </Route>
           <Route path='brands' element={<BrandsPage/>}  >
             {renderedBrandRoutes}
           </Route>

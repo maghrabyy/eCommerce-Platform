@@ -2,18 +2,18 @@ import { ProductItem } from "../ProductItem";
 import emptyBox from '../../../../assets/emptyBox.svg'
 import { useContext } from 'react';
 import SearchInptContext from "../../../../context/SearchInputContext";
-import ProductsContext from "../../../../context/ProductsContext";
+import { useNavigate } from "react-router-dom";
 
 export const ProductsList = ({prodsList,searchResultFilter})=>{
     const [searchInpt] = useContext(SearchInptContext);
-    const {onProductSelect}= useContext(ProductsContext);
+    const navigate = useNavigate();
     return (
         <div className="ProductsList">
             {prodsList.length > 0?
                 <div className="list-items grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 py-6">
                     {
                     (searchInpt.length > 0? searchResultFilter : prodsList).map((prod)=> <ProductItem key={prod.prodId} 
-                    onClick={()=>onProductSelect(prod.prodId)} 
+                    onClick={()=>navigate(prod.prodId)} 
                     inStock={prod.totalProdQty > 0 ? true : false} 
                     productImg={prod.prodColorQtyList[0].prodColorImgs.mainImg.src} 
                     productTitle={`${prod.prodBrand.text} - ${prod.prodTitle}`} 

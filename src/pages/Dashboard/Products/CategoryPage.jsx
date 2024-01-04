@@ -1,12 +1,11 @@
-import { DashboardContent } from "../../../components/dashboard/Dashcontent"
 import { Panel } from "../../../components/util/Panel"
-import { faShirt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useOutlet } from "react-router-dom";
 import hoodiesImg from '../../../assets/hoodies.png';
 import jacketsImg from '../../../assets/jackets.png';
 import denimsImg from '../../../assets/denims.png';
 import trousersImg from '../../../assets/trousers.png';
 import clothesImg from '../../../assets/clothes.png';
+import { ProductsNavs } from "../../../components/dashboard/Products/ProductsPageComps/ProductNavs";
 
 export const CategoriesPage = ()=>{
     const navigate = useNavigate();
@@ -23,7 +22,11 @@ export const CategoriesPage = ()=>{
             <div className="font-semibold text-2xl px-6">{prodCat.title}</div>
         </Panel>
         );
-    return outlet || <DashboardContent className={'grid xl:grid-cols-3 gap-4 p-4'} title={'Categories'} icon={faShirt}>
-        {renderedProductCategories}
-    </DashboardContent>
+    return outlet || 
+    <div className="categories-page">
+        <ProductsNavs  />
+        <div className="grid xl:grid-cols-3 gap-4 pt-2 p-4'">
+            {renderedProductCategories}
+        </div>
+    </div>
 }
