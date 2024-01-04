@@ -6,6 +6,7 @@ import { ProductsList } from '../../../components/dashboard/Products/ProductsPag
 import ProductsContext from "../../../context/ProductsContext";
 import { useContext } from "react";
 import SearchInptContext from "../../../context/SearchInputContext";
+import { ProductSearch } from "../../../components/dashboard/Products/ProductSearch";
 
 export const BrandsCategoryPage = ()=>{
    const navigate = useNavigate();
@@ -29,6 +30,9 @@ export const BrandsCategoryPage = ()=>{
                         <div className="font-semibold text-2xl w-32" >Brands</div>
                 </Panel>
         </div>
+        <div className="pt-2 md:hidden">
+                <ProductSearch />
+            </div>
         {
                 searchInpt.length > 0 &&
                     <div className="clear-searchFilter pt-2">
