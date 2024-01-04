@@ -59,7 +59,7 @@ function App() {
           </DashboardContent>} >
         <Route path=':prod'
           element={<ProductDetails brandTitle={brand}/>}>
-            <Route path='edit-product' element={<ExpandedProductEdit/>} />
+            <Route path='edit-product' element={<ExpandedProductEdit />} />
         </Route>
       </Route>
       );

@@ -8,7 +8,6 @@ import { ProductsHeader } from '../../../components/dashboard/Products/ProductsP
 export const ProductsPage = ({catTitle,brandTitle}) =>{
     const [searchInpt] = useContext(SearchInptContext)
     const {productsList} = useContext(ProductsContext);
-    console.log(catTitle?.title,brandTitle?.title)
     const prodCategoryList = productsList.filter((prodItem)=> (prodItem.prodCat.text === catTitle?.title || prodItem.prodBrand.text === brandTitle?.title) ||  catTitle?.title === 'All');
     const searchResultFilter = prodCategoryList.filter(prod=> 
                                 prod.prodBrand.text.toUpperCase().includes(searchInpt.toUpperCase()) ||
