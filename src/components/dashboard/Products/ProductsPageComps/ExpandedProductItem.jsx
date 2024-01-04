@@ -57,7 +57,7 @@ export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
                             {productItemData.prodBrand.text} - {productItemData.prodTitle}
                         </div>
                         <div className={`prodPrice ${lightBg? 'text-slate-800' :'text-white'} font-bold text-2xl`}>{productItemData.prodPrice} EGP</div>
-                        <div className={`prodDesc ${lightBg? 'text-slate-800' :'text-white'} text-lg`}>
+                        <div className={`prodDesc ${lightBg? 'text-slate-800' :'text-white'} font-semibold`}>
                             {productItemData.prodDesc}
                         </div>
                         <div className={`prodCat ${lightBg? 'text-slate-800' :'text-white'} font-semibold`}>Category: {productItemData.prodCat.text}</div>
