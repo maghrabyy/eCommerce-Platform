@@ -8,7 +8,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
 
-export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
+export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
     const [showProdQtyList,setShowProdQtyList] = useState(false);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
@@ -31,8 +31,8 @@ export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
     }
     return productItemData? <div className="expanded-product-details">
         <ProductsNavs
-         catTitle={catTitle}
-         brandTitle={brandTitle}
+         category={category}
+         brand={brand}
          productTitle={productItemData.prodTitle}/>
                 <div className="product-imgNDetails grid xl:grid-cols-2 xl:px-2 pt-4">
                     {productItemData.prodColorQtyList.length > 0?                

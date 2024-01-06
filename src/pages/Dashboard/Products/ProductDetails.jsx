@@ -2,15 +2,15 @@ import { ExpandedProductItem } from "../../../components/dashboard/Products/Prod
 import { useOutlet, useParams, Outlet } from "react-router-dom"
 
 
-export const ProductDetails = ({catTitle,brandTitle})=>{
+export const ProductDetails = ({category,brand})=>{
     const { prod } = useParams();
     const outlet = useOutlet();
     return <div>
         {outlet? <Outlet context={{prod}}/>
          : 
          <ExpandedProductItem 
-            catTitle={catTitle} 
-            brandTitle={brandTitle} 
+            category={category} 
+            brand={brand} 
             prodId={prod} lightBg/>}
     </div>
     

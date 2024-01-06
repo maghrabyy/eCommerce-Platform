@@ -36,7 +36,7 @@ function App() {
   const renderedCategoryRoutes = productCategories.map(category =>
     <Route key={category.path} path={category.path} element={<ProductsPage category={category}/>} >
         <Route path=':prod'
-          element={<ProductDetails catTitle={category}/>}>
+          element={<ProductDetails category={category}/>}>
             <Route path='edit-product' element={<ExpandedProductEdit />} />
         </Route>
       </Route>
@@ -52,7 +52,7 @@ function App() {
     const renderedBrandRoutes = productBrands.map(brand =>
       <Route key={brand.path} path={brand.path} element={<ProductsPage brand={brand}/>} >
         <Route path=':prod'
-          element={<ProductDetails brandTitle={brand}/>}>
+          element={<ProductDetails brand={brand}/>}>
             <Route path='edit-product' element={<ExpandedProductEdit />} />
         </Route>
       </Route>
