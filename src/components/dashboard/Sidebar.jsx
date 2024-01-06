@@ -21,7 +21,7 @@ export const Sidebar = () =>{
     }
     const logoutHandler = ()=>{
         logoutUser();
-        navigate(routes.homePage);
+        navigateToHomepage();
     }
     return (
         <div className={`dashboard-sidebar xl:static fixed top-0 z-50 xl:z-0 w-72 xl:w-auto h-full ${showToggledSidebar?'translate-x-0':'translate-x-[-120%] xl:translate-x-0'} duration-300 ease-in bg-white col-span-2 px-2 overflow-scroll select-none`}>
