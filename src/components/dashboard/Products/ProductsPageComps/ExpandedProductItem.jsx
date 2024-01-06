@@ -6,6 +6,7 @@ import { CustomButton } from '../../../util/Button';
 import { AddProductForum } from '../../Add Items/Add Products/AddProductForm';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
+import { ProductNotFound } from './ProductNotFoundError';
 
 export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
     const onImgClickHandler = index =>{
         setSelectedImgIndex(index);
     }
-    return productItemData && <div className="expanded-product-details">
+    return productItemData? <div className="expanded-product-details">
         <ProductsNavs
          catTitle={catTitle}
          brandTitle={brandTitle}
@@ -87,9 +88,9 @@ export const ExpandedProductItem = ({prodId, catTitle,brandTitle, lightBg})=>{
                         {productItemData.prodColorQtyList.map((colorQty,index)=> <ProdColorQty key={index} lightBg color={colorQty.prodColor} xsQty={colorQty.xsQty} sQty={colorQty.sQty} mQty={colorQty.mQty} lQty={colorQty.lQty} xlQty={colorQty.xlQty} xxlQty={colorQty.xxlQty}/>)}
                     </div>
                 </div>
-
         </div>
-
+    :
+    <ProductNotFound/>
 }
 
 export const ExpandedProductEdit = ()=>{
@@ -100,7 +101,7 @@ export const ExpandedProductEdit = ()=>{
         const prodIndex = productsList.map(prod=>prod.prodId).indexOf(prod);
         setProductItemData( productsList[prodIndex]);
     },[prod,productsList]);
-    return productItemData && 
+    return productItemData ?
          <div className='expanded-product-edit'>
              <AddProductForum
                 prodTitleState={productItemData.prodTitle}
@@ -110,9 +111,10 @@ export const ExpandedProductEdit = ()=>{
                 prodCatState={productItemData.prodCat}
                 prodBrandState={productItemData.prodBrand}
                 prodColorSizeQListState={[...productItemData.prodColorQtyList]}
-                isEditing
-             />
+                isEditing/>
         </div>
+        :
+        <ProductNotFound/>
 }
 
 const ProdColorQty = ({color,xsQty,sQty,mQty,lQty,xlQty,xxlQty,lightBg})=>{

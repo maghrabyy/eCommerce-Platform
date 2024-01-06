@@ -4,9 +4,12 @@ import  SearchInptContext  from "../../../../context/SearchInputContext";
 import { ProductSearch } from '../../Products/ProductSearch';
 import { ProductsNavs } from './ProductNavs';
 
-export const ProductsHeader = ({brandTitle,catTitle,initialprodsList,searchResultFilter,showSearchInpt,showProdsNav,showSortByDrodown, prodsList,setProdsList})=>{
+export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilter,showSearchInpt,showProdsNav,showSortByDrodown, prodsList,setProdsList})=>{
     const [sortBy,setSortBy] = useState(null);
     const [searchInpt,setSearchInpt] = useContext(SearchInptContext)
+    useEffect(()=>{
+        setSortBy(null);
+    },[brand,category]);
     useEffect(()=>{
         if(prodsList.length > 0){
             if(sortBy === null){
@@ -55,7 +58,7 @@ export const ProductsHeader = ({brandTitle,catTitle,initialprodsList,searchResul
             </div>}
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 
               {showProdsNav &&  <div className="flex flex-col md:flex-row md:items-center">
-                    <ProductsNavs catTitle={catTitle} brandTitle={brandTitle} />
+                    <ProductsNavs category={category} brand={brand} />
                     <span> - {prodsList.length} out of {prodsList.length} </span>
                 </div>}
                {showSortByDrodown && <div className="sortby-dropdown ms-auto">
