@@ -8,7 +8,7 @@ import { DashboardContent } from './components/dashboard/Dashcontent';
 
 //Pages
 import { MainDashboard } from "./pages/Dashboard/Dashboard Main/MainDashboardPage";
-import { SalesPage } from "./pages/Dashboard/Sales/SalesPage";
+import { OrdersPage } from "./pages/Dashboard/Orders/OrdersPage";
 import { ActivityLogPage } from "./pages/Dashboard/Activity Log/ActivityLogPage";
 import { DataEntryPage } from './pages/Dashboard/Data Entry/DataEntryPage';
 import { AddProductPage } from "./pages/Dashboard/Data Entry/Add Product/AddProductPage";
@@ -67,9 +67,9 @@ function App() {
           <DashboardContent title='Dashboard' >
             <MainDashboard/>
           </DashboardContent>} />
-        <Route path={routes.sales} element={
-          <DashboardContent title='Sales' icon={faChartLine}>
-            <SalesPage/>
+        <Route path={routes.orders} element={
+          <DashboardContent title='Orders' icon={faChartLine}>
+            <OrdersPage/>
           </DashboardContent>} />
         <Route path='products' element={ <BrandsCategoryPage/>} >
           <Route path=':prod' element={ <ProductDetails /> }>

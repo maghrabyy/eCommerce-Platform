@@ -21,7 +21,7 @@ export const NavigationRoutesProvider = ({children})=>{
     }
     const routes = {
         homePage:'/',
-        sales:'sales',
+        orders:'orders',
         products:{categoriesRoutes,brandsRoutes},
         dataEntry:{
             addCategory:'addCategory',

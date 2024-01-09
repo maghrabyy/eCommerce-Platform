@@ -34,7 +34,7 @@ export const Sidebar = () =>{
                         </div>
                     </div>
                     <ul className='sidebar-action flex flex-col gap-2 py-4'>
-                        <PageLink pageTitle={'Sales'} pagePath={routes.sales} icon={faChartLine}/>
+                        <PageLink pageTitle={'Orders'} pagePath={routes.orders} icon={faChartLine}/>
                         <li>
                             <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
                                 {path:'products/categories/' + categoriesRoutes.all ,title: 'All'},
