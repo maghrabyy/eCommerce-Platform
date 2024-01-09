@@ -129,8 +129,8 @@ const blackPnBHoodie02 = {
         }
     }],
     sales:2,
-    creationDate: new Date(),
-    initialTotalProdQty:18
+    creationDate: new Date(),   
+    initialTotalProdQty:8
 }
 blackPnBHoodie02.totalProdQty = blackPnBHoodie02.prodColorQtyList.reduce((a,b)=> a + b.totalQty,0);
 blackPnBHoodie02.totalProdCost = parseInt(blackPnBHoodie02.prodCost*blackPnBHoodie02.totalProdQty);

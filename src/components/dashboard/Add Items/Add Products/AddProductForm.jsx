@@ -81,8 +81,8 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
         {
             isEditing? 
             <div className="flex justify-end gap-2">
-                <CustomButton onClick={()=>navigate(-1)}>Save</CustomButton>
-                <CustomButton onClick={()=>navigate(-1)}>Cancel</CustomButton>
+                <CustomButton onClick={()=>navigate('..')}>Save</CustomButton>
+                <CustomButton onClick={()=>navigate('..')}>Cancel</CustomButton>
             </div>
             :
             <CustomButton onClick={()=>{}}>Add Product</CustomButton>

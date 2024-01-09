@@ -3,10 +3,11 @@ import {faPenToSquare, faCashRegister, faAngleDown, faAngleRight, faTrash, faArr
 import { useContext, useState, useEffect } from 'react';
 import ProductsContext from '../../../../context/ProductsContext';
 import { CustomButton } from '../../../util/Button';
-import { AddProductForum } from '../../Add Items/Add Products/AddProductForm';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
+import { Modal } from '../../../util/Model';
+import { Alert } from '../../../util/Alert';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
@@ -15,6 +16,11 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const [selectedImgIndex,setSelectedImgIndex] = useState(0);
     const {productsList} = useContext(ProductsContext);
     const [productItemData,setProductItemData] = useState(null);
+    const [showDeleteConfirmation,setShowDeleteConfirmation] = useState(false);
+    const [deleteConfirmationInpt,setDeleteConfirmationInpt] = useState('');
+    const [showDeletionAlert,setShowDeletionAlert] = useState(false);
+    const [alertMsg,setAlertMsg] = useState('');
+    const [alertCol,setAlertCol] = useState('primary');
     useEffect(()=>{
         const prodIndex = productsList.map(prod=>prod.prodId).indexOf(prodId);
         setProductItemData( productsList[prodIndex]);
@@ -29,7 +35,50 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const onImgClickHandler = index =>{
         setSelectedImgIndex(index);
     }
+    const prodName = `${productItemData?.prodBrand.text} ${productItemData?.prodTitle}`;
+    const displayAlert= (msg,color) =>{
+        if(!showDeletionAlert){
+            setShowDeletionAlert(true);
+            setAlertMsg(msg);
+            setAlertCol(color)
+        }
+    }
+    const handleProductDeletion = ()=>{
+        if(deleteConfirmationInpt){
+            if(deleteConfirmationInpt === ('Delete ' + prodName)){
+                exitDeleteModal();
+                displayAlert('Product deleted.','success');
+            }
+            else{
+                displayAlert('Incorrect confirmation text.','danger');
+            }
+        }else{
+            displayAlert("You can't leave the input empty.",'warning');
+        }
+
+    }
+    const exitDeleteModal = ()=>{
+        setDeleteConfirmationInpt('')
+        setShowDeleteConfirmation(false);
+    }
+    const deleteProductModal = <Modal 
+    showModal={showDeleteConfirmation} 
+    setShowModal={setShowDeleteConfirmation}
+    onModalExit={exitDeleteModal}
+    modalTitle={'Delete Confirmation'}
+    modalActions={[
+        {title:'Delete',onClicked:handleProductDeletion},
+        {title:'Cancel',onClicked:exitDeleteModal}]}>
+            <div className='flex flex-col'>
+                <p>Are you sure you want to delete {prodName} product?</p>
+                <p>To confirm deletion type: <span className='font-semibold'>Delete {prodName}</span></p>
+                <input type="text" className='inpt mt-2 text-slate-900' placeholder='Enter the delete confirmation text here.'
+                 value={deleteConfirmationInpt} onChange={e=>setDeleteConfirmationInpt(e.target.value)} />
+            </div>        
+    </Modal>
     return productItemData? <div className="expanded-product-details">
+        {deleteProductModal}
+        <Alert showAlert={showDeletionAlert} setShowAlert={setShowDeletionAlert} alertText={alertMsg} alertColor={alertCol}/>
         <ProductsNavs
          category={category}
          brand={brand}
@@ -72,12 +121,12 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                         </div>
                         <div className="prod-action flex gap-2 self-center pt-2">
                             <div className="sell-refund-action flex flex-col gap-2">
-                                <CustomButton className={'text-sm md:text-base'} onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faCashRegister}/><span>Sell product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'} onClick={()=>navigate('sell-product')} align={'start'}><FontAwesomeIcon className='me-2' icon={faCashRegister}/><span>Sell product</span></CustomButton>
                                 <CustomButton className={'text-sm md:text-base'} onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
                             </div>
                             <div className="edit-delete-action flex flex-col gap-2">
                                 <CustomButton className={'text-sm md:text-base'}  align={'start'} onClick={()=>navigate('edit-product')}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
-                                <CustomButton className={'text-sm md:text-base'} align={'start'} onClick={()=>{}}><FontAwesomeIcon className='me-2' icon={faTrash}/><span>Delete product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'} align={'start'} onClick={()=>setShowDeleteConfirmation(true)}><FontAwesomeIcon className='me-2' icon={faTrash}/><span>Delete product</span></CustomButton>
                             </div>
                         </div>
                     </div>
@@ -91,30 +140,6 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
         </div>
     :
     <ProductNotFound/>
-}
-
-export const ExpandedProductEdit = ()=>{
-    const {productsList} = useContext(ProductsContext);
-    const [productItemData,setProductItemData] = useState(null);
-    const { prod } = useOutletContext();
-    useEffect(()=>{
-        const prodIndex = productsList.map(prod=>prod.prodId).indexOf(prod);
-        setProductItemData( productsList[prodIndex]);
-    },[prod,productsList]);
-    return productItemData ?
-         <div className='expanded-product-edit'>
-             <AddProductForum
-                prodTitleState={productItemData.prodTitle}
-                prodDescState={productItemData.prodDesc}
-                prodPriceState={productItemData.prodPrice}
-                prodCostState={productItemData.prodCost}
-                prodCatState={productItemData.prodCat}
-                prodBrandState={productItemData.prodBrand}
-                prodColorSizeQListState={[...productItemData.prodColorQtyList]}
-                isEditing/>
-        </div>
-        :
-        <ProductNotFound/>
 }
 
 const ProdColorQty = ({color,xsQty,sQty,mQty,lQty,xlQty,xxlQty,lightBg})=>{

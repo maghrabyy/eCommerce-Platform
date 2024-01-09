@@ -18,7 +18,8 @@ import { BrandsPage } from './pages/Dashboard/Products/BrandsPage';
 import { CategoriesPage } from './pages/Dashboard/Products/CategoryPage';
 import { ProductsPage } from "./pages/Dashboard/Products/ProductsPage";
 import { ProductDetails } from './pages/Dashboard/Products/ProductDetails';
-import { ExpandedProductEdit } from './components/dashboard/Products/ProductsPageComps/ExpandedProductItem';
+import { ProductEditPage } from './pages/Dashboard/Products/ProductEditPage';
+import { SellProductPage } from './pages/Dashboard/Products/SellProductPage';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { LoginPage } from './pages/Auth/LoginPage';
 import { PageNotFound } from './pages/PageNotFound';
@@ -34,10 +35,11 @@ function App() {
     {path:categoriesRoutes.trousers,title:"Trousers"}
   ]
   const renderedCategoryRoutes = productCategories.map(category =>
-    <Route key={category.path} path={category.path} element={<ProductsPage category={category}/>} >
+    <Route key={category.path} path={category.path} element={<ProductsPage category={category}/>}>
         <Route path=':prod'
           element={<ProductDetails category={category}/>}>
-            <Route path='edit-product' element={<ExpandedProductEdit />} />
+            <Route path='edit-product' element={<ProductEditPage />} />
+            <Route path='sell-product' element={<SellProductPage />} />
         </Route>
       </Route>
     );
@@ -53,10 +55,12 @@ function App() {
       <Route key={brand.path} path={brand.path} element={<ProductsPage brand={brand}/>} >
         <Route path=':prod'
           element={<ProductDetails brand={brand}/>}>
-            <Route path='edit-product' element={<ExpandedProductEdit />} />
+            <Route path='edit-product' element={<ProductEditPage />} />
+            <Route path='sell-product' element={<SellProductPage />} />
         </Route>
       </Route>
       );
+
   const router = createBrowserRouter(createRoutesFromElements(
       <Route path={routes.homePage} element={authUser? <Dashboard /> : <LoginPage/>} >
         <Route index element={
@@ -69,7 +73,8 @@ function App() {
           </DashboardContent>} />
         <Route path='products' element={ <BrandsCategoryPage/>} >
           <Route path=':prod' element={ <ProductDetails /> }>
-              <Route path='edit-product' element={<ExpandedProductEdit />} />
+              <Route path='edit-product' element={<ProductEditPage />} />
+              <Route path='sell-product' element={<SellProductPage />} />
           </Route>
           <Route path='brands' element={<BrandsPage/>}  >
             {renderedBrandRoutes}
@@ -89,7 +94,7 @@ function App() {
             </DashboardContent>} />
         </Route>
         <Route path={routes.activityLog} element={
-          <DashboardContent title='ActivityLog' icon={faClipboardList}>
+          <DashboardContent title='Activity Log' icon={faClipboardList}>
             <ActivityLogPage/>
           </DashboardContent>} />
           <Route path='*' element={<PageNotFound />}/>
