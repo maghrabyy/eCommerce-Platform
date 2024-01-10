@@ -1,16 +1,15 @@
 import { useContext, useState, useEffect } from 'react';
 import './products.css';
 import SearchInptContext from '../../../context/SearchInputContext';
-import ProductsContext from '../../../context/ProductsContext';
 import { ProductsList } from '../../../components/dashboard/Products/ProductsPageComps/ProductsList'
 import { ProductsHeader } from '../../../components/dashboard/Products/ProductsPageComps/ProductsHeader';
 import { useOutlet } from 'react-router-dom';
+import { productsArray } from '../../../components/dashboard/Products/ProductsPageComps/productsData';
 
 export const ProductsPage = ({category,brand}) =>{
     const outlet = useOutlet();
     const [searchInpt] = useContext(SearchInptContext)
-    const {productsList} = useContext(ProductsContext);
-    const prodCategoryBrandList = productsList.filter((prodItem)=> (prodItem.prodCat.text === category?.title || prodItem.prodBrand.text === brand?.title) ||  category?.title === 'All');
+    const prodCategoryBrandList = productsArray.filter((prodItem)=> (prodItem.prodCat.text === category?.title || prodItem.prodBrand.text === brand?.title) ||  category?.title === 'All');
     const [filteredProdsList,setFilteredProdsList ] = useState([]);
     useEffect(()=>{
         setFilteredProdsList(prodCategoryBrandList);

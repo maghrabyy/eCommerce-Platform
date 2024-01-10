@@ -1,11 +1,12 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { ordersData } from '../Products/ProductsPageComps/ordersData';
 import { dummyCsts } from '../Products/ProductsPageComps/customersData';
+import { useNavigate } from 'react-router-dom';
 
-export const OrdersTable = ({selectedOrder})=>{
+export const OrdersTable = ()=>{
+    const navigate = useNavigate();
     const handleRowSelection = params =>{
-        const orderIndex = ordersData.map(order=>order.orderId).indexOf(params.id);
-        selectedOrder(ordersData[orderIndex])
+        navigate(params.id)
     }
     const getCstFromId = (cstId)=>{
         const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
@@ -15,11 +16,21 @@ export const OrdersTable = ({selectedOrder})=>{
         { field: 'id', headerName: 'Order ID', width: 110, hideable: false },
         { field: 'prodName', headerName: 'Product Name', width: 250, hideable: false},
         { field: 'colorQty', headerName: 'Color Quanity', width: 100, hideable: false},
-        { field: 'cstId', headerName: 'Customer ID',width: 110, hideable: false},
+        { field: 'cstId', headerName: 'Customer ID',width: 110 },
         { field: 'cstName', headerName: 'Customer Name',width: 200, hideable: false },
         { field: 'totalPrice', headerName: 'Total Price',width: 100, hideable: false },
-        { field: 'revenue', headerName: 'Revenue',width: 100, hideable: false },
-        { field: 'orderStatus', headerName: 'Order Status',width: 100, hideable: false },
+        { field: 'revenue', headerName: 'Revenue',width: 100 },
+        { field: 'orderStatus', headerName: 'Order Status',width: 120, hideable: false, align:'center',
+        renderCell: param =>{
+            const bgColor = {
+                'In Progress': 'bg-gray-500',
+                'Shipped': 'bg-blue-700',
+                'Arrived': 'bg-green-500',
+                'Cancelled': 'bg-red-500',
+                'Refunded': 'bg-yellow-500',
+            }
+            return <div className={`${bgColor[param.row.orderStatus]} p-2 rounded-lg shadow-lg font-semibold text-white`}>{param.row.orderStatus}</div>
+        } },
   ];
   const tableRows = ordersData.map(order=>({
     id:order.orderId,
@@ -42,7 +53,7 @@ export const OrdersTable = ({selectedOrder})=>{
         },
         }}
         pageSizeOptions={[5, 10]}
-        columnHi
+        hideFooterSelectedRowCount
         onRowClick={handleRowSelection}
   />
 }

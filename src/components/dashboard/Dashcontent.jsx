@@ -6,7 +6,6 @@ import NavigationsRoutesContext from '../../context/NavigationRoutesContext';
 import { useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import SidebarTogglerContext from '../../context/SidebarTogglerContext';
-import { useOutlet } from 'react-router-dom';
 
 export const dashcontentRef = { current: null };
 
@@ -14,7 +13,6 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
     const {showSidebar} = useContext(SidebarTogglerContext);
     const {routes} = useContext(NavigationsRoutesContext);
     const isHomeage = useLocation().pathname === routes.homePage;
-    const outlet = useOutlet();
     return (
         <div ref={dashcontentRef} className={`dashboard-content col-span-12 xl:col-span-10 px-4 bg-white overflow-scroll`}>
                 <div className="main-header py-4">
@@ -28,7 +26,7 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
                     </div> 
                 </div>
                 <div className={className}>
-                    {outlet || children}
+                    { children}
                 </div>
         </div>
     );

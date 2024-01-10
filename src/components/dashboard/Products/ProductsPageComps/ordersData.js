@@ -112,8 +112,7 @@ prodPrice: productsArray[3].prodPrice,
 totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
 revenue:function() {return this.totalPrice() -productsArray[3].prodCost},
 orderStatus:{
-    statusHistory:[{status:'In Progress',date:formattedDate(new Date())}],
-    currentStatus:function( ){return this.statusHistory[this.statusHistory.length-1]}
-}
+    statusHistory:[{status:'Cancelled',date:formattedDate(new Date())}],
+    currentStatus:function( ){return this.statusHistory[this.statusHistory.length-1]}}
 },
 ];

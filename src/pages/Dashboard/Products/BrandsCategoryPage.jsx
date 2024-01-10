@@ -3,11 +3,11 @@ import { DashboardContent } from "../../../components/dashboard/Dashcontent"
 import { faShirt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useOutlet, Outlet, useParams, useLocation } from "react-router-dom";
 import { ProductsList } from '../../../components/dashboard/Products/ProductsPageComps/ProductsList';
-import ProductsContext from "../../../context/ProductsContext";
 import { useContext, useState } from "react";
 import SearchInptContext from "../../../context/SearchInputContext";
 import { ProductsHeader } from "../../../components/dashboard/Products/ProductsPageComps/ProductsHeader";
 import NavigationsRoutesContext from "../../../context/NavigationRoutesContext";
+import { productsArray } from "../../../components/dashboard/Products/ProductsPageComps/productsData";
 
 export const BrandsCategoryPage = ()=>{
     const { brandsRoutes,categoriesRoutes } = useContext(NavigationsRoutesContext);
@@ -43,8 +43,7 @@ export const BrandsCategoryPage = ()=>{
    const outlet = useOutlet();
    const {prod} = useParams();
    const [searchInpt] = useContext(SearchInptContext)
-   const { productsList } = useContext(ProductsContext); 
-   const [allProdsItems,setAllProdsItems] = useState([...productsList]);
+   const [allProdsItems,setAllProdsItems] = useState([...productsArray]);
    const isProdsListRoute = location === '/products' || isProdsCatRoute() || isProdsBrandRoute();
    const searchResultFilter = allProdsItems.filter(prod=> 
         prod.prodBrand.text.toUpperCase().includes(searchInpt.toUpperCase()) ||
@@ -61,7 +60,7 @@ export const BrandsCategoryPage = ()=>{
                         <div className="font-semibold text-2xl w-32" >Brands</div>
                 </Panel>
         </div>
-                <ProductsHeader  prodsList={allProdsItems} setProdsList={setAllProdsItems} searchResultFilter={searchResultFilter} showProdsNav={false} initialprodsList={productsList} />
+                <ProductsHeader  prodsList={allProdsItems} setProdsList={setAllProdsItems} searchResultFilter={searchResultFilter} showProdsNav={false} initialprodsList={productsArray} />
                 <ProductsList prodsList={allProdsItems} searchResultFilter={searchResultFilter} />
         </div>}
    </DashboardContent>

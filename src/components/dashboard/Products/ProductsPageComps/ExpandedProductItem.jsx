@@ -1,20 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPenToSquare, faCashRegister, faAngleDown, faAngleRight, faTrash, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useState, useEffect } from 'react';
-import ProductsContext from '../../../../context/ProductsContext';
+import {  useState, useEffect } from 'react';
 import { CustomButton } from '../../../util/Button';
 import { useNavigate } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
 import { Modal } from '../../../util/Model';
 import { Alert } from '../../../util/Alert';
+import { productsArray } from './productsData';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
     const [showProdQtyList,setShowProdQtyList] = useState(false);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
     const [selectedImgIndex,setSelectedImgIndex] = useState(0);
-    const {productsList} = useContext(ProductsContext);
     const [productItemData,setProductItemData] = useState(null);
     const [showDeleteConfirmation,setShowDeleteConfirmation] = useState(false);
     const [deleteConfirmationInpt,setDeleteConfirmationInpt] = useState('');
@@ -22,9 +21,9 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const [alertMsg,setAlertMsg] = useState('');
     const [alertCol,setAlertCol] = useState('primary');
     useEffect(()=>{
-        const prodIndex = productsList.map(prod=>prod.prodId).indexOf(prodId);
-        setProductItemData( productsList[prodIndex]);
-    },[prodId,productsList]);
+        const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
+        setProductItemData( productsArray[prodIndex]);
+    },[prodId]);
 
     const showProdQtyListHandler = ()=>{
         setShowProdQtyList(!showProdQtyList);
