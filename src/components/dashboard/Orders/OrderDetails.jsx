@@ -43,7 +43,7 @@ export const OrderDetails = ()=>{
         }
         const updateStatusHandler = () =>
         {
-            if(order.orderStatus.currentStatus().status !== selectedStatus.text){
+            if(selectedStatus && (order.orderStatus.currentStatus().status !== selectedStatus.text)){
                 console.log('updated',selectedStatus)
                 closeModalHandler();
             }
@@ -113,17 +113,16 @@ export const OrderDetails = ()=>{
                 </div>
             </div>
             <div className="invoice-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center">
-                <OrderInfo title='Price' data={order.prodPrice+'EGP'} />
-                <OrderInfo title='Shipping Fees' data={order.shippingFees+'EGP'} />
-                <OrderInfo title='Total Price' data={order.totalPrice()+'EGP'} />
+                <div className="prodPrice border-b-2 border-b-slate-400 border-dotted pb-2 flex flex-col items-center">
+                    <OrderInfo title='Price' data={order.prodPrice+'EGP'} />
+                    <OrderInfo title='Shipping Fees' data={order.shippingFees+'EGP'} />
+                </div>
+                <div className="totalPrice border-b-2 border-b-slate-400 border-dotted pb-2 flex justify-center">
+                    <OrderInfo title='Total Price' data={order.totalPrice()+'EGP'} />
+                </div>
                 <OrderInfo title='Revenue' data={order.revenue()+'EGP'} />
             </div>
-            <div className="cst-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center">
-                <OrderInfo title='Customer ID' data={order.cstId} />
-                <OrderInfo title='Customer Name' data={getCstFromId(order.cstId).name} />
-                <OrderInfo title='Phone Number' data={getCstFromId(order.cstId).phoneNum} />
-                <OrderInfo title='Address' data={<div>{getCstFromId(order.cstId).cstAddress.address}, {getCstFromId(order.cstId).cstAddress.city}</div>} />
-            </div>
+            <CustomerData cst={getCstFromId(order.cstId)} />
         </div>
     </div>
 }
@@ -135,12 +134,23 @@ const OrderInfo = ({title,data})=>{
     </div>
 }
 
+export const CustomerData = ({cst,showNumOfOrders,className})=>{
+
+    return <div className={className + " cst-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center"}>
+        <OrderInfo title='Customer ID' data={cst.cstId} />
+        <OrderInfo title='Customer Name' data={cst.name} />
+        <OrderInfo title='Phone Number' data={cst.phoneNum} />
+        <OrderInfo title='Address' data={<div>{cst.cstAddress.address}, {cst.cstAddress.city}</div>} />
+        {showNumOfOrders && <OrderInfo title='Number Of orders' data={<div>{cst.orders.length}</div>} />}
+    </div>
+}
+
 const OrderHistoryModal = ({orderHistory})=>{
     return <div className="pt-2">
         {orderHistory.map((status,index)=>
            <div key={index} className="grid grid-cols-2 font-semibold">
                 <div className="pb-2 border-r-2 border-r-slate-200">{status.status}</div>
-                <div className="ps-8 md:ps-10">{status.date}</div>
+                <div className="xl:ps-10 ms-auto">{status.date}</div>
             </div>)}
     </div>
 }
