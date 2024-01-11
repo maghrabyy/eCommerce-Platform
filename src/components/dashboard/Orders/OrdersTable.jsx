@@ -14,9 +14,12 @@ export const OrdersTable = ()=>{
     }
     const tableColumns = [  
         { field: 'id', headerName: 'Order ID', width: 110, hideable: false },
+        { field: 'prodImg', headerName: 'Product', width:80, hideable:false,
+        renderCell: param =>{
+            return <img width='60px' src={param.row.prodImg} alt={param.row.prodName} />}
+        },
         { field: 'prodName', headerName: 'Product Name', width: 250, hideable: false},
         { field: 'colorQty', headerName: 'Color Quanity', width: 100, hideable: false},
-        { field: 'cstId', headerName: 'Customer ID',width: 110 },
         { field: 'cstName', headerName: 'Customer Name',width: 200, hideable: false },
         { field: 'totalPrice', headerName: 'Total Price',width: 100, hideable: false },
         { field: 'revenue', headerName: 'Revenue',width: 100 },
@@ -30,21 +33,23 @@ export const OrdersTable = ()=>{
                 'Refunded': 'bg-yellow-500',
             }
             return <div className={`${bgColor[param.row.orderStatus]} p-2 rounded-lg shadow-lg font-semibold text-white`}>{param.row.orderStatus}</div>
-        } },
+        },
+     },
   ];
   const tableRows = ordersData.map(order=>({
-    id:order.orderId,
+    id:order.orderId,   
+    prodImg:order.prodImg(),
     prodName:order.prodName,
     colorQty:`${order.colorQty.color} ${order.colorQty.size} x ${order.colorQty.qty}`,
-    cstId: order.cstId,
     cstName: getCstFromId(order.cstId).name,
     totalPrice: `${order.totalPrice()}EGP`,
     revenue: `${order.revenue()}EGP`,
-    orderStatus:order.orderStatus.currentStatus().status
+    orderStatus:order.orderStatus.currentStatus().status,
 }));
 
   
     return <DataGrid
+        className='shadow-md'
         rows={tableRows}
         columns={tableColumns}
         initialState={{

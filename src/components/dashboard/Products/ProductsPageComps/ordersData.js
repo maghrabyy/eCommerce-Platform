@@ -10,16 +10,20 @@ export const productColor = color=>{
 }
 
 const formattedDate = date =>{
-    const day = date.getDate();
-    const month = date.getMonth()+1;
-    const year = date.getFullYear();
-    return ` ${day}-${month}-${year}`;
+    const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+    return currentFullDate;
+}
+const getImgFromId = (prodId,colorId) =>{
+    const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
+    const colorIndex = productsArray[prodIndex].prodColorQtyList.map(col=>col.id).indexOf(colorId)
+    return productsArray[prodIndex].prodColorQtyList[colorIndex].prodColorImgs.mainImg.src;
 }
 export const ordersData = [
     {
         orderId:'order9TI39F',
         prodId:productsArray[0].prodId,
         prodName:`${productsArray[0].prodBrand.text} ${productsArray[0].prodTitle}`,
+        prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
         colorQty:{
             colorId:productsArray[0].prodColorQtyList[0].id,
             color:productColor(productsArray[0].prodColorQtyList[0].prodColor),
@@ -32,7 +36,11 @@ export const ordersData = [
         totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
         revenue:function() {return this.totalPrice()-productsArray[0].prodCost},
         orderStatus:{
-            statusHistory:[{status:'Arrived',date:formattedDate(new Date())}],
+            statusHistory:[
+                {status:'In Progress',date:formattedDate(new Date())},
+                {status:'Shipped',date:formattedDate(new Date())},
+                {status:'Arrived',date:formattedDate(new Date())},
+            ],
             currentStatus:function( ){return {...this.statusHistory[this.statusHistory.length-1]}}
         }
 },
@@ -40,6 +48,7 @@ export const ordersData = [
     orderId:'orderAS64F',
     prodId:productsArray[1].prodId,
     prodName:`${productsArray[1].prodBrand.text} ${productsArray[1].prodTitle}`,
+    prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
         colorId:productsArray[1].prodColorQtyList[0].id,
         color:productColor(productsArray[1].prodColorQtyList[0].prodColor),
@@ -60,6 +69,7 @@ export const ordersData = [
 orderId:'orderVPSKLE3',
 prodId:productsArray[0].prodId,
 prodName:`${productsArray[0].prodBrand.text} ${productsArray[0].prodTitle}`,
+prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)},
 colorQty:{
     colorId:productsArray[0].prodColorQtyList[0].id,
     color:productColor(productsArray[0].prodColorQtyList[0].prodColor),
@@ -80,6 +90,7 @@ orderStatus:{
 orderId:'order0GOWF',
 prodId:productsArray[2].prodId,
 prodName:`${productsArray[2].prodBrand.text} ${productsArray[2].prodTitle}`,
+prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)},
 colorQty:{
     colorId:productsArray[2].prodColorQtyList[0].id,
     color:productColor(productsArray[2].prodColorQtyList[0].prodColor),
@@ -100,6 +111,7 @@ orderStatus:{
 orderId:'order9GDF9F',
 prodId:productsArray[3].prodId,
 prodName:`${productsArray[3].prodBrand.text} ${productsArray[3].prodTitle}`,
+prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)},
 colorQty:{
     colorId:productsArray[3].prodColorQtyList[0].id,
     color:productColor(productsArray[3].prodColorQtyList[0].prodColor),
@@ -112,7 +124,10 @@ prodPrice: productsArray[3].prodPrice,
 totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
 revenue:function() {return this.totalPrice() -productsArray[3].prodCost},
 orderStatus:{
-    statusHistory:[{status:'Cancelled',date:formattedDate(new Date())}],
+    statusHistory:[
+        {status:'In Progress',date:formattedDate(new Date())},
+        {status:'Cancelled',date:formattedDate(new Date())}
+    ],
     currentStatus:function( ){return this.statusHistory[this.statusHistory.length-1]}}
-},
+}
 ];
