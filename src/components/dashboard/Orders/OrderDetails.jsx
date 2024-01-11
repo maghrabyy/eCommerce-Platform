@@ -122,7 +122,7 @@ export const OrderDetails = ()=>{
                 </div>
                 <OrderInfo title='Revenue' data={order.revenue()+'EGP'} />
             </div>
-            <CustomerData cst={getCstFromId(order.cstId)} />
+            <CustomerData cst={getCstFromId(order.cstId)} navigateToCstPage />
         </div>
     </div>
 }
@@ -134,9 +134,12 @@ const OrderInfo = ({title,data})=>{
     </div>
 }
 
-export const CustomerData = ({cst,showNumOfOrders,className})=>{
-
-    return <div className={className + " cst-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center"}>
+export const CustomerData = ({cst,showNumOfOrders,navigateToCstPage,className})=>{
+    const navigate = useNavigate();
+    const cstClickedHandler = ()=>{
+        navigate(`/customers/${cst.cstId}`);
+    }
+    return <div onClick={navigateToCstPage && cstClickedHandler} className={className + ` cst-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center ${navigateToCstPage && 'cursor-pointer hover:bg-gray-100'}`}>
         <OrderInfo title='Customer ID' data={cst.cstId} />
         <OrderInfo title='Customer Name' data={cst.name} />
         <OrderInfo title='Phone Number' data={cst.phoneNum} />

@@ -31,5 +31,6 @@ export const CustomersTable = ()=>{
     }}  
     hideFooterSelectedRowCount
     onRowClick={handleRowSelection}
+    pageSizeOptions={[5]}
 />
 }

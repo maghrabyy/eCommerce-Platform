@@ -59,5 +59,6 @@ export const OrdersTable = ()=>{
         }}  
         hideFooterSelectedRowCount
         onRowClick={handleRowSelection}
+        pageSizeOptions={[5]}
   />
 }

@@ -50,6 +50,7 @@ export const CustomerDetails = ()=>{
             paginationModel: { page: 0, pageSize: 5 },
         },
         }}  
-        hideFooterSelectedRowCount/>
+        hideFooterSelectedRowCount
+        pageSizeOptions={[5]}/>
     </div>
 }
