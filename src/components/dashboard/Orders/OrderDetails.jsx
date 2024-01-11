@@ -140,7 +140,7 @@ const OrderHistoryModal = ({orderHistory})=>{
         {orderHistory.map((status,index)=>
            <div key={index} className="grid grid-cols-2 font-semibold">
                 <div className="pb-2 border-r-2 border-r-slate-200">{status.status}</div>
-                <div className="ps-10">{status.date}</div>
+                <div className="ps-8 md:ps-10">{status.date}</div>
             </div>)}
     </div>
 }

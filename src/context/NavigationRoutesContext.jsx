@@ -22,6 +22,8 @@ export const NavigationRoutesProvider = ({children})=>{
     const routes = {
         homePage:'/',
         orders:'orders',
+        customers:'customers',
+        monthlyReport:'monthy-report',
         products:{categoriesRoutes,brandsRoutes},
         dataEntry:{
             addCategory:'addCategory',

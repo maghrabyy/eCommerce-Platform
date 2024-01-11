@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faShirt, faCirclePlus, faClipboardList, faRightFromBracket, faClose} from '@fortawesome/free-solid-svg-icons';
+import { faChartLine,faBasketShopping,faUserGroup ,faShirt, faCirclePlus, faClipboardList, faRightFromBracket, faClose} from '@fortawesome/free-solid-svg-icons';
 import logo from './../../assets/stylesquad-logo.png';
 import { ExpandableMenu } from '../util/ExpandableMenu';
 import { useContext } from 'react';
@@ -34,7 +34,9 @@ export const Sidebar = () =>{
                         </div>
                     </div>
                     <ul className='sidebar-action flex flex-col gap-2 py-4'>
-                        <PageLink pageTitle={'Orders'} pagePath={routes.orders} icon={faChartLine}/>
+                        <PageLink pageTitle={'Orders'} pagePath={routes.orders} icon={faBasketShopping}/>
+                        <PageLink pageTitle={'Customers'} pagePath={routes.customers} icon={faUserGroup}/>
+                        <PageLink pageTitle={'Monthly Report'} pagePath={routes.monthlyReport} icon={faChartLine}/>
                         <li>
                             <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
                                 {path:'products/categories/' + categoriesRoutes.all ,title: 'All'},

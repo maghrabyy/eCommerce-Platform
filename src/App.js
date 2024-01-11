@@ -1,5 +1,5 @@
 import './App.css';
-import { faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { faUserGroup, faChartLine, faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
@@ -10,6 +10,8 @@ import { DashboardContent } from './components/dashboard/Dashcontent';
 import { MainDashboard } from "./pages/Dashboard/Dashboard Main/MainDashboardPage";
 import { OrdersPage } from "./pages/Dashboard/Orders/OrdersPage";
 import { OrderDetails } from './components/dashboard/Orders/OrderDetails';
+import { CustomersPage } from './pages/Customers/CustomersPage';
+import { MonthlyReportPage } from './pages/Monthly Reports/MonthlyReportsPage';
 import { ActivityLogPage } from "./pages/Dashboard/Activity Log/ActivityLogPage";
 import { DataEntryPage } from './pages/Dashboard/Data Entry/DataEntryPage';
 import { AddProductPage } from "./pages/Dashboard/Data Entry/Add Product/AddProductPage";
@@ -71,6 +73,14 @@ function App() {
         <Route path={routes.orders} element={<OrdersPage/>}>
             <Route path=':ordersId' element={<OrderDetails/>} />
         </Route>
+        <Route path={routes.customers} element={
+          <DashboardContent title='Customers' icon={faUserGroup}>
+            <CustomersPage/>
+          </DashboardContent>} />
+          <Route path={routes.monthlyReport} element={
+          <DashboardContent title='Monthly Report' icon={faChartLine}>
+            <MonthlyReportPage/>
+          </DashboardContent>} />
         <Route path='products' element={ <BrandsCategoryPage/>} >
           <Route path=':prod' element={ <ProductDetails /> }>
               <Route path='edit-product' element={<ProductEditPage />} />
