@@ -12,7 +12,7 @@ import { OrdersPage } from "./pages/Dashboard/Orders/OrdersPage";
 import { OrderDetails } from './components/dashboard/Orders/OrderDetails';
 import { CustomersPage } from './pages/Customers/CustomersPage';
 import { CustomerDetails } from './pages/Customers/CustomerDetails';
-import { MonthlyReportPage } from './pages/Monthly Reports/MonthlyReportsPage';
+import { SalesReportPage } from './pages/Sales Reports/SalesReportsPage';
 import { ActivityLogPage } from "./pages/Dashboard/Activity Log/ActivityLogPage";
 import { DataEntryPage } from './pages/Dashboard/Data Entry/DataEntryPage';
 import { AddProductPage } from "./pages/Dashboard/Data Entry/Add Product/AddProductPage";
@@ -77,10 +77,10 @@ function App() {
         <Route path={routes.customers} element={<CustomersPage/>}>
           <Route path=':cstId' element={<CustomerDetails/>} />
         </Route>
-          <Route path={routes.monthlyReport} element={
-          <DashboardContent title='Monthly Report' icon={faChartLine}>
-            <MonthlyReportPage/>
-          </DashboardContent>} />
+        <Route path={routes.salesReport} element={
+          <DashboardContent title='Sales Report' icon={faChartLine}>
+          <SalesReportPage/>
+        </DashboardContent>} />
         <Route path='products' element={ <BrandsCategoryPage/>} >
           <Route path=':prod' element={ <ProductDetails /> }>
               <Route path='edit-product' element={<ProductEditPage />} />

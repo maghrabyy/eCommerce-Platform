@@ -9,10 +9,10 @@ export const MainDashboard = ()=>{
     const navigate = useNavigate();
     const {  routes } = useContext(NavigationsRoutesContext);
     return <div className="grid xl:grid-cols-2 gap-5 xl:px-14 py-2">
+        <DashboardItem onClick={()=>navigate(routes.salesReport)} icon={faChartLine} title={'Sales Report'}/>
         <DashboardItem onClick={()=>navigate(routes.orders)} icon={faBasketShopping} title={'Orders'}/>
         <DashboardItem onClick={()=>navigate('products')} icon={faShirt} title={'Products'}/>
         <DashboardItem onClick={()=>navigate(routes.customers)} icon={faUserGroup} title={'Customers'}/>
-        <DashboardItem onClick={()=>navigate(routes.monthlyReport)} icon={faChartLine} title={'Monthly Report'}/>
         <DashboardItem onClick={()=>navigate('dataEntry')} icon={faCirclePlus} title={'Data Entry'}/>
         <DashboardItem onClick={()=>navigate(routes.activityLog)} icon={faClipboardList} title={'Activity Log'}/>
     </div>

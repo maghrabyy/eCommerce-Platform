@@ -2,8 +2,13 @@ import { DataGrid } from '@mui/x-data-grid';
 import { ordersData } from '../Products/ProductsPageComps/ordersData';
 import { dummyCsts } from '../Products/ProductsPageComps/customersData';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { SearchBar } from '../../util/SearchBar';
+import emptyBox from '../../../assets/emptyBox.svg'
 
 export const OrdersTable = ()=>{
+    const [searchValue,setSearchValue] = useState('');
+    const [ordersArray,setOrdersArray] = useState([...ordersData]);
     const navigate = useNavigate();
     const handleRowSelection = params =>{
         navigate(params.id)
@@ -13,7 +18,6 @@ export const OrdersTable = ()=>{
         return dummyCsts[cstIndex];
     }
     const tableColumns = [  
-        { field: 'id', headerName: 'Order ID', width: 120, hideable: false },
         { field: 'prodImg', headerName: 'Product', width:80, hideable:false,
         renderCell: param =>{
             return <img width='60px' src={param.row.prodImg} alt={param.row.prodName} />}
@@ -35,8 +39,10 @@ export const OrdersTable = ()=>{
             return <div className={`${bgColor[param.row.orderStatus]} p-2 rounded-lg shadow-lg font-semibold text-white`}>{param.row.orderStatus}</div>
         },
      },
+     { field: 'id', headerName: 'Order ID', width: 120, hideable: false },
+
   ];
-  const tableRows = ordersData.map(order=>({
+  const tableRows = ordersArray.map(order=>({
     id:order.orderId,   
     prodImg:order.prodImg(),
     prodName:order.prodName,
@@ -44,11 +50,28 @@ export const OrdersTable = ()=>{
     cstName: getCstFromId(order.cstId).name,
     totalPrice: `${order.totalPrice()}EGP`,
     revenue: `${order.revenue()}EGP`,
-    orderStatus:order.orderStatus.currentStatus().status,
-}));
+    orderStatus:order.orderStatus.currentStatus().status,}));
 
-  
+    const valueChangeHandler = e =>{
+        const searchInputText = e.target.value;
+        setSearchValue(searchInputText);
+        const searchFilter = ordersData.filter(order=>
+            order.orderId.toLowerCase().includes(searchInputText.toLowerCase()) ||
+            order.prodName.toLowerCase().includes(searchInputText.toLowerCase()) ||
+            getCstFromId(order.cstId).name.toLowerCase().includes(searchInputText.toLowerCase()) ||
+            order.colorQty.color.toLowerCase().includes(searchInputText.toLowerCase()) ||
+            order.colorQty.size.toLowerCase().includes(searchInputText.toLowerCase()) ||
+            order.totalPrice().toString().toLowerCase().includes(searchInputText.toLowerCase()) ||
+            order.revenue().toString().toLowerCase().includes(searchInputText.toLowerCase()) ||
+            order.orderStatus.currentStatus().status.toLowerCase().includes(searchInputText.toLowerCase()));
+        if(searchInputText.length > 0){
+            setOrdersArray([...searchFilter]);
+        }else{
+            setOrdersArray(ordersData);
+        }
+    }
     return <DataGrid
+        sx={{height: ordersArray.length > 0? 'auto' : '400px'}}
         className='shadow-md'
         rows={tableRows}
         columns={tableColumns}
@@ -60,5 +83,20 @@ export const OrdersTable = ()=>{
         hideFooterSelectedRowCount
         onRowClick={handleRowSelection}
         pageSizeOptions={[5]}
+        slots={{toolbar: SearchBar,noRowsOverlay:EmptySearchResult}}
+        slotProps={{
+            toolbar:{
+                searchValue:searchValue,
+                onValueChange:valueChangeHandler
+            }
+        }}
   />
+}
+
+
+const EmptySearchResult = ()=>{
+    return <div className="flex flex-col items-center justify-center h-full py-2">
+        <h1 className="font-bold">Nothing found here</h1>
+        <img width={'160px'} src={emptyBox} alt="no-items" />
+    </div>
 }

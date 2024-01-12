@@ -23,7 +23,7 @@ export const NavigationRoutesProvider = ({children})=>{
         homePage:'/',
         orders:'orders',
         customers:'customers',
-        monthlyReport:'monthy-report',
+        salesReport:'sales-report',
         products:{categoriesRoutes,brandsRoutes},
         dataEntry:{
             addCategory:'addCategory',

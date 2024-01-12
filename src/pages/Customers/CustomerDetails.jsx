@@ -10,7 +10,6 @@ export const CustomerDetails = ()=>{
     const customer = dummyCsts[cstIndex];
     const cstOrders = ordersData.filter(order=>order.cstId === cstId);
     const tableColumns = [  
-        { field: 'id', headerName: 'Order ID', width: 120, hideable: false },
         { field: 'prodImg', headerName: 'Product', width:80, hideable:false,
         renderCell: param =>{
             return <img width='60px' src={param.row.prodImg} alt={param.row.prodName} />}
@@ -30,6 +29,7 @@ export const CustomerDetails = ()=>{
             return <div className={`${bgColor[param.row.orderStatus]} p-2 rounded-lg shadow-lg font-semibold text-white`}>{param.row.orderStatus}</div>
         },
      },
+     { field: 'id', headerName: 'Order ID', width: 120, hideable: false },
   ];
   const tableRows = cstOrders.map(order=>({
     id:order.orderId,   
