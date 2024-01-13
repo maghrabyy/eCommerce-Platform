@@ -97,8 +97,8 @@ AddProductForum.defaultProps = {
     prodDescState:'',
     prodPriceState:0,
     prodCostState:0,
-    prodCatState:'none',
-    prodBrandState:'none',
+    prodCatState:null,
+    prodBrandState:null,
     prodColorSizeQListState:[],
     isEditing:false
 }
