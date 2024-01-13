@@ -5,20 +5,6 @@ import {  faAngleDown, faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import { Chart } from "react-google-charts";
 
 export const SalesReport = ()=>{
-    // const months = {
-    //     jan:'Jan',
-    //     feb:'Feb',
-    //     mar:'Mar',
-    //     apr:'Apr',
-    //     may:'May',
-    //     jun:'June',
-    //     july:'July',
-    //     aug:'Aug',
-    //     sept:'Sept',
-    //     oct:'Oct',
-    //     nov:'Nov',
-    //     dec:'Dec'
-    // }
     const monthNum = {
         0:'Jan',
         1:'Feb',
@@ -126,7 +112,7 @@ const ReportChart = ({sales,revenue,year,month,chartType})=>{
             revenue:manyOrdersPerDay.length > 1 ? manyOrdersPerDay.reduce((n, o) => n + o.revenue(), 0) : order.revenue()
     }})
         const undupOrders = salesRevFilter.filter((order,index,self)=>  index === self.findIndex((t) => (t.day === order.day && t.sales === order.sales)));
-        return undupOrders;
+        return undupOrders.reverse();
     } 
 
     const chartOption ={
