@@ -37,6 +37,10 @@
   @apply border-2 border-gray-700 rounded-lg py-2 ps-3 appearance-none outline-none;
 }
 
+.dashboard-content{
+  @apply col-span-12 xl:col-span-10;
+}
+
 .inpt.center{
   @apply ps-0 text-center;
 }

@@ -14,7 +14,7 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
     const {routes} = useContext(NavigationsRoutesContext);
     const isHomeage = useLocation().pathname === routes.homePage;
     return (
-        <div ref={dashcontentRef} className={`dashboard-content col-span-12 xl:col-span-10 px-4 bg-white overflow-scroll`}>
+        <div ref={dashcontentRef} className={`dashboard-content px-4 bg-white overflow-scroll`}>
                 <div className="main-header py-4">
                     <div className="flex justify-between items-center border-b-2 py-5 border-b-gray-600">
                         <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">

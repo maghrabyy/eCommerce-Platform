@@ -26,7 +26,12 @@ export const OrdersTable = ()=>{
         { field: 'colorQty', headerName: 'Color Quanity', width: 100, hideable: false},
         { field: 'cstName', headerName: 'Customer Name',width: 200, hideable: false },
         { field: 'totalPrice', headerName: 'Total Price',width: 100, hideable: false },
-        { field: 'revenue', headerName: 'Revenue',width: 100 },
+        { field: 'revenue', headerName: 'Revenue',width: 100, valueGetter:param=>{
+           if( param.row.orderStatus === 'Cancelled' || param.row.orderStatus === 'Refunded')
+             return   0 + ' EGP'
+               else
+               return param.row.revenue;
+        } },
         { field: 'orderStatus', headerName: 'Order Status',width: 120, hideable: false, align:'center',
         renderCell: param =>{
             const bgColor = {

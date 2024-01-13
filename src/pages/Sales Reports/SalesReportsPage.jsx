@@ -1,5 +1,5 @@
+import { SalesReport } from "../../components/dashboard/Sales Report/SalesReport"
+
 export const SalesReportPage = ()=>{
-    return <div>
-        
-    </div>
+    return <SalesReport/>
 }

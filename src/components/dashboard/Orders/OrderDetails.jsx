@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Modal } from '../../util/Model';
 
+const formattedDate = date =>{
+    const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+    return currentFullDate;
+}
+
 export const OrderDetails = ()=>{
     const navigate = useNavigate();
     const {ordersId} = useParams();
@@ -104,7 +109,7 @@ export const OrderDetails = ()=>{
                     <div className="text-slate-800 font-bold">Order Status</div>
                     <div className={`${bgColor[order.orderStatus.currentStatus().status]} p-2 rounded-lg shadow-lg font-semibold text-white`}>{order.orderStatus.currentStatus().status}</div>
                 </div>
-                <OrderInfo title='Date' data={order.orderStatus.currentStatus().date} />
+                <OrderInfo title='Date' data={formattedDate(order.orderStatus.currentStatus().date)} />
                 <div className="order-action flex gap-2 w-full">
                     {order.orderStatus.currentStatus().status === 'Arrived' &&<CustomButton onClick={refundItemHandler} className={'text-xs sm:text-base'}>Refund</CustomButton>}
                     {order.orderStatus.currentStatus().status === 'In Progress' && <CustomButton onClick={cancelOrderHandler} className={'text-xs sm:text-base'}>Cancel</CustomButton>}
@@ -153,7 +158,7 @@ const OrderHistoryModal = ({orderHistory})=>{
         {orderHistory.map((status,index)=>
            <div key={index} className="grid grid-cols-2 font-semibold">
                 <div className="pb-2 border-r-2 border-r-slate-200">{status.status}</div>
-                <div className="xl:ps-10 ms-auto">{status.date}</div>
+                <div className="xl:ps-10 ms-auto">{formattedDate(status.date)}</div>
             </div>)}
     </div>
 }
