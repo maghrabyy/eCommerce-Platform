@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom"
-import { dummyCsts } from "../../components/dashboard/Products/ProductsPageComps/customersData";
-import { CustomerData } from "../../components/dashboard/Orders/OrderDetails";
+import { dummyCsts } from "../Products/ProductsPageComps/customersData";
+import { CustomerData } from "../Orders/OrderDetails";
 import { DataGrid } from "@mui/x-data-grid";
-import { ordersData } from "../../components/dashboard/Products/ProductsPageComps/ordersData";
+import { ordersData } from "../Products/ProductsPageComps/ordersData";
 
 export const CustomerDetails = ()=>{
     const {cstId} = useParams();

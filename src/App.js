@@ -11,7 +11,7 @@ import { MainDashboard } from "./pages/Dashboard/Dashboard Main/MainDashboardPag
 import { OrdersPage } from "./pages/Dashboard/Orders/OrdersPage";
 import { OrderDetails } from './components/dashboard/Orders/OrderDetails';
 import { CustomersPage } from './pages/Customers/CustomersPage';
-import { CustomerDetails } from './pages/Customers/CustomerDetails';
+import { CustomerDetails } from './components/dashboard/Customers/CustomerDetails';
 import { SalesReportPage } from './pages/Sales Reports/SalesReportsPage';
 import { ActivityLogPage } from "./pages/Dashboard/Activity Log/ActivityLogPage";
 import { DataEntryPage } from './pages/Dashboard/Data Entry/DataEntryPage';

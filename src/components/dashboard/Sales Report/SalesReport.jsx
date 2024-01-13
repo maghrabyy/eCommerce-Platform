@@ -44,27 +44,57 @@ export const SalesReport = ()=>{
 
 const ReportsContainer = ({month,year})=>{
     const [expandReports,setExpandReports] = useState(true);
+    const [totalRev,setTotalRev] = useState(0);
+    const [totalSales,setTotalSales] = useState(0);
+    const totalRevHandler = value =>{
+        setTotalRev(value.totalRev);
+        setTotalSales(value.totalSales)
+    }
     return <div className="reports">
         <div onClick={()=>setExpandReports(!expandReports)} className="reports-title text-center font-bold md:text-4xl text-lg text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2 flex justify-between px-4 cursor-pointer select-none hover:bg-slate-200">
-            {month ? <span>Montly: {month} - {year} Reports</span> :
+            {month ? <span>Monthly: {month} - {year} Reports</span> :
                     <span>Annual: {year} Reports</span>
              }
             <span className='me-2'><FontAwesomeIcon icon={expandReports? faAngleDown: faAngleRight} /></span>
         </div>
         {expandReports && <div className="reports-container">
             <div className="report flex md:flex-row flex-col gap-2 py-2">
-                <ReportChart chartType={month? 'Line' : 'Bar'} year={year} month={month && month} revenue/>
-                <ReportChart chartType={'Bar'} year={year} month={month && month} sales/>
+                <div className="flex flex-col  basis-1/2">
+                    <ReportChart chartType={month? 'Line' : 'Bar'} year={year} month={month && month} revenue 
+                        totalValueCallbk={totalRevHandler}/>
+                    {!month && <div className="total-value">
+                        Total Revenue {totalRev}EGP
+                    </div>}
+                </div>
+                <div className="flex flex-col basis-1/2">
+                    <ReportChart chartType={'Bar'} year={year} month={month && month} sales
+                        totalValueCallbk={totalRevHandler}/>
+                        {!month && <div className="total-value">
+                            Total Sales {totalSales}
+                        </div>}
+                </div>
             </div>
             <div className="pie-report flex md:flex-row flex-col gap-2 py-2">
-                <ReportChart chartType={'PieChart'} year={year} month={month && month} revenue/>
-                <ReportChart chartType={'PieChart'} year={year} month={month && month} sales/>
+                <div className="flex flex-col  basis-1/2">
+                    <ReportChart chartType={'PieChart'} year={year} month={month && month} revenue
+                        totalValueCallbk={totalRevHandler}/>
+                    {!month && <div className="total-value">
+                        Total Revenue {totalRev}EGP
+                    </div>}
+                </div>
+                <div className="flex flex-col basis-1/2">
+                    <ReportChart chartType={'PieChart'} year={year} month={month && month} sales
+                        totalValueCallbk={totalRevHandler}/>
+                     {!month && <div className="total-value">
+                       Total Sales {totalSales}
+                    </div>}
+                </div>
             </div>
         </div>}
     </div>
 }
 
-const ReportChart = ({sales,revenue,year,month,chartType})=>{
+const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
     const monthlyOrders = (year)=>{
         const resultedOrders = []
         const salesOrders = ordersData.filter(order=>order.revenue() > 0);
@@ -92,25 +122,46 @@ const ReportChart = ({sales,revenue,year,month,chartType})=>{
     const ordersPerYear = (year)=>monthlyOrders(year).filter(ordersPerMonth=>ordersPerMonth.orders.length > 0)
     
     const annualDataset = (year) =>{
-        return ordersPerYear(year).map(orders=>(
+        return ordersPerYear(year).map(monthlyOrders=>(
         {
-            sales:orders.orders.length,
-            revenue:orders.orders.reduce((n, o) => n + o.revenue(), 0), 
-            month:orders.month 
+            sales:monthlyOrders.orders.length,
+            revenue:monthlyOrders.orders.reduce((n, o) => n + o.revenue(), 0), 
+            month:monthlyOrders.month 
         })
         );
     } 
-
+    (!month && totalValueCallbk(annualDataset(year).reduce((accumulator, dataSet) => {
+        accumulator.totalSales = (accumulator.totalSales || 0) + dataSet.sales;
+        accumulator.totalRev = (accumulator.totalRev || 0) + dataSet.revenue;
+        return accumulator;
+      }, {})));
+    
+    
+    
+    // .reduce((n, data)=>
+    // {    
+    //       return {
+    //         totalSales:(n + data.revenue,0),
+    //         totalRev:(n + data.sales,0)
+    //     }}
+    // )))
+    
+    
+    // .map(()=>({
+    //     totalSales:annualDataset(year).reduce((n, o) => n + o.revenue, 0),
+    //     totalRev:annualDataset(year).reduce((n, o) => n + o.revenue, 0)
+    // }))))
     const monthlyDataset = (month,year) =>{
         const monthIndex = ordersPerYear(year).map(annualOrders=>annualOrders.month).indexOf(month);
         const ordersPerMonth = ordersPerYear(year)[monthIndex].orders;       
         const salesRevFilter = ordersPerMonth.map(order=>{
-        const manyOrdersPerDay =  ordersPerMonth.filter(monthlyOrder=>monthlyOrder.orderStatus.currentStatus().date.getDate() === order.orderStatus.currentStatus().date.getDate())
-        return {
-            day:order.orderStatus.currentStatus().date.getDate(),
-            sales:manyOrdersPerDay.length,
-            revenue:manyOrdersPerDay.length > 1 ? manyOrdersPerDay.reduce((n, o) => n + o.revenue(), 0) : order.revenue()
-    }})
+            const manyOrdersPerDay =  ordersPerMonth.filter(monthlyOrder=>monthlyOrder.orderStatus.currentStatus().date.getDate() === order.orderStatus.currentStatus().date.getDate())
+            return {
+                day:order.orderStatus.currentStatus().date.getDate(),
+                sales:manyOrdersPerDay.length,
+                revenue:manyOrdersPerDay.length > 1 ? manyOrdersPerDay.reduce((n, o) => n + o.revenue(), 0) : order.revenue()
+            }}
+        );
         const undupOrders = salesRevFilter.filter((order,index,self)=>  index === self.findIndex((t) => (t.day === order.day && t.sales === order.sales)));
         return undupOrders.reverse();
     } 
@@ -128,10 +179,10 @@ const ReportChart = ({sales,revenue,year,month,chartType})=>{
             [
                 ['Month',(sales && 'Sales') || (revenue && 'Revenue')],
                 ...annualDataset(year).map(data=>
-                    (revenue && [data.month,data.revenue]) || (sales && [data.month,data.sales]))
+                        (revenue && [data.month,data.revenue]) || (sales && [data.month,data.sales]))
             ]
     }
-    return <div className='annual-sales-report basis-1/2'>
+    return <div className='annual-sales-report'>
         <div className="year-sales-title">
             <h1 className='text-center font-bold md:text-4xl text-lg text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2'>
               {month && month + ' - '}  {year} {(sales && 'Sales') || (revenue && 'Revenue')}
@@ -140,9 +191,8 @@ const ReportChart = ({sales,revenue,year,month,chartType})=>{
                 chartType={chartOption.chartType}
                 data={chartOption.chartData}
                 options={ {
-                'width': '100%',
                 'height': 400,
-                'chartArea': {'width': '100%', 'height': '80%'},
+                'chartArea': {'width': '90%', 'height': '80%'},
                 'legend': chartOption.chartType === 'PieChart'? {'position': 'bottom' } : {'position': 'none'}
                 }}
                 formatters={
