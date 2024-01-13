@@ -43,11 +43,31 @@ export const CustomDropdown = ({title, className, options, value,onChange, color
     const optionItemsClass = `text-white p-2 hover:border-l-2 ${colorStyles[color].line} ${colorStyles[color].bgHover} rounded-r-lg cursor-pointer font-semibold`;
     return (
         <div ref={dropdownRef} style={{width:width}} className={className + " custom-dropdown mt-2 relative"}>
-            <CustomButton onClick={()=>setShowOptions(!showOptions)} color={color} outlined={outlined} className={dropdownBtnClass}>{value?.text || title}<FontAwesomeIcon icon={showOptions? (isOverflowed? faAngleUp : faAngleDown) : faAngleRight} /></CustomButton>
+            <CustomButton onClick={()=>setShowOptions(!showOptions)} color={color} outlined={outlined} className={dropdownBtnClass}>
+                {
+                value?
+                <div className="w-full pe-4">
+                    <div className="drodown title flex justify-between text-sm md:text-base">
+                        <div className="text">{value?.text}</div>
+                        <div className="suffix">{value?.suffix}</div>
+                    </div>
+                    <div className="subtitle text-xs text-start text-gray-300">{value?.subtitle}</div>
+                </div>
+            :
+            title
+            }
+                <FontAwesomeIcon icon={showOptions? (isOverflowed? faAngleUp : faAngleDown) : faAngleRight} /></CustomButton>
             {showOptions && 
             <div ref={optionRef} className={optionMenuClass}>
                 <div onClick={()=>optionSelectionHandler(null)} className={optionItemsClass}>{title}</div>
-                {options.map((option=><div key={option.value} onClick={()=>optionSelectionHandler(option)} className={optionItemsClass}>{option.text}</div>))}
+                {options.map((option=>
+                <div key={option.value} onClick={()=>optionSelectionHandler(option)} className={optionItemsClass}>
+                        <div className="title flex justify-between">
+                            <div className="text">{option.text}</div>
+                            <div className="suffix">{option.suffix}</div>
+                        </div>
+                        <div className="subtitle text-xs text-end text-gray-300">{option.subtitle}</div>
+                </div>))}   
             </div>}
 
         </div>

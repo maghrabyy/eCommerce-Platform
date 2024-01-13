@@ -8,6 +8,9 @@ import { ProductNotFound } from './ProductNotFoundError';
 import { Modal } from '../../../util/Model';
 import { Alert } from '../../../util/Alert';
 import { productsArray } from './productsData';
+import { ordersData } from './ordersData';
+import { CustomDropdown } from '../../../util/Dropdown';
+import { dummyCsts } from './customersData';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
@@ -18,6 +21,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const [showDeleteConfirmation,setShowDeleteConfirmation] = useState(false);
     const [deleteConfirmationInpt,setDeleteConfirmationInpt] = useState('');
     const [showDeletionAlert,setShowDeletionAlert] = useState(false);
+    const [showRefundModal,setShowRefundModal] = useState(false);
     const [alertMsg,setAlertMsg] = useState('');
     const [alertCol,setAlertCol] = useState('primary');
     useEffect(()=>{
@@ -42,17 +46,22 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
             setAlertCol(color)
         }
     }
+    const productDeletionAlert = ()=> displayAlert('Product deleted.','success');
+    const productRefundAlert = ()=>displayAlert('Product refunded.','success');
+    const incorrectConfirmationTxtAlert = ()=> displayAlert('Incorrect confirmation text.','danger');
+    const emptyConfirmationTextAlert = ()=>displayAlert("You can't leave the input empty.",'warning');
+    const unSelectedOrderAlert = ()=>displayAlert("You haven't selected an order yet.",'warning');
     const handleProductDeletion = ()=>{
         if(deleteConfirmationInpt){
             if(deleteConfirmationInpt === ('Delete ' + prodName)){
                 exitDeleteModal();
-                displayAlert('Product deleted.','success');
+                productDeletionAlert();
             }
             else{
-                displayAlert('Incorrect confirmation text.','danger');
+                incorrectConfirmationTxtAlert()
             }
         }else{
-            displayAlert("You can't leave the input empty.",'warning');
+            emptyConfirmationTextAlert()
         }
 
     }
@@ -60,6 +69,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
         setDeleteConfirmationInpt('')
         setShowDeleteConfirmation(false);
     }
+
     const deleteProductModal = <Modal 
     showModal={showDeleteConfirmation} 
     setShowModal={setShowDeleteConfirmation}
@@ -75,8 +85,17 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                  value={deleteConfirmationInpt} onChange={e=>setDeleteConfirmationInpt(e.target.value)} />
             </div>        
     </Modal>
+
+    const refundProdModal = <RefundProductModal prodId={prodId}
+     showRefundModal={showRefundModal} 
+     setShowRefundModal={setShowRefundModal}
+     unselectedOrderAlert={unSelectedOrderAlert}
+     incorrectConfirmationTxtAlert={incorrectConfirmationTxtAlert}
+     emptyConfirmationTextAlert={emptyConfirmationTextAlert}
+     productRefundAlert={productRefundAlert} /> 
     return productItemData? <div className="expanded-product-details">
         {deleteProductModal}
+        {refundProdModal}
         <Alert showAlert={showDeletionAlert} setShowAlert={setShowDeletionAlert} alertText={alertMsg} alertColor={alertCol}/>
         <ProductsNavs
          category={category}
@@ -121,7 +140,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                         <div className="prod-action flex gap-2 self-center pt-2">
                             <div className="sell-refund-action flex flex-col gap-2">
                                 <CustomButton className={'text-sm md:text-base'} onClick={()=>navigate('sell-product')} align={'start'}><FontAwesomeIcon className='me-2' icon={faCashRegister}/><span>Sell product</span></CustomButton>
-                                <CustomButton className={'text-sm md:text-base'} onClick={()=>{}} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
+                                <CustomButton className={'text-sm md:text-base'} onClick={()=>setShowRefundModal(true)} align={'start'}><FontAwesomeIcon className='me-2' icon={faArrowRotateLeft}/><span>Refund product</span></CustomButton>
                             </div>
                             <div className="edit-delete-action flex flex-col gap-2">
                                 <CustomButton className={'text-sm md:text-base'}  align={'start'} onClick={()=>navigate('edit-product')}><FontAwesomeIcon className='me-2' icon={faPenToSquare}/><span>Edit product</span></CustomButton>
@@ -174,3 +193,87 @@ const ProdColorQty = ({color,xsQty,sQty,mQty,lQty,xlQty,xxlQty,lightBg})=>{
     </div>
     );
 } 
+
+const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal,emptyConfirmationTextAlert,incorrectConfirmationTxtAlert, unselectedOrderAlert,productRefundAlert})=>{
+    const [selectedOrder,setSelectedOrder] = useState(null);
+    const [refundConfirmation,setRefundConfirmation] = useState('');
+    const arrivedOrdersFilter = ordersData.filter(order=>(order.prodId === prodId && order.orderStatus.currentStatus().status === 'Arrived'));
+    const formattedDate = date =>{
+        const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+        return currentFullDate;
+    }
+    const exitRefundModal = ()=>{
+        setShowRefundModal(false);
+        setSelectedOrder(null);
+        setRefundConfirmation('');
+    }
+    const getCstFromId = (cstId)=>{
+        const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
+        return dummyCsts[cstIndex];
+    }
+    const refundProdHandler = ()=>{
+        if(selectedOrder){
+            if(refundConfirmation){
+                if(refundConfirmation === `Refund ${orderDatafromId(selectedOrder?.value).prodName}`){
+                    exitRefundModal();
+                    productRefundAlert();
+                }
+                else
+                    incorrectConfirmationTxtAlert();
+            }
+            else
+                emptyConfirmationTextAlert();
+        }
+        else
+            unselectedOrderAlert();
+    }
+    const orderDatafromId = (orderId)=>{
+        const orderIndex = ordersData.map(order=>order.orderId).indexOf(orderId);
+        return ordersData[orderIndex]
+    }
+    return <Modal
+    showModal={showRefundModal}
+    setShowModal={setShowRefundModal}
+    onModalExit={exitRefundModal}
+    modalTitle={'Refund product'}
+    modalActions={
+        arrivedOrdersFilter.length > 0?    
+    [
+        {title:'Refund',onClicked:refundProdHandler},
+        {title:'Cancel',onClicked:exitRefundModal},
+    ]
+        :
+    [
+        {title:'Ok',onClicked:exitRefundModal}, 
+    ]
+    }
+    >
+    {
+    arrivedOrdersFilter.length > 0?
+    <div className="has-arrived-orders">
+        <p>Select the customer who you want to refund the word to.</p>
+        <CustomDropdown title='Select Order'
+            value={selectedOrder}
+            onChange={setSelectedOrder}
+            options={arrivedOrdersFilter.map(order=>
+            (
+                {value:order.orderId,
+                text:`${getCstFromId(order.cstId).name} - ${order.colorQty.color} ${order.colorQty.size} x ${order.colorQty.qty}`,
+                suffix:`${order.totalPrice()}EGP`,
+                subtitle:formattedDate(order.orderStatus.currentStatus().date)
+            }
+            ))}/>
+        {selectedOrder && 
+        <div className="refund-confirmation mt-2 flex flex-col gap-1 px-2">
+            <p>Type the following to confirm refund of amount <span className='font-bold'>{orderDatafromId(selectedOrder?.value).totalPrice()}EGP</span>.</p>
+            <p className='ms-2 font-semibold'>Refund {orderDatafromId(selectedOrder?.value).prodName}</p>
+            <input type="text" value={refundConfirmation} onChange={e=>setRefundConfirmation(e.target.value)} className='inpt w-full text-slate-900' placeholder='Type the text above for confirmation.' />
+        </div>}
+    </div>
+    :
+    <div className="no-arrived-orders">
+        No one purchased this product yet.
+    </div>
+    }
+    </Modal>
+}

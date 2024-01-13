@@ -135,22 +135,6 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
         accumulator.totalRev = (accumulator.totalRev || 0) + dataSet.revenue;
         return accumulator;
       }, {})));
-    
-    
-    
-    // .reduce((n, data)=>
-    // {    
-    //       return {
-    //         totalSales:(n + data.revenue,0),
-    //         totalRev:(n + data.sales,0)
-    //     }}
-    // )))
-    
-    
-    // .map(()=>({
-    //     totalSales:annualDataset(year).reduce((n, o) => n + o.revenue, 0),
-    //     totalRev:annualDataset(year).reduce((n, o) => n + o.revenue, 0)
-    // }))))
     const monthlyDataset = (month,year) =>{
         const monthIndex = ordersPerYear(year).map(annualOrders=>annualOrders.month).indexOf(month);
         const ordersPerMonth = ordersPerYear(year)[monthIndex].orders;       
