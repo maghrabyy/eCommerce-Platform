@@ -138,8 +138,8 @@ colorQty:{
 cstId:dummyCsts[1].cstId,
 shippingFees:40,
 prodPrice: productsArray[3].prodPrice,
-totalPrice:function() {return 0},
-revenue:function() {return this.totalPrice() -productsArray[3].prodCost},
+totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
+revenue:function() {return 0},
 orderStatus:{
     statusHistory:[
         {status:'In Progress',date:(new Date('January 1, 2024 00:17:00'))},

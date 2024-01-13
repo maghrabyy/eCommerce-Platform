@@ -4,7 +4,7 @@ export const dummyCsts = [
         name:'Mahmoud Deba',
         phoneNum:'201282807419',
         cstAddress:{address:'17 eishreen St',city:'Giza'},
-        orders:['order9TI39F']
+        orders:['order9TI39F','order465H4R','order23VRSTQ','order6984CT']
     },
     {
         cstId:'cst953TFEW',
@@ -18,7 +18,7 @@ export const dummyCsts = [
         name:'Leo khaled',
         phoneNum:'20120343419',
         cstAddress:{address:'So2 ali Maleka Feisal St',city:'Giza'},
-        orders:['orderAS64F']
+        orders:['orderAS64F','orderA5890']
     },
     {
         cstId:'cst49OPD0R',
