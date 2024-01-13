@@ -76,7 +76,7 @@ export const OrderDetails = ()=>{
             closeModalHandler();
         }
         openModal();
-        setModalContent({title:'Refund Item', content: <RefundItemModal prodName={order.prodName} totalPrice={order.totalPrice()} cstName={getCstFromId(order.cstId).name} />,
+        setModalContent({title:'Refund Item', content: <RefundItemModal prodName={order.prodName} prodPrice={order.prodPrice} cstName={getCstFromId(order.cstId).name} />,
         actions:[
             {title:'Confirm',onClicked:refundConfirmHandler},
             {title:'Cancel',onClicked:closeModalHandler},
@@ -194,10 +194,10 @@ const CancelOrderModal = ({cstName,prodName})=>{
     </div>
 }
 
-const RefundItemModal = ({prodName,totalPrice,cstName})=>{
+const RefundItemModal = ({prodName,prodPrice,cstName})=>{
     return <div>
-        <p>Are you sure you want to refund <span className="font-semibold"> {prodName}</span> with a total price of 
-        <span className="font-bold"> {totalPrice} EGP</span> to 
+        <p>Are you sure you want to refund <span className="font-semibold"> {prodName}</span> with an amount of 
+        <span className="font-bold"> {prodPrice} EGP</span> to 
         <span className="font-semibold"> {cstName}</span>?</p>
     </div>
 }

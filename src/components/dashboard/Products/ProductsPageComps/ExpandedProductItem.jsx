@@ -259,20 +259,20 @@ const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal,emptyConf
             (
                 {value:order.orderId,
                 text:`${getCstFromId(order.cstId).name} - ${order.colorQty.color} ${order.colorQty.size} x ${order.colorQty.qty}`,
-                suffix:`${order.totalPrice()}EGP`,
+                suffix:`${order.prodPrice}EGP`,
                 subtitle:formattedDate(order.orderStatus.currentStatus().date)
             }
             ))}/>
         {selectedOrder && 
         <div className="refund-confirmation mt-2 flex flex-col gap-1 px-2">
-            <p>Type the following to confirm refund of amount <span className='font-bold'>{orderDatafromId(selectedOrder?.value).totalPrice()}EGP</span>.</p>
+            <p>Type the following to confirm refund of amount <span className='font-bold'>{orderDatafromId(selectedOrder?.value).prodPrice}EGP</span>.</p>
             <p className='ms-2 font-semibold'>Refund {orderDatafromId(selectedOrder?.value).prodName}</p>
             <input type="text" value={refundConfirmation} onChange={e=>setRefundConfirmation(e.target.value)} className='inpt w-full text-slate-900' placeholder='Type the text above for confirmation.' />
         </div>}
     </div>
     :
     <div className="no-arrived-orders">
-        No one purchased this product yet.
+        No one recieved this product yet.
     </div>
     }
     </Modal>
