@@ -3,7 +3,7 @@ import { faChartLine, faCirclePlus, faClipboardList } from '@fortawesome/free-so
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import NavigationsRoutesContext from './context/NavigationRoutesContext';
+import { routes, categoriesRoutes, brandsRoutes } from './data/navigationPaths';
 import { DashboardContent } from './components/dashboard/Dashcontent';
 
 //Pages
@@ -30,7 +30,6 @@ import { PageNotFound } from './pages/PageNotFound';
 
 function App() {
   const {authUser} = useContext(AuthContext);
-  const { routes, categoriesRoutes, brandsRoutes } = useContext(NavigationsRoutesContext);
   const productCategories = [
     {path:categoriesRoutes.all,title:"All"},
     {path:categoriesRoutes.hoodiesNSweatshirt,title:"Hoodies and Sweatshirts"},

@@ -3,10 +3,28 @@ import { useState, useContext, useEffect } from 'react';
 import  SearchInptContext  from "../../../../context/SearchInputContext";
 import { ProductSearch } from '../../Products/ProductSearch';
 import { ProductsNavs } from './ProductNavs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from '../../../util/Model';
+import { Alert } from '../../../util/Alert';
+import { ProductsSectionEditModal } from '../ProductSectionEdit';
 
-export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilter,showSearchInpt,showProdsNav,showSortByDrodown, prodsList,setProdsList})=>{
+export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilter,showSearchInpt,showProdsNav,showSortByDrodown,showActionBtns, prodsList,setProdsList})=>{
     const [sortBy,setSortBy] = useState(null);
-    const [searchInpt,setSearchInpt] = useContext(SearchInptContext)
+    const [alertMsg,setAlertMsg] = useState('');
+    const [alertColor,setAlertColor] = useState('primary');
+    const [showAlert,setShowAlert] = useState(false);
+    const [showDeleteSectionModal,setShowDeleteSectionModal] = useState(false);
+    const [deleteConfirmationText,setDeleteConfirmationText] = useState('');
+    const [searchInpt,setSearchInpt] = useContext(SearchInptContext);
+    const [showEditSectionTitle,setShowEditSectionTitle] = useState(false);
+    const displayAlert=(msg,color)=>{
+        if(!showAlert){
+            setShowAlert(true);
+            setAlertColor(color);
+            setAlertMsg(msg);
+        }
+    }
     useEffect(()=>{
         setSortBy(null);
     },[brand,category]);
@@ -51,23 +69,82 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
         { value:'qtyHToL', text:'Quantity - High to Low' },
         { value:'qtyLToH', text:'Quantity - Low to High'},
     ]
+    const editClickHandler = ()=>{
+        setShowEditSectionTitle(true);
+    }
+    const deleteClickHandler = () =>{
+        if(initialprodsList.length > 0){
+            displayAlert(`${(brand && 'Brand') || (category && 'Category')} section must be empty to be removed.`,'warning');
+        }else{
+            openDeleteSectionModal();
+        }
+    }
+    const openDeleteSectionModal = ()=> setShowDeleteSectionModal(true);
+    const closeDeleteSectionModal = ()=> {
+        setShowDeleteSectionModal(false);
+        setDeleteConfirmationText('')
+    }
+    const sectionDeletionAlert = ()=> displayAlert('Section deleted.','success');
+    const incorrectConfirmationTxtAlert = ()=> displayAlert('Incorrect confirmation text.','danger');
+    const emptyConfirmationTextAlert = ()=>displayAlert("You can't leave the input empty.",'warning');
+    const confirmationText = `Delete ${(brand?.title || category?.title)} ${((brand && 'Brand') || (category && 'Category'))}`
+    const deleteSectionHandler = ()=>{
+        if(deleteConfirmationText.length > 0){
+            if(deleteConfirmationText === confirmationText){
+                sectionDeletionAlert();
+                closeDeleteSectionModal();
+            }
+            else{
+                incorrectConfirmationTxtAlert();
+            }
+        }
+        else{
+            emptyConfirmationTextAlert();
+        }
+    }
+    const deleteSectionModal = <Modal
+        modalTitle={'Delete ' + ((brand && 'Brand') || (category && 'Category'))}
+        showModal={showDeleteSectionModal}
+        setShowModal={setShowDeleteSectionModal}
+        onModalExit={closeDeleteSectionModal}
+        modalActions={
+            [
+                {title:'Delete', onClicked:deleteSectionHandler},
+                {title:'Cancel', onClicked:closeDeleteSectionModal},
+            ]
+        }
+    >
+        <p>Type the following to confirm {(brand?.title || category?.title)}'s {((brand && 'Brand') || (category && 'Category'))} section deletion.</p>
+        <p className='ms-2 font-semibold py-1'>{confirmationText}</p>
+        <input type="text" value={deleteConfirmationText} onChange={e=>setDeleteConfirmationText(e.target.value)} className='ms-2 inpt w-full text-slate-900' placeholder='Enter the delete confirmation text here.' />
+    </Modal>
     return(
         <div className="productsHeader flex flex-col">
+            <Alert showAlert={showAlert} setShowAlert={setShowAlert} alertText={alertMsg} alertColor={alertColor} />
+           {deleteSectionModal}
+           <ProductsSectionEditModal category={category} brand={brand} showEditSectionTitle={showEditSectionTitle} setShowEditSectionTitle={setShowEditSectionTitle}/>
            {showSearchInpt && <div className="py-2 md:hidden">
                 <ProductSearch />
             </div>}
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 
-              {showProdsNav &&  <div className="flex flex-col md:flex-row md:items-center">
-                    <ProductsNavs category={category} brand={brand} />
-                    <span> - {prodsList.length} out of {prodsList.length} </span>
-                </div>}
-               {showSortByDrodown && <div className="sortby-dropdown ms-auto">
-                    <CustomDropdown title='Sort by'
-                    value={sortBy}
-                    onChange={setSortBy}
-                    options={sortyByItems} 
-                    width={220}/>
-                </div> }
+              <div className="flex justify-between">
+                {showProdsNav &&  <div className="flex flex-col gap-2 md:flex-row md:items-center">
+                        <ProductsNavs category={category} brand={brand} />
+                        <span>{prodsList.length} out of {prodsList.length} </span>
+                    </div>}
+                    {showActionBtns && 
+                        <div className="admin-action-btns flex ms-4 gap-2 items-center text-slate-700">
+                        <FontAwesomeIcon onClick={editClickHandler} className=' hover:text-slate-500 cursor-pointer' icon={faEdit} />
+                        <FontAwesomeIcon onClick={deleteClickHandler} className=' hover:text-slate-500 cursor-pointer' icon={faTrash} />
+                    </div>}
+              </div>
+              {showSortByDrodown && <div className="sortby-dropdown ms-auto">
+                        <CustomDropdown title='Sort by'
+                        value={sortBy}
+                        onChange={setSortBy}
+                        options={sortyByItems} 
+                        width={230}/>
+                    </div> }
             </div>
             { showSearchInpt &&
                 searchInpt.length > 0 &&
@@ -84,4 +161,5 @@ ProductsHeader.defaultProps = {
     showSearchInpt:true,
     showProdsNav:true,
     showSortByDrodown:true,
+    showActionBtns:true,
 }

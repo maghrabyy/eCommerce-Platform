@@ -1,4 +1,4 @@
-import { ordersData } from '../Products/ProductsPageComps/ordersData';
+import { ordersData } from '../../../data/ordersData';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faAngleDown, faAngleRight} from '@fortawesome/free-solid-svg-icons';

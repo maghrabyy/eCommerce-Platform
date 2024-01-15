@@ -3,15 +3,14 @@ import { faChartLine,faBasketShopping,faUserGroup ,faShirt, faCirclePlus, faClip
 import logo from './../../assets/stylesquad-logo.png';
 import { ExpandableMenu } from '../util/ExpandableMenu';
 import { useContext } from 'react';
-import NavigationRoutesContext from '../../context/NavigationRoutesContext';
+import { routes } from '../../data/navigationPaths';
 import AuthContext from '../../context/AuthContext';
 import SidebarTogglerContext from '../../context/SidebarTogglerContext';
 import { PageLink } from './PageLink'; 
 import { useNavigate } from "react-router-dom";
-
+import { categories,brands } from '../../data/sectionsData';
 
 export const Sidebar = () =>{
-    const { routes, categoriesRoutes, brandsRoutes } = useContext(NavigationRoutesContext);
     const {logoutUser} = useContext(AuthContext);
     const {showToggledSidebar, hideSidebar} = useContext(SidebarTogglerContext);
     const navigate = useNavigate();
@@ -39,20 +38,15 @@ export const Sidebar = () =>{
                         <PageLink pageTitle={'Customers'} pagePath={routes.customers} icon={faUserGroup}/>
                         <li>
                             <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
-                                {path:'products/categories/' + categoriesRoutes.all ,title: 'All'},
-                                {path:'products/categories/' + categoriesRoutes.hoodiesNSweatshirt, title: 'Hoodies and Sweatshirts'},
-                                {path:'products/categories/' + categoriesRoutes.coatsNJackets, title: 'Coats and Jackets'},
-                                {path:'products/categories/' + categoriesRoutes.denims, title: 'Denims'},
-                                {path:'products/categories/' + categoriesRoutes.trousers, title: 'Trousers'},
+                                ...categories.map(category=>(
+                                    {path:'products/categories/' + category.path ,title: category.title}
+                                )),
                                 {subMenu: true}
                                 ]} > 
                                     <ExpandableMenu title='Brands'  menuList={[
-                                        {path:'products/brands/' + brandsRoutes.pullNBear, title: 'Pull & Bear'},
-                                        {path:'products/brands/' + brandsRoutes.bershka, title: 'Bershka'},
-                                        {path:'products/brands/' + brandsRoutes.americanEagle, title: 'American Eagle'},
-                                        {path:'products/brands/' + brandsRoutes.zara, title: 'Zara'},
-                                        {path:'products/brands/' + brandsRoutes.defacto, title: 'Defacto'},
-                                        {path:'products/brands/' + brandsRoutes.hollister, title: 'Hollister'},
+                                        ...brands.map(brand=>(
+                                            {path:'products/brands/' + brand.path, title: brand.title}
+                                        ))
                                     ]} /> 
                             </ExpandableMenu>
                         </li>

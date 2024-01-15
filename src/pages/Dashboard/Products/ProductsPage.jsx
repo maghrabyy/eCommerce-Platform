@@ -4,7 +4,7 @@ import SearchInptContext from '../../../context/SearchInputContext';
 import { ProductsList } from '../../../components/dashboard/Products/ProductsPageComps/ProductsList'
 import { ProductsHeader } from '../../../components/dashboard/Products/ProductsPageComps/ProductsHeader';
 import { useOutlet } from 'react-router-dom';
-import { productsArray } from '../../../components/dashboard/Products/ProductsPageComps/productsData';
+import { productsArray } from '../../../data/productsData';
 
 export const ProductsPage = ({category,brand}) =>{
     const outlet = useOutlet();

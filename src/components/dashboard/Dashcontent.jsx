@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { ProductSearch } from './Products/ProductSearch';
 import { MdDashboard } from "react-icons/md";
-import NavigationsRoutesContext from '../../context/NavigationRoutesContext';
+import {routes} from '../../data/navigationPaths';
 import { useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import SidebarTogglerContext from '../../context/SidebarTogglerContext';
@@ -11,7 +11,6 @@ export const dashcontentRef = { current: null };
 
 export const DashboardContent = ({icon,title,showSearchInput,className,children})=>{
     const {showSidebar} = useContext(SidebarTogglerContext);
-    const {routes} = useContext(NavigationsRoutesContext);
     const isHomeage = useLocation().pathname === routes.homePage;
     return (
         <div ref={dashcontentRef} className={`dashboard-content px-4 bg-white overflow-scroll`}>

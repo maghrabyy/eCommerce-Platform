@@ -1,8 +1,8 @@
-import { dummyCsts } from "../Products/ProductsPageComps/customersData";
+import { dummyCsts } from "../../../data/customersData";
 import { CustomButton } from "../../util/Button";
 import { CustomDropdown } from "../../util/Dropdown";
 import { useParams } from "react-router-dom";
-import { ordersData } from "../Products/ProductsPageComps/ordersData";
+import { ordersData } from "../../../data/ordersData";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Modal } from '../../util/Model';

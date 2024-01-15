@@ -7,10 +7,10 @@ import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
 import { Modal } from '../../../util/Model';
 import { Alert } from '../../../util/Alert';
-import { productsArray } from './productsData';
-import { ordersData } from './ordersData';
+import { productsArray } from '../../../../data/productsData';
+import { ordersData } from '../../../../data/ordersData';
 import { CustomDropdown } from '../../../util/Dropdown';
-import { dummyCsts } from './customersData';
+import { dummyCsts } from '../../../../data/customersData';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();

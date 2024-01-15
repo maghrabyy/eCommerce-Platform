@@ -1,17 +1,11 @@
-import { createContext } from "react";
-
-
-const NavigationsRoutesContext = createContext();
-
-export const NavigationRoutesProvider = ({children})=>{
-    const categoriesRoutes = {
+    export const categoriesRoutes = {
         all:'all',
         hoodiesNSweatshirt:'hoodiesNSweatshirt',
         coatsNJackets:'coatsNJackets',
         denims:'denims',
         trousers:'trousers',
     }
-    const brandsRoutes = {
+    export const brandsRoutes = {
         pullNBear:'pullNBear',
         bershka:'bershka',
         americanEagle:'americanEagle',
@@ -19,7 +13,7 @@ export const NavigationRoutesProvider = ({children})=>{
         defacto:'defacto',
         hollister:'hollister',
     }
-    const routes = {
+    export const routes = {
         homePage:'/',
         orders:'orders',
         customers:'customers',
@@ -31,9 +25,3 @@ export const NavigationRoutesProvider = ({children})=>{
         },
         activityLog: 'activityLog',
     }
-    return <NavigationsRoutesContext.Provider value={{routes,brandsRoutes,categoriesRoutes}}>
-        {children}
-    </NavigationsRoutesContext.Provider>
-}
-
-export default NavigationsRoutesContext;

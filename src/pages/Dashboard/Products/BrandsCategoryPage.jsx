@@ -6,11 +6,10 @@ import { ProductsList } from '../../../components/dashboard/Products/ProductsPag
 import { useContext, useState } from "react";
 import SearchInptContext from "../../../context/SearchInputContext";
 import { ProductsHeader } from "../../../components/dashboard/Products/ProductsPageComps/ProductsHeader";
-import NavigationsRoutesContext from "../../../context/NavigationRoutesContext";
-import { productsArray } from "../../../components/dashboard/Products/ProductsPageComps/productsData";
+import {brandsRoutes,categoriesRoutes} from "../../../data/navigationPaths";
+import { productsArray } from "../../../data/productsData";
 
 export const BrandsCategoryPage = ()=>{
-    const { brandsRoutes,categoriesRoutes } = useContext(NavigationsRoutesContext);
     const productBrands = [
         {path:brandsRoutes.pullNBear,title:"Pull & Bear"},
         {path:brandsRoutes.bershka,title:"Bershka"},
@@ -60,7 +59,13 @@ export const BrandsCategoryPage = ()=>{
                         <div className="font-semibold text-2xl w-32" >Brands</div>
                 </Panel>
         </div>
-                <ProductsHeader  prodsList={allProdsItems} setProdsList={setAllProdsItems} searchResultFilter={searchResultFilter} showProdsNav={false} initialprodsList={productsArray} />
+                <ProductsHeader  
+                    prodsList={allProdsItems} 
+                    setProdsList={setAllProdsItems} 
+                    searchResultFilter={searchResultFilter} 
+                    showProdsNav={false}
+                    showActionBtns={false}
+                    initialprodsList={productsArray} />
                 <ProductsList prodsList={allProdsItems} searchResultFilter={searchResultFilter} />
         </div>}
    </DashboardContent>

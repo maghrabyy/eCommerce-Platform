@@ -1,6 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { ordersData } from '../Products/ProductsPageComps/ordersData';
-import { dummyCsts } from '../Products/ProductsPageComps/customersData';
+import { ordersData } from '../../../data/ordersData';
+import { dummyCsts } from '../../../data/customersData';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { SearchBar } from '../../util/SearchBar';

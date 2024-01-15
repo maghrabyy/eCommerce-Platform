@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AddProductForum } from "../../../components/dashboard/Add Items/Add Products/AddProductForm";
 import { ProductNotFound } from "../../../components/dashboard/Products/ProductsPageComps/ProductNotFoundError";
-import { productsArray } from "../../../components/dashboard/Products/ProductsPageComps/productsData";
+import { productsArray } from "../../../data/productsData";
 
 export const ProductEditPage = ()=>{
     const [productItemData,setProductItemData] = useState(null);

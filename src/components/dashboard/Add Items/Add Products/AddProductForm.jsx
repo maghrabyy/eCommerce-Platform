@@ -4,6 +4,7 @@ import { ColorSizeQuantityInput } from './ColorSizeQuantityInput';
 import { ColorSizeQtyList } from './ColorSizeQtyList';
 import { CustomDropdown } from '../../../util/Dropdown';
 import { useNavigate } from 'react-router-dom';
+import { categories,brands } from '../../../../data/sectionsData';
 
 export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditing})=>{
     const navigate = useNavigate();
@@ -44,21 +45,16 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
                 <label className='inpt-label'>Product Category</label>
                 <CustomDropdown title='Select Category' value={prodCat} onChange={setProdCat} width={240}
                 options={[
-                    { value:'hoodiesNSweatshirts', text:'Hoodies and Sweatshirts'},
-                    { value:'coatsNJackets',text:'Coats and Jackets'},
-                    { value:'denims',text:'Denims'},
-                    { value:'trousers',text:'Trousers'},]}/>
+                    ...categories.filter(category=>category.id !== 'cat01').map(category=>(
+                        {value:category.path, text:category.title}
+                    ))]}/>
             </div>
             <div className="brand-dropdown">
                 <label className='inpt-label'>Product Brand</label>
                 <CustomDropdown title='Select Brand' value={prodBrand} onChange={setProdBrand} width={180}
                     options={[
-                        { value:'pullNBear', text:'Pull & Bear'},
-                        { value:'bershka',text:'Bershka'},
-                        { value:'americanEagle',text:'American Eagle'},
-                        { value:'zara',text:'Zara'},
-                        { value:'defacto',text:'Defacto'},
-                        { value:'hollister',text:'Hollister'},]}/>
+                        ...brands.map(category=>(
+                            {value:category.path, text:category.title}))]} />
             </div>
 
         </div>

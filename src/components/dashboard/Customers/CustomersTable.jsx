@@ -1,6 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid"
 import { useNavigate } from "react-router-dom";
-import { dummyCsts } from "../Products/ProductsPageComps/customersData";
+import { dummyCsts } from "../../../data/customersData";
 import { SearchBar } from "../../util/SearchBar";
 import { useState } from "react";
 import emptyBox from '../../../assets/emptyBox.svg'

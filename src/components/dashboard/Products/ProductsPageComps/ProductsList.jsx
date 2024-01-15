@@ -21,7 +21,7 @@ export const ProductsList = ({prodsList,searchResultFilter})=>{
                     productColors={prod.prodColorQtyList.map(color=>color.prodColor)}/>)}
                 </div>
                 :
-                <div className='empty-list-msg font-bold text-4xl text-gray-700 pt-12 xl:pt-0 flex flex-col items-center'>
+                <div className='empty-list-msg font-bold text-4xl text-gray-700 h-full flex flex-col items-center pt-8'>
                     <div className="empty-text">Empty here.</div>
                     <img src={emptyBox} className=" w-96" alt="empty box" />
                 </div>}
