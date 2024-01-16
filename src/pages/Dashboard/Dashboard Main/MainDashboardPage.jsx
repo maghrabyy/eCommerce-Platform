@@ -11,7 +11,7 @@ export const MainDashboard = ()=>{
         <DashboardItem onClick={()=>navigate(routes.orders)} icon={faBasketShopping} title={'Orders'}/>
         <DashboardItem onClick={()=>navigate('products')} icon={faShirt} title={'Products'}/>
         <DashboardItem onClick={()=>navigate(routes.customers)} icon={faUserGroup} title={'Customers'}/>
-        <DashboardItem onClick={()=>navigate('dataEntry')} icon={faCirclePlus} title={'Data Entry'}/>
+        <DashboardItem onClick={()=>navigate(routes.addProduct)} icon={faCirclePlus} title={'Add Product'}/>
         <DashboardItem onClick={()=>navigate(routes.activityLog)} icon={faClipboardList} title={'Activity Log'}/>
     </div>
 }

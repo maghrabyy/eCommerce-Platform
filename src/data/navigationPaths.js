@@ -19,9 +19,6 @@
         customers:'customers',
         salesReport:'sales-report',
         products:{categoriesRoutes,brandsRoutes},
-        dataEntry:{
-            addCategory:'addCategory',
-            addProduct: 'addProd',
-        },
+        addProduct: 'addProduct',
         activityLog: 'activityLog',
     }

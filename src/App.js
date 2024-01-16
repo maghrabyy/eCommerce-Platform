@@ -14,9 +14,7 @@ import { CustomersPage } from './pages/Customers/CustomersPage';
 import { CustomerDetails } from './components/dashboard/Customers/CustomerDetails';
 import { SalesReportPage } from './pages/Sales Reports/SalesReportsPage';
 import { ActivityLogPage } from "./pages/Dashboard/Activity Log/ActivityLogPage";
-import { DataEntryPage } from './pages/Dashboard/Data Entry/DataEntryPage';
-import { AddProductPage } from "./pages/Dashboard/Data Entry/Add Product/AddProductPage";
-import { AddCategoryPage } from "./pages/Dashboard/Data Entry/Add Category/AddCategoryPage";
+import { AddProductPage } from "./pages/Dashboard/Add Product/AddProductPage";
 import { BrandsCategoryPage } from './pages/Dashboard/Products/BrandsCategoryPage';
 import { BrandsPage } from './pages/Dashboard/Products/BrandsPage';
 import { CategoriesPage } from './pages/Dashboard/Products/CategoryPage';
@@ -92,16 +90,10 @@ function App() {
             {renderedCategoryRoutes}
           </Route>
         </Route>
-        <Route path='dataEntry' element={<DataEntryPage/>}  >
-          <Route path={routes.dataEntry.addProduct} element={
+        <Route path={routes.addProduct} element={
               <DashboardContent title='Add Product' icon={faCirclePlus}>
                 <AddProductPage/>
               </DashboardContent>} />
-          <Route path={routes.dataEntry.addCategory} element={
-            <DashboardContent title='Add Category' icon={faCirclePlus}>
-              <AddCategoryPage/>
-            </DashboardContent>} />
-        </Route>
         <Route path={routes.activityLog} element={
           <DashboardContent title='Activity Log' icon={faClipboardList}>
             <ActivityLogPage/>

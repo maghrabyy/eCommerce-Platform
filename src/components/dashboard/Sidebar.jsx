@@ -37,27 +37,20 @@ export const Sidebar = () =>{
                         <PageLink pageTitle={'Orders'} pagePath={routes.orders} icon={faBasketShopping}/>
                         <PageLink pageTitle={'Customers'} pagePath={routes.customers} icon={faUserGroup}/>
                         <li>
-                            <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[
-                                ...categories.map(category=>(
-                                    {path:'products/categories/' + category.path ,title: category.title}
-                                )),
-                                {subMenu: true}
-                                ]} > 
-                                    <ExpandableMenu title='Brands'  menuList={[
-                                        ...brands.map(brand=>(
-                                            {path:'products/brands/' + brand.path, title: brand.title}
-                                        ))
+                            <ExpandableMenu title='Products' menuIcon={faShirt} menuList={[{subMenu: true}]} > 
+                                <ExpandableMenu title='Categories'  menuList={[
+                                    ...categories.map(category=>(
+                                        {path:'products/categories/' + category.path ,title: category.title}
+                                    )),
                                     ]} /> 
+                                <ExpandableMenu title='Brands'  menuList={[
+                                    ...brands.map(brand=>(
+                                        {path:'products/brands/' + brand.path, title: brand.title}
+                                    ))
+                                ]} /> 
                             </ExpandableMenu>
                         </li>
-                        <li>
-                            <ExpandableMenu title='Add Item' menuIcon={faCirclePlus}
-                                menuList={[
-                                    {path: 'dataEntry/' + routes.dataEntry.addProduct, title: 'Add Product'},
-                                    {path: 'dataEntry/' + routes.dataEntry.addCategory, title: 'Add Category'}
-                                ]}
-                            />
-                        </li>
+                        <PageLink pageTitle={'Add Product'} pagePath={routes.addProduct} icon={faCirclePlus}/>
                         <PageLink pageTitle={'Activity Log'} pagePath={routes.activityLog} icon={faClipboardList}/>
                     </ul>
                 </div>
