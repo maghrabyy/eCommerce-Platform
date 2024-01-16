@@ -8,6 +8,7 @@ import defactoLogo from '../../../assets/brands/defacto.svg';
 import hollisterLogo from '../../../assets/brands/hollister.png';
 import { useOutlet } from "react-router-dom";
 import { ProductsNavs } from "../../../components/dashboard/Products/ProductsPageComps/ProductNavs";
+import { AddSectionModal } from "../../../components/dashboard/Add Items/AddSection/AddSectionModal";
 
 export const BrandsPage = ()=>{
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const BrandsPage = ()=>{
         );
     return outlet || 
     <div className="brands-page">
+        <AddSectionModal brands />
         <ProductsNavs  />
         <div className={'grid xl:grid-cols-3 gap-4 p-4'} >
             {renderedProductBrands}

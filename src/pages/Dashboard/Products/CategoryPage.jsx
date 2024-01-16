@@ -6,6 +6,7 @@ import denimsImg from '../../../assets/denims.png';
 import trousersImg from '../../../assets/trousers.png';
 import clothesImg from '../../../assets/clothes.png';
 import { ProductsNavs } from "../../../components/dashboard/Products/ProductsPageComps/ProductNavs";
+import { AddSectionModal } from "../../../components/dashboard/Add Items/AddSection/AddSectionModal";
 
 export const CategoriesPage = ()=>{
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export const CategoriesPage = ()=>{
         );
     return outlet || 
     <div className="categories-page">
+        <AddSectionModal categories />
         <ProductsNavs  />
         <div className="grid xl:grid-cols-3 gap-4 pt-2 p-4'">
             {renderedProductCategories}

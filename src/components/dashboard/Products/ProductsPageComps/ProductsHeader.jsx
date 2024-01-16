@@ -124,7 +124,7 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
                     {showActionBtns && 
                         <div className="admin-action-btns flex ms-4 gap-2 items-center text-slate-700">
                         <FontAwesomeIcon onClick={editClickHandler} className=' hover:text-slate-500 cursor-pointer' icon={faEdit} />
-                        <FontAwesomeIcon onClick={deleteClickHandler} className=' hover:text-slate-500 cursor-pointer' icon={faTrash} />
+                        <FontAwesomeIcon onClick={deleteClickHandler} className=' hover:text-red-600 cursor-pointer' icon={faTrash} />
                     </div>}
               </div>
               {showSortByDrodown && <div className="sortby-dropdown ms-auto">

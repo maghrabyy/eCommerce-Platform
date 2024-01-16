@@ -1,5 +1,5 @@
-import { AddCategoryForm } from '../../../../components/dashboard/Add Items/AddCategory/AddCategoryForm';
-import { AddBrandForm } from '../../../../components/dashboard/Add Items/AddCategory/AddBrandForm';
+import { AddCategoryForm } from '../../../../components/dashboard/Add Items/AddSection/AddCategoryForm';
+import { AddBrandForm } from '../../../../components/dashboard/Add Items/AddSection/AddBrandForm';
 
 export const AddCategoryPage = ()=>{
     return(
