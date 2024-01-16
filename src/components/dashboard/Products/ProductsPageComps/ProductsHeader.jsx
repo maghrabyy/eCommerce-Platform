@@ -6,25 +6,16 @@ import { ProductsNavs } from './ProductNavs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from '../../../util/Model';
-import { Alert } from '../../../util/Alert';
 import { ProductsSectionEditModal } from '../ProductSectionEdit';
+import AlertContext from '../../../../context/AlertContext';
 
 export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilter,showSearchInpt,showProdsNav,showSortByDrodown,showActionBtns, prodsList,setProdsList})=>{
     const [sortBy,setSortBy] = useState(null);
-    const [alertMsg,setAlertMsg] = useState('');
-    const [alertColor,setAlertColor] = useState('primary');
-    const [showAlert,setShowAlert] = useState(false);
     const [showDeleteSectionModal,setShowDeleteSectionModal] = useState(false);
     const [deleteConfirmationText,setDeleteConfirmationText] = useState('');
     const [searchInpt,setSearchInpt] = useContext(SearchInptContext);
     const [showEditSectionTitle,setShowEditSectionTitle] = useState(false);
-    const displayAlert=(msg,color)=>{
-        if(!showAlert){
-            setShowAlert(true);
-            setAlertColor(color);
-            setAlertMsg(msg);
-        }
-    }
+    const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     useEffect(()=>{
         setSortBy(null);
     },[brand,category]);
@@ -85,8 +76,7 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
         setDeleteConfirmationText('')
     }
     const sectionDeletionAlert = ()=> displayAlert('Section deleted.','success');
-    const incorrectConfirmationTxtAlert = ()=> displayAlert('Incorrect confirmation text.','danger');
-    const emptyConfirmationTextAlert = ()=>displayAlert("You can't leave the input empty.",'warning');
+
     const confirmationText = `Delete ${(brand?.title || category?.title)} ${((brand && 'Brand') || (category && 'Category'))}`
     const deleteSectionHandler = ()=>{
         if(deleteConfirmationText.length > 0){
@@ -99,7 +89,7 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
             }
         }
         else{
-            emptyConfirmationTextAlert();
+            emptyFieldAlert();
         }
     }
     const deleteSectionModal = <Modal
@@ -120,7 +110,6 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
     </Modal>
     return(
         <div className="productsHeader flex flex-col">
-            <Alert showAlert={showAlert} setShowAlert={setShowAlert} alertText={alertMsg} alertColor={alertColor} />
            {deleteSectionModal}
            <ProductsSectionEditModal category={category} brand={brand} showEditSectionTitle={showEditSectionTitle} setShowEditSectionTitle={setShowEditSectionTitle}/>
            {showSearchInpt && <div className="py-2 md:hidden">

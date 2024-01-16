@@ -1,29 +1,27 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPenToSquare, faCashRegister, faAngleDown, faAngleRight, faTrash, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import {  useState, useEffect } from 'react';
+import {  useState, useEffect, useContext } from 'react';
 import { CustomButton } from '../../../util/Button';
 import { useNavigate } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
 import { Modal } from '../../../util/Model';
-import { Alert } from '../../../util/Alert';
 import { productsArray } from '../../../../data/productsData';
 import { ordersData } from '../../../../data/ordersData';
 import { CustomDropdown } from '../../../util/Dropdown';
 import { dummyCsts } from '../../../../data/customersData';
+import AlertContext from '../../../../context/AlertContext';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
+    const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     const [showProdQtyList,setShowProdQtyList] = useState(false);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
     const [selectedImgIndex,setSelectedImgIndex] = useState(0);
     const [productItemData,setProductItemData] = useState(null);
     const [showDeleteConfirmation,setShowDeleteConfirmation] = useState(false);
     const [deleteConfirmationInpt,setDeleteConfirmationInpt] = useState('');
-    const [showDeletionAlert,setShowDeletionAlert] = useState(false);
     const [showRefundModal,setShowRefundModal] = useState(false);
-    const [alertMsg,setAlertMsg] = useState('');
-    const [alertCol,setAlertCol] = useState('primary');
     useEffect(()=>{
         const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
         setProductItemData( productsArray[prodIndex]);
@@ -39,18 +37,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
         setSelectedImgIndex(index);
     }
     const prodName = `${productItemData?.prodBrand.text} ${productItemData?.prodTitle}`;
-    const displayAlert= (msg,color) =>{
-        if(!showDeletionAlert){
-            setShowDeletionAlert(true);
-            setAlertMsg(msg);
-            setAlertCol(color)
-        }
-    }
     const productDeletionAlert = ()=> displayAlert('Product deleted.','success');
-    const productRefundAlert = ()=>displayAlert('Product refunded.','success');
-    const incorrectConfirmationTxtAlert = ()=> displayAlert('Incorrect confirmation text.','danger');
-    const emptyConfirmationTextAlert = ()=>displayAlert("You can't leave the input empty.",'warning');
-    const unSelectedOrderAlert = ()=>displayAlert("You haven't selected an order yet.",'warning');
     const handleProductDeletion = ()=>{
         if(deleteConfirmationInpt){
             if(deleteConfirmationInpt === ('Delete ' + prodName)){
@@ -61,7 +48,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                 incorrectConfirmationTxtAlert()
             }
         }else{
-            emptyConfirmationTextAlert()
+            emptyFieldAlert()
         }
 
     }
@@ -88,15 +75,10 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
 
     const refundProdModal = <RefundProductModal prodId={prodId}
      showRefundModal={showRefundModal} 
-     setShowRefundModal={setShowRefundModal}
-     unselectedOrderAlert={unSelectedOrderAlert}
-     incorrectConfirmationTxtAlert={incorrectConfirmationTxtAlert}
-     emptyConfirmationTextAlert={emptyConfirmationTextAlert}
-     productRefundAlert={productRefundAlert} /> 
+     setShowRefundModal={setShowRefundModal}/> 
     return productItemData? <div className="expanded-product-details">
         {deleteProductModal}
         {refundProdModal}
-        <Alert showAlert={showDeletionAlert} setShowAlert={setShowDeletionAlert} alertText={alertMsg} alertColor={alertCol}/>
         <ProductsNavs
          category={category}
          brand={brand}
@@ -194,10 +176,13 @@ const ProdColorQty = ({color,xsQty,sQty,mQty,lQty,xlQty,xxlQty,lightBg})=>{
     );
 } 
 
-const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal,emptyConfirmationTextAlert,incorrectConfirmationTxtAlert, unselectedOrderAlert,productRefundAlert})=>{
+const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
+    const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     const [selectedOrder,setSelectedOrder] = useState(null);
     const [refundConfirmation,setRefundConfirmation] = useState('');
     const arrivedOrdersFilter = ordersData.filter(order=>(order.prodId === prodId && order.orderStatus.currentStatus().status === 'Arrived'));
+    const productRefundAlert = ()=>displayAlert('Product refunded.','success');
+    const unSelectedOrderAlert = ()=>displayAlert("You haven't selected an order yet.",'warning');
     const formattedDate = date =>{
         const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
         return currentFullDate;
@@ -222,10 +207,10 @@ const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal,emptyConf
                     incorrectConfirmationTxtAlert();
             }
             else
-                emptyConfirmationTextAlert();
+                emptyFieldAlert();
         }
         else
-            unselectedOrderAlert();
+            unSelectedOrderAlert();
     }
     const orderDatafromId = (orderId)=>{
         const orderIndex = ordersData.map(order=>order.orderId).indexOf(orderId);

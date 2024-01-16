@@ -1,14 +1,27 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
 import { Modal } from "../../util/Model";
+import AlertContext from "../../../context/AlertContext";
 
 export const ProductsSectionEditModal = ({category,brand,showEditSectionTitle,setShowEditSectionTitle})=>{
-    const [sectionTitle,setSectionTitle] = useState(category?.title || brand?.title)
+    const [sectionTitle,setSectionTitle] = useState(category?.title || brand?.title);
+    const {displayAlert,emptyFieldAlert} = useContext(AlertContext); 
     const closeEditSectionTitleModal = ()=>{
         setSectionTitle(category?.title || brand?.title)
         setShowEditSectionTitle(false);
     }
     const updateSectionTitleHandler = ()=>{
-
+        if(sectionTitle){
+            if(sectionTitle !== (category?.title || brand?.title)){
+                displayAlert(((category && 'Category') || (brand && 'Brand')) + ' title changed','success');
+                closeEditSectionTitleModal();
+            }
+            else{
+                displayAlert('Nothing changed.','primary');
+                closeEditSectionTitleModal();
+            }
+        }else{
+            emptyFieldAlert()
+        }
     }
     useEffect(()=>{
         setSectionTitle(category?.title || brand?.title)
