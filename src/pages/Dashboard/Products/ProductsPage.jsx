@@ -5,6 +5,7 @@ import { ProductsList } from '../../../components/dashboard/Products/ProductsPag
 import { ProductsHeader } from '../../../components/dashboard/Products/ProductsPageComps/ProductsHeader';
 import { useOutlet } from 'react-router-dom';
 import { productsArray } from '../../../data/productsData';
+import { ProductSectionActions } from './ProductSectionActions';
 
 export const ProductsPage = ({category,brand}) =>{
     const outlet = useOutlet();
@@ -19,9 +20,11 @@ export const ProductsPage = ({category,brand}) =>{
                                 prod.prodBrand.text.toUpperCase().includes(searchInpt.toUpperCase()) ||
                                 prod.prodTitle.toUpperCase().includes(searchInpt.toUpperCase()) ||
                                 prod.prodDesc.toUpperCase().includes(searchInpt.toUpperCase()));
+      
     return (
         outlet ||
         <div>
+            <ProductSectionActions category={category} brand={brand} prodsList={prodCategoryBrandList}/>
             <ProductsHeader 
                 brand={brand} 
                 category={category} 

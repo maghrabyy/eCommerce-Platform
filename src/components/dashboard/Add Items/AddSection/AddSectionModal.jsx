@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from '../../../util/Model';
 import { useState, useContext } from 'react';
 import AlertContext from '../../../../context/AlertContext';
+import { FloatingActionButton } from '../../../util/FloatingActionButton';
 
 export const AddSectionModal = ({categories,brands})=>{
     const {displayAlert,emptyFieldAlert} = useContext(AlertContext);
@@ -32,9 +32,7 @@ export const AddSectionModal = ({categories,brands})=>{
         setSectionImg([]);
     }
     return <div>
-        <div onClick={addSectionClickHandler} className="floating-button fixed bottom-2 right-4 z-40">
-            <FontAwesomeIcon className="text-white rounded-full p-4 shadow-lg bg-slate-800 hover:bg-slate-600 cursor-pointer" icon={faPlus} />
-        </div>
+        <FloatingActionButton onClick={addSectionClickHandler} tip={`Add new ${sectionType}`} icon={faPlus} />
         <Modal 
             width={'xl:w-4/12'}
             modalTitle={`New ${sectionType}`}
