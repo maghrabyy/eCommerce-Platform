@@ -20,9 +20,9 @@ export const Alert = ({showAlert,setShowAlert,alertText, alertColor})=>{
         }
       }, [showAlert,setShowAlert]);
     return ReactDOM.createPortal( 
-        showAlert && <div className={`alert fixed top-2 right-2 flex items-center ${colorStyles[alertColor]} text-white py-2 pr-4 pl-3 rounded-lg font-semibold z-50`}>
+        showAlert && <div className={`alert fixed top-2 ms-2 right-2 flex items-center ${colorStyles[alertColor]} text-white py-2 pr-4 pl-3 rounded-lg font-semibold z-50`}>
             <FontAwesomeIcon className="me-3" icon={faExclamationCircle} />
-            {alertText}
+            <p className="text-xs xl:text-base">{alertText}</p>
             <FontAwesomeIcon onClick={()=>setShowAlert(false)} className="cursor-pointer ms-8 xl:ms-10 hover:text-gray-200" icon={faXmark} />
         </div>,
         document.getElementById('alert-container'));
