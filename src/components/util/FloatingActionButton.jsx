@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState,useRef, useEffect } from 'react';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export const FloatingActionButton = ({icon, onClick,tip,subActions})=>{
     const floatingBtnRef = useRef();
@@ -40,6 +41,6 @@ const SubFloatingBtn = ({onClick,tip,icon})=>{
 const [showSubTip,setShowSubTip] = useState(false)
    return <div className="sub-btn flex items-center self-end">
         {(showSubTip && tip) && <div className="floatingActionBtn-tip me-1 bg-gray-500 text-gray-200 px-2 py-2 rounded-l-lg rounded-tr-lg shadow-lg text-sm select-none">{tip}</div>}
-    <FontAwesomeIcon onClick={onClick}  onMouseEnter={()=>setShowSubTip(true)} onMouseLeave={()=>setShowSubTip(false)} className="text-white rounded-full p-4 shadow-lg bg-slate-800 hover:bg-slate-600 cursor-pointer" icon={icon} />
+    <FontAwesomeIcon onClick={onClick}  onMouseEnter={()=>setShowSubTip(true)} onMouseLeave={()=>setShowSubTip(false)} className={`text-white rounded-full p-4 shadow-lg bg-slate-800 hover:bg-slate-600 cursor-pointer ${icon === faTrash && 'hover:text-red-600 hover:bg-slate-800'}`} icon={icon} />
 </div>
 }
