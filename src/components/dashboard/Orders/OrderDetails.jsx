@@ -4,8 +4,9 @@ import { CustomDropdown } from "../../util/Dropdown";
 import { useParams } from "react-router-dom";
 import { ordersData } from "../../../data/ordersData";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Modal } from '../../util/Model';
+import AlertContext from "../../../context/AlertContext";
 
 const formattedDate = date =>{
     const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
@@ -13,6 +14,7 @@ const formattedDate = date =>{
 }
 
 export const OrderDetails = ()=>{
+    const {emptyFieldAlert,displayAlert, incorrectConfirmationTxtAlert} = useContext(AlertContext);
     const navigate = useNavigate();
     const {ordersId} = useParams();
     const orderIndex = ordersData.map(order=>order.orderId).indexOf(ordersId);
@@ -48,9 +50,17 @@ export const OrderDetails = ()=>{
         }
         const updateStatusHandler = () =>
         {
-            if(selectedStatus && (order.orderStatus.currentStatus().status !== selectedStatus.text)){
-                console.log('updated',selectedStatus)
-                closeModalHandler();
+            if(selectedStatus){
+                if((order.orderStatus.currentStatus().status !== selectedStatus.text)){
+                    displayAlert('Order status updated to ' + selectedStatus.text + '.','success');
+                    closeModalHandler();
+                }else{
+                    displayAlert("Nothing changed.",'primary')
+                    closeModalHandler();
+                }
+
+            }else{
+                displayAlert("You haven't selected a status yet.",'warning')
             }
         }
         openModal();
@@ -61,22 +71,50 @@ export const OrderDetails = ()=>{
         ]});
     }
     const cancelOrderHandler = ()=>{
+        let cancelConfirmationTxt
+        const cancelConfirmationTextHandler = (confirmationText)=>{
+            cancelConfirmationTxt = confirmationText;
+        }
         const orderCancelConfirmation = ()=>{
-            closeModalHandler();
+            if(cancelConfirmationTxt){
+                if(cancelConfirmationTxt === `Cancel ${order.prodName}`){
+                    closeModalHandler();
+                    displayAlert('Order cancelled.','success');
+                }
+                else{
+                    incorrectConfirmationTxtAlert();
+                }
+            }else{
+                emptyFieldAlert();
+            }
         }
         openModal();
-        setModalContent({title:'Cancel Order', content: <CancelOrderModal prodName={order.prodName} cstName={getCstFromId(order.cstId).name}/>,
+        setModalContent({title:'Cancel Order', content: <CancelOrderModal prodName={order.prodName} cstName={getCstFromId(order.cstId).name} cancelConfirmationTextCallbk={cancelConfirmationTextHandler}/>,
         actions:[
             {title:'Confirm',onClicked:orderCancelConfirmation},
             {title:'Cancel',onClicked:closeModalHandler},
         ]});
     }
     const refundItemHandler = ()=>{
+        let refundConfirmationTxt;
+        const refundConfirmationTxtHandler =(confirmationText)=>{
+            refundConfirmationTxt = confirmationText;
+        }
         const refundConfirmHandler = ()=>{
-            closeModalHandler();
+            if(refundConfirmationTxt){
+                if(refundConfirmationTxt === `Refund ${order.prodName}`){
+                    closeModalHandler();
+                    displayAlert('Order refunded.','success');
+                }
+                else{
+                    incorrectConfirmationTxtAlert();
+                }
+            }else{
+                emptyFieldAlert();
+            }
         }
         openModal();
-        setModalContent({title:'Refund Item', content: <RefundItemModal prodName={order.prodName} prodPrice={order.prodPrice} cstName={getCstFromId(order.cstId).name} />,
+        setModalContent({title:'Refund Item', content: <RefundItemModal prodName={order.prodName} prodPrice={order.prodPrice} cstName={getCstFromId(order.cstId).name} refundConfirmationTextCallbk={refundConfirmationTxtHandler} />,
         actions:[
             {title:'Confirm',onClicked:refundConfirmHandler},
             {title:'Cancel',onClicked:closeModalHandler},
@@ -171,9 +209,9 @@ const ModifyStatusModal = ({orderStatus,selectedStatusCallbk})=>{
     ]
     const statusIndex = currentStatus.map(status=>status.text).indexOf(orderStatus);
     const [status,setStatus] = useState(currentStatus[statusIndex]);
+    selectedStatusCallbk(status);
     const onChangeHandler = value =>{
         setStatus(value);
-        selectedStatusCallbk(value);
     }
     return <div>
         <p>Change the current order's status here.</p>
@@ -188,16 +226,28 @@ const ModifyStatusModal = ({orderStatus,selectedStatusCallbk})=>{
     </div>
 }
 
-const CancelOrderModal = ({cstName,prodName})=>{
+const CancelOrderModal = ({cstName,prodName,cancelConfirmationTextCallbk})=>{
+    const confirmationText = `Cancel ${prodName}`;
+    const [cancelConfirmationText,setCancelConfirmationText] = useState('');
+    cancelConfirmationTextCallbk(cancelConfirmationText);
     return <div>
         <p>Are you sure you want to cancel <span className="font-semibold">{cstName}'s {prodName}</span> order?</p>
+        <p>Type the following to confirm cancelation.</p>
+        <p className="ms-2">{confirmationText}</p>
+        <input type="text" value={cancelConfirmationText} onChange={e=>setCancelConfirmationText(e.target.value)} className="inpt w-full text-slate-900" placeholder="Enter the cancel confirmation text here." />
     </div>
 }
 
-const RefundItemModal = ({prodName,prodPrice,cstName})=>{
+const RefundItemModal = ({prodName,prodPrice,cstName,refundConfirmationTextCallbk})=>{
+    const confirmationText = `Refund ${prodName}`
+    const [refundConfirmationText,setRefundConfirmationText] = useState('');
+    refundConfirmationTextCallbk(refundConfirmationText);
     return <div>
         <p>Are you sure you want to refund <span className="font-semibold"> {prodName}</span> with an amount of 
         <span className="font-bold"> {prodPrice} EGP</span> to 
         <span className="font-semibold"> {cstName}</span>?</p>
+        <p>Type the following to confirm refund.</p>
+        <p className="ms-2">{confirmationText}</p>
+        <input type="text" value={refundConfirmationText} onChange={e=>setRefundConfirmationText(e.target.value)} className="inpt w-full text-slate-900" placeholder="Enter the refund confirmation text here." />
     </div>
 }

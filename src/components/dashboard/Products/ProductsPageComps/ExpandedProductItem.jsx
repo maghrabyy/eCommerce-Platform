@@ -181,7 +181,7 @@ const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
     const [selectedOrder,setSelectedOrder] = useState(null);
     const [refundConfirmation,setRefundConfirmation] = useState('');
     const arrivedOrdersFilter = ordersData.filter(order=>(order.prodId === prodId && order.orderStatus.currentStatus().status === 'Arrived'));
-    const productRefundAlert = ()=>displayAlert('Product refunded.','success');
+    const productRefundAlert = ()=>displayAlert('Order refunded.','success');
     const unSelectedOrderAlert = ()=>displayAlert("You haven't selected an order yet.",'warning');
     const formattedDate = date =>{
         const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
