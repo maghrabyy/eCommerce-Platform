@@ -14,6 +14,7 @@ export const SellProductPage = ()=>{
     const [selectedQty,setSelectedQty] = useState(0);
     const [selectedSize,setSelectedSize] = useState('');
     const [registeredCst,setRegisteredCst] = useState(false);
+    const [selectedCst,setSelectedCst] = useState(null);
     const [shippingFees,setShippingFees] = useState(0);
     const [cstName,setCstName] = useState('');
     const [cstPhoneNum,setCstPhoneNum] = useState('');
@@ -103,7 +104,7 @@ export const SellProductPage = ()=>{
                     <div className="cst-selection">
                         <CustomDropdown title='Select Customer' options={dummyCsts.map(cst=>(
                             {text:cst.name,value:cst.cstId}
-                        ))} />
+                        ))} value={selectedCst} onChange={setSelectedCst} />
                     </div>    
                     :
                     <div className="cst-input flex flex-col gap-1">
