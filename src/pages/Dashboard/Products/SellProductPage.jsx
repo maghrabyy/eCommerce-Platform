@@ -137,7 +137,7 @@ export const SellProductPage = ()=>{
                     </div>
                 }
             </div>
-            <div className="invoice-detail flex items-center justify-between my-2 shadow-md rounded-md px-4 py-2 border-2 border-gray-200">
+            <div className="invoice-detail flex md:flex-row flex-col md:items-center justify-between my-2 shadow-md rounded-md px-4 py-2 border-2 border-gray-200">
                 <div className="shipping-fees flex flex-col">
                     <label className="inpt-label">Shipping Fees</label>
                     <input type="number" value={shippingFees} onChange={e=>setShippingFees(e.target.value)} placeholder="Shipping Fees" className="inpt" />
