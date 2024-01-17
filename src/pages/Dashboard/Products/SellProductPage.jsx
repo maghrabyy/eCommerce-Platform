@@ -95,7 +95,7 @@ export const SellProductPage = ()=>{
                 </div>
             </div>
             <div className="cst-data shadow-md rounded-md px-2 py-2 border-2 border-gray-200">
-                <div className="register-cst flex gap-2 mt-2">
+                <div className="register-cst flex gap-2 my-2">
                     <input type="checkbox" value={registeredCst} onChange={e=>setRegisteredCst(e.target.checked)}/>
                     <label className="inpt-label">Registered Customer?</label>
                 </div>
@@ -106,11 +106,15 @@ export const SellProductPage = ()=>{
                         ))} />
                     </div>    
                     :
-                    <div className="cst-input">
-                        <label className="inpt-label">Customer Name</label>
-                        <input type="text" className="inpt w-full" placeholder="Customer's name." value={cstName} onChange={e=>setCstName(e.target.value)}/>
-                        <label className="inpt-label">Customer Phone Number</label>
-                        <input type="text" className="inpt w-full" placeholder="customer's phone number." value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)}/>
+                    <div className="cst-input flex flex-col gap-1">
+                        <div className="cst-name">
+                            <label className="inpt-label">Customer Name</label>
+                            <input type="text" className="inpt w-full" placeholder="Customer's name." value={cstName} onChange={e=>setCstName(e.target.value)}/>
+                        </div>
+                        <div className="cst-phoneNum">
+                            <label className="inpt-label">Customer Phone Number</label>
+                            <input type="text" className="inpt w-full" placeholder="customer's phone number." value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)}/>
+                        </div>
                         <div className="cst-address-inpt flex flex-col md:flex-row gap-2">
                             <div className="aprt">
                                 <label className="inpt-label">Apartment No.</label>
