@@ -130,8 +130,7 @@ export const OrderDetails = ()=>{
         </Modal>
         <div onClick={()=>navigate(`/products/${order.prodId}`)} className="prod-info border-2 border-gray-200 shadow-md rounded-lg p-3 xl:col-span-4 col-span-12 cursor-pointer hover:bg-gray-100">
             <div className="prod-info-data flex flex-col items-center gap-2  mb-2">
-                <OrderInfo title='Product ID' data={order.prodId} />
-                <OrderInfo data={order.prodName} />
+                <div className="text-slate-800 text-lg font-bold text-center">{order.prodName}</div>
                 <img width={'200px'} src={order.prodImg()} alt={order.prodName} />
             </div>
             <div className="prod-cst-selection-info flex gap-2 justify-center">
@@ -171,7 +170,7 @@ export const OrderDetails = ()=>{
 }
 
 const OrderInfo = ({title,data})=>{
-    return <div className="flex gap-2">
+    return <div className="flex gap-2 ">
         {title && <span className="text-slate-800 font-bold">{title}</span>}
         <span className="text-slate-800 font-semibold">{data}</span>
     </div>
@@ -186,7 +185,7 @@ export const CustomerData = ({cst,showNumOfOrders,navigateToCstPage,className})=
         <OrderInfo title='Customer ID' data={cst.cstId} />
         <OrderInfo title='Customer Name' data={cst.name} />
         <OrderInfo title='Phone Number' data={cst.phoneNum} />
-        <OrderInfo title='Address' data={<div>{cst.cstAddress.address}, {cst.cstAddress.city}</div>} />
+        <OrderInfo data={<div className="text-center">Apt {cst.cstAddress.aptNum}, Floor {cst.cstAddress.floorNum}, Building {cst.cstAddress.buildingNum}, {cst.cstAddress.address}, {cst.cstAddress.city}</div>} />
         {showNumOfOrders && <OrderInfo title='Number Of orders' data={<div>{cst.orders.length}</div>} />}
     </div>
 }

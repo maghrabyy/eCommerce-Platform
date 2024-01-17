@@ -15,7 +15,7 @@ export const CustomersTable = ()=>{
     const tableColumns = [  
         { field: 'cstName', headerName: 'Customer Name', width:150, hideable:false,},
         { field: 'cstPhoneNum', headerName: 'Phone Number', width: 150, hideable: false},
-        { field: 'cstAddress', headerName: 'Address', width: 250, hideable: false},
+        { field: 'cstAddress', headerName: 'Address', width: 430, hideable: false},
         { field: 'ordersNum', headerName: 'Num of Orders', width: 150, hideable: false},
         { field: 'id', headerName: 'Customer ID', width: 130, hideable: false },
 
@@ -24,7 +24,7 @@ export const CustomersTable = ()=>{
     id:cst.cstId,   
     cstName:cst.name,
     cstPhoneNum:cst.phoneNum,
-    cstAddress:`${cst.cstAddress.address}, ${cst.cstAddress.city}`,
+    cstAddress:`Apt ${cst.cstAddress.aptNum}, Floor ${cst.cstAddress.floorNum}, Building ${cst.cstAddress.buildingNum}, ${cst.cstAddress.address}, ${cst.cstAddress.city}`,
     ordersNum:cst.orders.length,
     }));
 
