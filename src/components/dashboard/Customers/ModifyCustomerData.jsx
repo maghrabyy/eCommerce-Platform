@@ -32,7 +32,29 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
         setCity(address?.city);
     }
     const updateHandler = ()=>{
-        if(phoneNum){
+        if((address && phoneNum)){
+            if(cstPhoneNum && aptNum && floorNum && buildingNum && streetAddress && city){
+                 if(cstPhoneNum !== phoneNum || 
+                    aptNum !== address.aptNum || 
+                    floorNum !== address.floorNum || 
+                    buildingNum !== address.buildingNum || 
+                    streetAddress !== address.address || 
+                    city !== address.city){
+                        if(cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
+                            displayAlert("Customer's contact info has updated.",'success');
+                            closeCstModifyModal();
+                        }else{
+                            displayAlert('Invalid phone number','warning');
+                        }
+                    }else{
+                        displayAlert('Nothing changed.','primary');
+                        closeCstModifyModal();
+                    }
+            }else{
+                emptyFieldAlert();
+            }
+        }
+        else if(phoneNum){
             if(cstPhoneNum){
                 if(cstPhoneNum !== phoneNum){
                     if(cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
@@ -48,7 +70,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
                         closeCstModifyModal();
 
                     }else{
-                        displayAlert('Invalid phone number','warning')
+                        displayAlert('Invalid phone number','warning');
                     }
                 }else{
                     displayAlert('Nothing changed.','primary');
@@ -85,7 +107,36 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
             }
         }
     }
-    const cstModifyModalContent = <div className="cst-modify-content">
+    const cstModifyModalContent = (address && phoneNum) ?
+    <div>
+        <div className="phoneNum-input">
+            <label className="inpt-label-dark">Customer Phone Number</label>
+            <input type="text" className="inpt text-slate-900 w-full" value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)} placeholder="Customer's phone num." />
+        </div>
+        <div className="adress-detail-input grid sm:grid-cols-3 grid-cols-2 gap-2">
+            <div className="aptNum">
+                <label className="inpt-label-dark">Apartment No.</label>
+                <input type="text" className="inpt text-slate-900 w-full" placeholder="Apartment no." value={aptNum} onChange={e=>setAptNum(e.target.value)}/>
+            </div>
+            <div className="floorNum">
+                <label className="inpt-label-dark">Floor.</label>
+                <input type="text" className="inpt text-slate-900 w-full" placeholder="Floor no." value={floorNum} onChange={e=>setFloorNum(e.target.value)}/>
+            </div>
+            <div className="buildingNum">
+                <label className="inpt-label-dark">Building No.</label>
+                <input type="text" className="inpt text-slate-900  w-full" placeholder="Building no." value={buildingNum} onChange={e=>setBuildingNum(e.target.value)}/>
+            </div>
+            <div className="stAddress">
+                <label className="inpt-label-dark">Street Address</label>
+                <input type="text" className="inpt text-slate-900 w-full" placeholder="Street address." value={streetAddress} onChange={e=>setStreetAddress(e.target.value)}/>
+            </div>
+            <div className="city">
+                <label className="inpt-label-dark">City</label>
+                <input type="text" className="inpt text-slate-900 w-full" placeholder="Customer's city." value={city} onChange={e=>setCity(e.target.value)}/>
+            </div>
+        </div>
+    </div>
+    : <div className="cst-modify-content">
         {phoneNum && <div className="phoneNum-modify flex flex-col gap-2">
                 <div className="modify-phoneNum-title">
                     <p>Modify customer's phone number.</p>
@@ -132,7 +183,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
         <Modal 
             showModal={showCstModifyModal} 
             setShowModal={setShowCstModifyModal}
-            modalTitle={`Update  ${((phoneNum && 'phone number') || (address && 'address'))}`}
+            modalTitle={`Update ${((address && phoneNum) ? "Customer's Contact Info" : ((phoneNum && 'phone number') || (address && 'address')))}`}
             onModalExit={closeCstModifyModal}
             modalActions={[
                 {title:'Update',onClicked:updateHandler},

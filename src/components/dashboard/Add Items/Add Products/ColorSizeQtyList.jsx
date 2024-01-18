@@ -2,10 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare,faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { CustomButton } from '../../../util/Button';
-// import whiteHoodie from '../../../../assets/whiteHoodie.png'
-// import blackHoodie from '../../../../assets/blackHoodie.png'
-// import grayHoodie from '../../../../assets/grayHoodie.png'
-// import greenHoodie from '../../../../assets/greenHoodie.png'
 
 const captilizeFirstLetter = str =>{
     const firstLetter = str.slice(0,1);
@@ -41,6 +37,8 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
             setIsEditing(false);
         }
     }
+    const colorList = inputtedList[0].prodColorImgs
+    console.log(colorList)
     return (
         <div className={`added-color-size-qty shadow-md rounded-md px-2  border-2 border-gray-200px-6 py-2 flex flex-col xl:flex-row gap-4 xl:gap-0 justify-between`}>
             <div className={`prodColor flex flex-wrap flex-row xl:flex-col items-center xl:items-start justify-between xl:flew-col`}>
@@ -74,12 +72,11 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
                     {isEditing? <input type="number" className='inpt w-12' max="99"  value={editXXLQty} onChange={e=>setEditXXLQty(e.target.value)} /> : <p className={`inpt-label`}>{inputtedXXL}</p>}
                 </div>
             </div>
-            {/* <div className="imgsPreview flex justify-center items-center">
-                <img src={whiteHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2 ' alt="" />
-                <img src={blackHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2' alt="" />
-                <img src={grayHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2' alt="" />
-                <img src={greenHoodie} className='h-12 cursor-pointer hover:border-2 hover:border-dashed border-gray-600 rounded-lg hover:p-1 hover:scale-95 duration-100 hover:mx-2' alt="" />
-            </div> */}
+            <div className="imgsPreview flex justify-center items-center">
+                {/* {inputtedList.map(color=>color.prodColorImgs.otherImgs.map((img,index)=>{
+                    return <img src={img.src} className={`h-12 cursor-pointer rounded-lg ${index === 0? 'p-1 scale-95 border-2 border-dashed mx-2 border-green-700' : 'hover:p-1 hover:scale-95 hover:border-2 hover:border-dashed hover:mx-2 border-gray-600'} duration-100  `} alt={img.alt} />
+                }))} */}
+            </div>
             {isEditing?
             <div className="edit-delete-container editing flex justify-center xl:justify-start gap-2">
                 <CustomButton onClick={editColorSizeQtyHandler}><FontAwesomeIcon icon={faPenToSquare}/></CustomButton>
