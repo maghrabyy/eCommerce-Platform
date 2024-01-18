@@ -16,7 +16,7 @@ export const AlertProvider = ({children})=>{
         }
     }
     const incorrectConfirmationTxtAlert = ()=> displayAlert('Incorrect confirmation text.','danger');
-    const emptyFieldAlert = ()=>displayAlert("You can't leave the input empty.",'warning');
+    const emptyFieldAlert = ()=>displayAlert("You have to complete the following input(s).",'warning');
     return <AlertContext.Provider value={{
         displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert
     }}>

@@ -1,16 +1,20 @@
 import { useOutletContext,useNavigate } from "react-router-dom"
 import { CustomButton } from "../../../components/util/Button";
 import { productsArray } from "../../../data/productsData";
-import { useState,useEffect } from "react";
+import { useState,useEffect,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faLocationArrow, faMinus, faUser, faPhone, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CustomDropdown } from "../../../components/util/Dropdown";
 import { dummyCsts } from "../../../data/customersData";
 import { ModifyCstData } from "../../../components/dashboard/Customers/ModifyCustomerData";
+import { Modal } from "../../../components/util/Model";
+import { productColor } from "../../../data/ordersData";
+import AlertContext from "../../../context/AlertContext";
 
 export const SellProductPage = ()=>{
     const navigate = useNavigate();
     const {prod} = useOutletContext();
+    const {emptyFieldAlert} = useContext(AlertContext);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
     const [selectedQty,setSelectedQty] = useState(0);
     const [selectedSize,setSelectedSize] = useState('');
@@ -26,32 +30,34 @@ export const SellProductPage = ()=>{
     const [city,setCity] = useState('');
     const [regCstPhoneNum,setRegCstPhoneNum] = useState('');
     const [regCstAddress,setRegCstAddress] = useState({});
+    const [showOrderSummary,setShowOrderSummary] = useState(false);
     const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prod);
     const prodData = productsArray[prodIndex];
     const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(selectedCst?.value);
-    const cstData = dummyCsts[cstIndex];
+    const selectedCstData = dummyCsts[cstIndex];
     const prodName = `${prodData.prodBrand.text} ${prodData.prodTitle}`;
+    const selectedColor = productColor(prodData.prodColorQtyList[selectedColorIndex].prodColor);
+    const qtyCode = {
+        'XS':'xsQty',
+        'S':'sQty',
+        'M':'mQty',
+        'L':'lQty',
+        'XL':'xlQty',
+        'XXL':'xxlQty',
+    }
     useEffect(()=>{
         if(selectedCst){
-            setRegCstPhoneNum(cstData.phoneNum);
-            setRegCstAddress(cstData.cstAddress);
+            setRegCstPhoneNum(selectedCstData.phoneNum);
+            setRegCstAddress(selectedCstData.cstAddress);
         }
-    },[selectedCst,cstData?.phoneNum,cstData?.cstAddress])
+    },[selectedCst,selectedCstData?.phoneNum,selectedCstData?.cstAddress])
     const colors = {
         'green-800':'bg-green-800',
         'black':'bg-black',
         'white':'bg-white'
     }
     const selectedSizeHandler = (size)=>{
-        const qtyCode = {
-            'XS':'xsQty',
-            'S':'sQty',
-            'M':'mQty',
-            'L':'lQty',
-            'XL':'xlQty',
-            'XXL':'xxlQty',
-        }
-        setSelectedSize(qtyCode[size]);
+        setSelectedSize(size);
         setSelectedQty(prodData.prodColorQtyList[selectedColorIndex][qtyCode[size]] > 0?  1 : 0)
     }
     const qtyDecHandler = ()=>{
@@ -63,7 +69,7 @@ export const SellProductPage = ()=>{
     }
     const qtyIncHandler = ()=>{
         if(selectedSize){
-            if(selectedQty < prodData.prodColorQtyList[selectedColorIndex][selectedSize]){
+            if(selectedQty < prodData.prodColorQtyList[selectedColorIndex][qtyCode[selectedSize]]){
                 setSelectedQty(currentQty=>currentQty + 1);
             }
         }
@@ -73,6 +79,20 @@ export const SellProductPage = ()=>{
     }
     const modifiedAddressHandler = address =>{
         setRegCstAddress(address)
+    }  
+    const sellClickedHandler = ()=>{
+        if(selectedSize && selectedQty  && shippingFees){
+            if(registeredCst && selectedCst){
+                setShowOrderSummary(true);
+            }
+            else if(cstName && cstPhoneNum && aptNum && floorNum && buildingNum && streetAddress && city){
+                setShowOrderSummary(true);
+            }else{
+                emptyFieldAlert();
+            }
+        }else{
+            emptyFieldAlert();
+        }
     }
     return <div className=" grid grid-cols-12 gap-2">
         <div className="product md:col-span-3 col-span-12 shadow-md rounded-md px-2 py-2 border-2 border-gray-200">
@@ -189,11 +209,70 @@ export const SellProductPage = ()=>{
                 </div>
             </div>
             <div className="action flex gap-2 my-2">
-                <CustomButton onClick={()=>navigate('..')}>Sell</CustomButton>
+                <CustomButton onClick={sellClickedHandler}>Sell</CustomButton>
                 <CustomButton  onClick={()=>navigate('..')}>Back</CustomButton>
             </div>
         </div>
+        <OrderSummary 
+                    showOrderSummary={showOrderSummary}
+                    setShowOrderSummary={setShowOrderSummary}
+                    prodName={prodName}
+                    prodImg={prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.src}
+                    prodPrice={prodData.prodPrice}
+                    selectedColor={selectedColor}
+                    selectedSize={selectedSize}
+                    selectedQty={selectedQty}
+                    cstName={registeredCst? selectedCstData?.name : cstName}
+                    cstPhoneNum={registeredCst? regCstPhoneNum : cstPhoneNum}
+                    cstAddress={registeredCst? regCstAddress : {aptNum,floorNum,buildingNum,address:streetAddress,city}}
+                    shippingFees={shippingFees}
+                    totalPrice={prodData.prodPrice*selectedQty + (shippingFees? parseInt(shippingFees) : 0)}/>
     </div>
+}
+
+const OrderSummary =({showOrderSummary,setShowOrderSummary, prodName,prodImg,prodPrice,selectedColor,selectedSize,selectedQty,cstName,cstPhoneNum,cstAddress,shippingFees,totalPrice})=>{
+    const navigate = useNavigate();
+    const {displayAlert} = useContext(AlertContext);
+    const closeOrderSummary = ()=>{
+        setShowOrderSummary(false);
+    }
+    const confirmOrderHandler = ()=>{
+        navigate('..');
+        displayAlert(`${prodName} is purchased to ${cstName}.`,'success');
+    }
+    return <Modal modalTitle='Order Summary'
+        showModal={showOrderSummary} setShowModal={setShowOrderSummary}
+        onModalExit={closeOrderSummary}
+        modalActions={[
+            {title:'Confirm',onClicked:confirmOrderHandler},
+            {title:'Cancel',onClicked:closeOrderSummary},
+        ]}>
+        <div className="order-summary flex md:flex-row flex-col md:gap-4 gap-2 items-center">
+            <div className="prod-img-title flex flex-col gap-2">
+                <h1 className="font-bold text-lg">{prodName}</h1>
+                <img src={prodImg} className="rounded-md shadow-lg w-full h-64 object-cover" alt={prodName} />
+                <div className="prod-selection flex gap-2 justify-center text-lg font-semibold">
+                    <div className="prodColor">{selectedColor}</div>
+                    <div className="prodSize">{selectedSize} x</div>
+                    <div className="prodQty">{selectedQty}</div>
+                </div>
+            </div>
+            <div className="cstInfo-invoice">
+                <div className="cst-info">
+                    <div className="cstName"><FontAwesomeIcon icon={faUser}/> {cstName}</div>
+                    <div className="phoneNum"><FontAwesomeIcon icon={faPhone}/> +20 {cstPhoneNum}</div>
+                    <div className="cstAddress"><FontAwesomeIcon icon={faLocationArrow}/> Apt {cstAddress.aptNum}, Floor {cstAddress.floorNum}, Building {cstAddress.buildingNum}, {cstAddress.address}, {cstAddress.city}</div>
+                </div>
+                <div className="invoice md:px-4 px-0">
+                    <div className="price-shippingFees border-b border-white border-dashed py-2">
+                        <div className="prodPrice font-semibold">Price {prodPrice} x {selectedQty}</div>
+                        <div className="shippingFees font-semibold">Shipping Fees {shippingFees}</div>
+                    </div>
+                    <div className="totalPrice text-2xl font-bold pt-2">Total {totalPrice}</div>
+                </div>  
+            </div>
+        </div>
+    </Modal>
 }
 
 const SizeSelection = ({size,selectedSizeCallbk})=>{
