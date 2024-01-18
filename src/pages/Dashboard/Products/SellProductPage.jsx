@@ -102,7 +102,7 @@ export const SellProductPage = ()=>{
             <div className="prod-info flex flex-col items-center md:items-start">
                 <div className="font-bold text-center md:text-start text-slate-900 text-2xl">{prodName}</div> 
                 <div className="font-bold text-slate-900 text-xl">{prodData.prodPrice}EGP</div> 
-                <div className="font-semibold text-slate-900 text-lg">{prodData.prodDesc}</div> 
+                <div className="font-semibold text-center md:text-start text-slate-900 text-lg">{prodData.prodDesc}</div> 
                 <div className="font-semibold text-slate-900 text-lg">Quantity {prodData.prodColorQtyList[selectedColorIndex].totalQty}</div> 
             </div>
         </div>
