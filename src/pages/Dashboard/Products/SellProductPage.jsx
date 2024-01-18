@@ -1,12 +1,12 @@
 import { useOutletContext,useNavigate } from "react-router-dom"
 import { CustomButton } from "../../../components/util/Button";
 import { productsArray } from "../../../data/productsData";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CustomDropdown } from "../../../components/util/Dropdown";
 import { dummyCsts } from "../../../data/customersData";
-import { Modal } from "../../../components/util/Model";
+import { ModifyCstData } from "../../../components/dashboard/Customers/ModifyCustomerData";
 
 export const SellProductPage = ()=>{
     const navigate = useNavigate();
@@ -24,11 +24,19 @@ export const SellProductPage = ()=>{
     const [buildingNum,setBuildingNum] = useState('');
     const [streetAddress,setStreetAddress] = useState('');
     const [city,setCity] = useState('');
+    const [regCstPhoneNum,setRegCstPhoneNum] = useState('');
+    const [regCstAddress,setRegCstAddress] = useState({});
     const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prod);
     const prodData = productsArray[prodIndex];
     const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(selectedCst?.value);
     const cstData = dummyCsts[cstIndex];
-    const prodName = `${prodData.prodBrand.text} ${prodData.prodTitle}`
+    const prodName = `${prodData.prodBrand.text} ${prodData.prodTitle}`;
+    useEffect(()=>{
+        if(selectedCst){
+            setRegCstPhoneNum(cstData.phoneNum);
+            setRegCstAddress(cstData.cstAddress);
+        }
+    },[selectedCst,cstData?.phoneNum,cstData?.cstAddress])
     const colors = {
         'green-800':'bg-green-800',
         'black':'bg-black',
@@ -60,7 +68,12 @@ export const SellProductPage = ()=>{
             }
         }
     }
-
+    const modifiedPhoneNumHandler = phoneNum =>{
+        setRegCstPhoneNum(phoneNum)
+    }
+    const modifiedAddressHandler = address =>{
+        setRegCstAddress(address)
+    }
     return <div className=" grid grid-cols-12 gap-2">
         <div className="product md:col-span-3 col-span-12 shadow-md rounded-md px-2 py-2 border-2 border-gray-200">
             <div className="prod-img mb-2 flex justify-center">
@@ -112,15 +125,16 @@ export const SellProductPage = ()=>{
                             ))} value={selectedCst} onChange={setSelectedCst} />
                         </div>
                         {selectedCst && <div className="register-cst-info my-2 px-2">
-                                <p className="cst-phoneNum flex items-center gap-2">
-                                    <span className="text-slate-800 font-semibold">Phone Number</span> 
-                                    <span className="text-slate-800 font-bold">{cstData.phoneNum}</span>
-                                    <ModifyCstData phoneNum={cstData.phoneNum} saveDataCheckbox/>
+                                <p className="cst-phoneNum flex items-center gap-2 justify-between md:justify-normal">
+                                    <div className="phoneNum-data flex gap-2">
+                                        <span className="text-slate-800 font-semibold">Phone Number</span> 
+                                        <span className="text-slate-800 font-bold">{regCstPhoneNum}</span>
+                                    </div>
+                                    <ModifyCstData phoneNum={regCstPhoneNum} phoneNumCallbk={modifiedPhoneNumHandler} saveDataCheckbox/>
                                 </p>
-                                <p className="cst-address flex items-center gap-2">
-                                    <span className="text-slate-800 font-semibold">Address</span> 
-                                    <span className="text-slate-800 font-bold">Apt {cstData.cstAddress.aptNum} Floor {cstData.cstAddress.floorNum} Building {cstData.cstAddress.buildingNum}, {cstData.cstAddress.address}, {cstData.cstAddress.city}</span>
-                                    <ModifyCstData address={cstData.cstAddress} saveDataCheckbox/>
+                                <p className="cst-address flex gap-2">
+                                    <span className="text-slate-800 font-bold">Apt {regCstAddress.aptNum} Floor {regCstAddress.floorNum} Building {regCstAddress.buildingNum}, {regCstAddress.address}, {regCstAddress.city}</span>
+                                    <ModifyCstData address={regCstAddress} addressCallbk={modifiedAddressHandler} saveDataCheckbox/>
                                 </p>
                         </div>}
                     </div>    
@@ -193,78 +207,3 @@ const SizeSelection = ({size,selectedSizeCallbk})=>{
     </div>
 }
 
-const ModifyCstData = ({phoneNum,address,saveDataCheckbox})=>{
-    const [showCstModifyModal,setShowCstModifyModal] = useState(false);
-    const [cstPhoneNum,setCstPhoneNum] = useState(phoneNum);
-    const [aptNum,setAptNum] = useState(address?.aptNum);
-    const [floorNum,setFloorNum] = useState(address?.floorNum);
-    const [buildingNum,setBuildingNum] = useState(address?.buildingNum);
-    const [streetAddress,setStreetAddress] = useState(address?.address);
-    const [city,setCity] = useState(address?.city);
-    const [saveModifiedData,setSaveModifiedData] = useState(false);
-    const closeCstModifyModal = ()=>{
-        setShowCstModifyModal(false);
-        setCstPhoneNum(phoneNum);
-        setAptNum(address?.aptNum);
-        setFloorNum(address?.floorNum);
-        setBuildingNum(address?.buildingNum);
-        setStreetAddress(address?.address);
-        setCity(address?.city);
-    }
-    const cstModifyModalContent = <div className="cst-modify-content">
-        {phoneNum && <div className="phoneNum-modify flex flex-col gap-2">
-                <div className="modify-phoneNum-title">
-                    <p>Modify customer's phone number.</p>
-                </div>
-                <div className="phoneNum-input">
-                    <label className="inpt-label-dark">Customer Phone Number</label>
-                    <input type="text" className="inpt text-slate-900 w-full" value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)} placeholder="Customer's phone num." />
-                </div>
-            </div>}
-        {address && <div className="adddress-modify flex flex-col gap-2">
-            <div className="modify-address-title">
-                <p>Modify customer's delivery address.</p>
-            </div>
-            <div className="adress-detail-input grid sm:grid-cols-3 grid-cols-2 gap-2">
-                <div className="aptNum">
-                    <label className="inpt-label-dark">Apartment No.</label>
-                    <input type="text" className="inpt text-slate-900 w-full" placeholder="Apartment no." value={aptNum} onChange={e=>setAptNum(e.target.value)}/>
-                </div>
-                <div className="floorNum">
-                    <label className="inpt-label-dark">Floor.</label>
-                    <input type="text" className="inpt text-slate-900 w-full" placeholder="Floor no." value={floorNum} onChange={e=>setFloorNum(e.target.value)}/>
-                </div>
-                <div className="buildingNum">
-                    <label className="inpt-label-dark">Building No.</label>
-                    <input type="text" className="inpt text-slate-900  w-full" placeholder="Building no." value={buildingNum} onChange={e=>setBuildingNum(e.target.value)}/>
-                </div>
-                <div className="stAddress">
-                    <label className="inpt-label-dark">Street Address</label>
-                    <input type="text" className="inpt text-slate-900 w-full" placeholder="Street address." value={streetAddress} onChange={e=>setStreetAddress(e.target.value)}/>
-                </div>
-                <div className="city">
-                    <label className="inpt-label-dark">City</label>
-                    <input type="text" className="inpt text-slate-900 w-full" placeholder="Customer's city." value={city} onChange={e=>setCity(e.target.value)}/>
-                </div>
-            </div>
-        </div>}
-        {saveDataCheckbox && <div className="save-modified-Data flex gap-2 mt-2">
-            <input type="checkbox" value={saveModifiedData} onChange={e=>setSaveModifiedData(e.target.checked)} />
-            <label className="inpt-label-dark">Save modified {((phoneNum && 'phone number') || (address && 'address'))}?</label>
-        </div>}
-    </div>
-    return <div className="modify-cst-data">
-        <FontAwesomeIcon onClick={()=>setShowCstModifyModal(true)} className="ms-2 text-slate-800 font-semibold hover:text-slate-600 cursor-pointer" icon={faPen} />
-        <Modal 
-            showModal={showCstModifyModal} 
-            setShowModal={setShowCstModifyModal}
-            modalTitle={`Update  ${((phoneNum && 'phone number') || (address && 'address'))}`}
-            onModalExit={closeCstModifyModal}
-            modalActions={[
-                {title:'Update',onClicked:()=>{}},
-                {title:'Cancel',onClicked:closeCstModifyModal},
-            ]}>
-            {cstModifyModalContent}
-        </Modal>
-    </div>
-}

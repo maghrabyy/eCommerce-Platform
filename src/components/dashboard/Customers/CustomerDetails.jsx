@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { dummyCsts } from "../../../data/customersData";
-import { CustomerData } from "../Orders/OrderDetails";
+import { CustomerData } from "./CustomerData";
 import { DataGrid } from "@mui/x-data-grid";
 import { ordersData } from "../../../data/ordersData";
 
@@ -40,7 +40,7 @@ export const CustomerDetails = ()=>{
     orderStatus:order.orderStatus.currentStatus().status,
 }));
     return <div className="py-4 grid xl:grid-cols-6 gap-2">
-        <CustomerData className='xl:col-span-2 col-span-6' cst={customer} showNumOfOrders />
+        <CustomerData className='xl:col-span-2 col-span-6' cst={customer} showNumOfOrders modifiable />
         <DataGrid
         className='shadow-md xl:col-span-4 col-span-6'
         rows={tableRows}

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState,useContext } from "react";
 import { Modal } from '../../util/Model';
 import AlertContext from "../../../context/AlertContext";
+import { CustomerData } from "../Customers/CustomerData";
 
 const formattedDate = date =>{
     const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
@@ -169,24 +170,10 @@ export const OrderDetails = ()=>{
     </div>
 }
 
-const OrderInfo = ({title,data})=>{
+export const OrderInfo = ({title,data})=>{
     return <div className="flex gap-2 ">
         {title && <span className="text-slate-800 font-bold">{title}</span>}
         <span className="text-slate-800 font-semibold">{data}</span>
-    </div>
-}
-
-export const CustomerData = ({cst,showNumOfOrders,navigateToCstPage,className})=>{
-    const navigate = useNavigate();
-    const cstClickedHandler = ()=>{
-        navigate(`/customers/${cst.cstId}`);
-    }
-    return <div onClick={navigateToCstPage && cstClickedHandler} className={className + ` cst-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center ${navigateToCstPage && 'cursor-pointer hover:bg-gray-100'}`}>
-        <OrderInfo title='Customer ID' data={cst.cstId} />
-        <OrderInfo title='Customer Name' data={cst.name} />
-        <OrderInfo title='Phone Number' data={cst.phoneNum} />
-        <OrderInfo data={<div className="text-center">Apt {cst.cstAddress.aptNum}, Floor {cst.cstAddress.floorNum}, Building {cst.cstAddress.buildingNum}, {cst.cstAddress.address}, {cst.cstAddress.city}</div>} />
-        {showNumOfOrders && <OrderInfo title='Number Of orders' data={<div>{cst.orders.length}</div>} />}
     </div>
 }
 
