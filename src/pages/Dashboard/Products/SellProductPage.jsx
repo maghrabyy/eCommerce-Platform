@@ -145,17 +145,17 @@ export const SellProductPage = ()=>{
                             ))} value={selectedCst} onChange={setSelectedCst} />
                         </div>
                         {selectedCst && <div className="register-cst-info my-2 px-2">
-                                <p className="cst-phoneNum flex items-center gap-2 justify-between md:justify-normal">
+                                <div className="cst-phoneNum flex items-center gap-2 justify-between md:justify-normal">
                                     <div className="phoneNum-data flex gap-2">
                                         <span className="text-slate-800 font-semibold">Phone Number</span> 
                                         <span className="text-slate-800 font-bold">{regCstPhoneNum}</span>
                                     </div>
                                     <ModifyCstData phoneNum={regCstPhoneNum} phoneNumCallbk={modifiedPhoneNumHandler} saveDataCheckbox/>
-                                </p>
-                                <p className="cst-address flex gap-2">
+                                </div>
+                                <div className="cst-address flex gap-2">
                                     <span className="text-slate-800 font-bold">Apt {regCstAddress.aptNum} Floor {regCstAddress.floorNum} Building {regCstAddress.buildingNum}, {regCstAddress.address}, {regCstAddress.city}</span>
                                     <ModifyCstData address={regCstAddress} addressCallbk={modifiedAddressHandler} saveDataCheckbox/>
-                                </p>
+                                </div>
                         </div>}
                     </div>    
                     :
@@ -247,9 +247,9 @@ const OrderSummary =({showOrderSummary,setShowOrderSummary, prodName,prodImg,pro
             {title:'Confirm',onClicked:confirmOrderHandler},
             {title:'Cancel',onClicked:closeOrderSummary},
         ]}>
+        <div className="font-bold text-lg pb-2 md:text-start text-center">{prodName}</div>
         <div className="order-summary flex md:flex-row flex-col md:gap-4 gap-2 items-center">
             <div className="prod-img-title flex flex-col gap-2">
-                <h1 className="font-bold text-lg">{prodName}</h1>
                 <img src={prodImg} className="rounded-md shadow-lg w-full h-64 object-cover" alt={prodName} />
                 <div className="prod-selection flex gap-2 justify-center text-lg font-semibold">
                     <div className="prodColor">{selectedColor}</div>
