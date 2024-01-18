@@ -32,11 +32,9 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
             }
             else if(sortBy?.value === 'newToOld'){
                 setProdsList([...prodsList.sort((a,b)=>b.creationDate - a.creationDate)])
-                console.log('date from new to old')
             }
             else if(sortBy?.value === 'oldToNew'){
                 setProdsList([...prodsList.sort((a,b)=>a.creationDate - b.creationDate)])
-                console.log('date from old to new')
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

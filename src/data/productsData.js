@@ -46,7 +46,7 @@ const greenPnBHoodie = {
 
     }],
     sales:8,
-    creationDate: new Date(),
+    creationDate: new Date('January 3, 2024 23:15:30'),
     initialTotalProdQty:16
 }
 greenPnBHoodie.totalProdQty = greenPnBHoodie.prodColorQtyList.reduce((a,b)=> a + b.totalQty,0);
@@ -73,7 +73,7 @@ const whitePnBHoodie = {
         }
     }],
     sales:4,
-    creationDate: new Date(),
+    creationDate: new Date('January 9, 2024 23:15:30'),
     initialTotalProdQty:15
 }
 whitePnBHoodie.totalProdQty = whitePnBHoodie.prodColorQtyList.reduce((a,b)=> a + b.totalQty,0);
@@ -102,7 +102,7 @@ const blackPnBHoodie01 = {
 
     }],
     sales:6,
-    creationDate: new Date(),
+    creationDate: new Date('January 11, 2024 23:15:30'),
     initialTotalProdQty:11
 }
 blackPnBHoodie01.totalProdQty = blackPnBHoodie01.prodColorQtyList.reduce((a,b)=> a + b.totalQty,0);
@@ -129,7 +129,7 @@ const blackPnBHoodie02 = {
         }
     }],
     sales:2,
-    creationDate: new Date(),   
+    creationDate: new Date('January 15, 2024 23:15:30'),   
     initialTotalProdQty:8
 }
 blackPnBHoodie02.totalProdQty = blackPnBHoodie02.prodColorQtyList.reduce((a,b)=> a + b.totalQty,0);
