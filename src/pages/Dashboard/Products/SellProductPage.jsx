@@ -14,7 +14,7 @@ import AlertContext from "../../../context/AlertContext";
 export const SellProductPage = ()=>{
     const navigate = useNavigate();
     const {prod} = useOutletContext();
-    const {emptyFieldAlert} = useContext(AlertContext);
+    const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
     const [selectedQty,setSelectedQty] = useState(0);
     const [selectedSize,setSelectedSize] = useState('');
@@ -86,7 +86,11 @@ export const SellProductPage = ()=>{
                 setShowOrderSummary(true);
             }
             else if(cstName && cstPhoneNum && aptNum && floorNum && buildingNum && streetAddress && city){
-                setShowOrderSummary(true);
+                if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
+                    setShowOrderSummary(true);
+                }else{
+                    displayAlert('Invalid phone number','warning');
+                }
             }else{
                 emptyFieldAlert();
             }

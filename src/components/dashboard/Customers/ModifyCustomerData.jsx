@@ -40,7 +40,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
                     buildingNum !== address.buildingNum || 
                     streetAddress !== address.address || 
                     city !== address.city){
-                        if(cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
+                        if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
                             displayAlert("Customer's contact info has updated.",'success');
                             closeCstModifyModal();
                         }else{
@@ -57,7 +57,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
         else if(phoneNum){
             if(cstPhoneNum){
                 if(cstPhoneNum !== phoneNum){
-                    if(cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
+                    if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
                         if(saveDataCheckbox){
                             phoneNumCallbk(cstPhoneNum);
                             if(saveModifiedData){
