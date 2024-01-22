@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "../../../components/util/Model";
 import AlertContext from "../../../context/AlertContext"
+import { dummyCsts } from "../../../data/customersData";
 
 export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,saveDataCheckbox})=>{
     const { displayAlert, emptyFieldAlert } = useContext(AlertContext);
@@ -14,14 +15,32 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
     const [streetAddress,setStreetAddress] = useState('');
     const [city,setCity] = useState('');
     const [saveModifiedData,setSaveModifiedData] = useState(false);
+
     useEffect(()=>{
-        setCstPhoneNum(phoneNum);
-        setAptNum(address?.aptNum);
-        setFloorNum(address?.floorNum);
-        setBuildingNum(address?.buildingNum);
-        setStreetAddress(address?.address);
-        setCity(address?.city);
-    },[phoneNum,address])
+        if(showCstModifyModal){
+            setCstPhoneNum(phoneNum);
+            setAptNum(address?.aptNum);
+            setFloorNum(address?.floorNum);
+            setBuildingNum(address?.buildingNum);
+            setStreetAddress(address?.address);
+            setCity(address?.city);
+        }
+    },[phoneNum,address,showCstModifyModal]);
+    const isValidePhoneNum = (phoneNum)=>{
+        if(!isNaN(cstPhoneNum) && cstPhoneNum.length === 11 && cstPhoneNum.startsWith("01")){
+            return true
+        }
+        else{
+            return false;
+        }
+    }
+    const alreadyRegisteredPhoneNum = (phoneNum)=>{
+        if(dummyCsts.map(cst=>cst.phoneNum).includes(phoneNum)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     const closeCstModifyModal = ()=>{
         setShowCstModifyModal(false);
         setCstPhoneNum(phoneNum);
@@ -40,10 +59,14 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
                     buildingNum !== address.buildingNum || 
                     streetAddress !== address.address || 
                     city !== address.city){
-                        if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
-                            displayAlert("Customer's contact info has updated.",'success');
-                            closeCstModifyModal();
-                            //save to database
+                        if(isValidePhoneNum(cstPhoneNum)){
+                            if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
+                                displayAlert("Customer's contact info has updated.",'success');
+                                closeCstModifyModal();
+                                //save to database
+                            }else{
+                                displayAlert("There's a registered customer with this phone number.",'warning');
+                            }
                         }else{
                             displayAlert('Invalid phone number','warning');
                         }
@@ -58,18 +81,21 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
         else if(phoneNum){
             if(cstPhoneNum){
                 if(cstPhoneNum !== phoneNum){
-                    if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
-                        if(saveDataCheckbox){
-                            phoneNumCallbk(cstPhoneNum);
-                            if(saveModifiedData){
-                                //save to database
+                    if(isValidePhoneNum(cstPhoneNum)){
+                        if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
+                            if(saveDataCheckbox){
+                                phoneNumCallbk(cstPhoneNum);
+                                if(saveModifiedData){
+                                    //save to database
+                                }
+                            }else{
+                                //save to databse
                             }
+                            displayAlert('Phone number has updated.','success');
+                            closeCstModifyModal();
                         }else{
-                            //save to databse
+                            displayAlert("There's a registered customer with this phone number.",'warning');
                         }
-                        displayAlert('Phone number has updated.','success');
-                        closeCstModifyModal();
-
                     }else{
                         displayAlert('Invalid phone number','warning');
                     }

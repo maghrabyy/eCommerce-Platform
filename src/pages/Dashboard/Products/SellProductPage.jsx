@@ -46,11 +46,6 @@ export const SellProductPage = ()=>{
         'XXL':'xxlQty',
     }
     useEffect(()=>{
-        if(!cstPhoneNum.startsWith("0")){
-            setCstPhoneNum("0" + cstPhoneNum);
-        }
-    },[cstPhoneNum])
-    useEffect(()=>{
         if(selectedCst){
             setRegCstPhoneNum(selectedCstData.phoneNum);
             setRegCstAddress(selectedCstData.cstAddress);
@@ -85,6 +80,14 @@ export const SellProductPage = ()=>{
     const modifiedAddressHandler = address =>{
         setRegCstAddress(address)
     }  
+    const isValidePhoneNum = (phoneNum)=>{
+        if(!isNaN(cstPhoneNum) && cstPhoneNum.length === 11 && cstPhoneNum.startsWith("01")){
+            return true
+        }
+        else{
+            return false;
+        }
+    }
     const alreadyRegisteredPhoneNum = (phoneNum)=>{
         if(dummyCsts.map(cst=>cst.phoneNum).includes(phoneNum)){
             return true;
@@ -98,7 +101,7 @@ export const SellProductPage = ()=>{
                 setShowOrderSummary(true);
             }
             else if(cstName && cstPhoneNum && aptNum && floorNum && buildingNum && streetAddress && city){
-                if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
+                if(isValidePhoneNum(cstPhoneNum)){
                     if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
                         setShowOrderSummary(true);
                     }else{
