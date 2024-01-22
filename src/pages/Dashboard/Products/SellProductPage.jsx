@@ -46,6 +46,11 @@ export const SellProductPage = ()=>{
         'XXL':'xxlQty',
     }
     useEffect(()=>{
+        if(!cstPhoneNum.startsWith("0")){
+            setCstPhoneNum("0" + cstPhoneNum);
+        }
+    },[cstPhoneNum])
+    useEffect(()=>{
         if(selectedCst){
             setRegCstPhoneNum(selectedCstData.phoneNum);
             setRegCstAddress(selectedCstData.cstAddress);
@@ -80,6 +85,13 @@ export const SellProductPage = ()=>{
     const modifiedAddressHandler = address =>{
         setRegCstAddress(address)
     }  
+    const alreadyRegisteredPhoneNum = (phoneNum)=>{
+        if(dummyCsts.map(cst=>cst.phoneNum).includes(phoneNum)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     const sellClickedHandler = ()=>{
         if(selectedSize && selectedQty  && shippingFees){
             if(registeredCst && selectedCst){
@@ -87,7 +99,11 @@ export const SellProductPage = ()=>{
             }
             else if(cstName && cstPhoneNum && aptNum && floorNum && buildingNum && streetAddress && city){
                 if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
-                    setShowOrderSummary(true);
+                    if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
+                        setShowOrderSummary(true);
+                    }else{
+                        displayAlert("There's a registered customer with this phone number.",'warning');
+                    }
                 }else{
                     displayAlert('Invalid phone number','warning');
                 }
@@ -214,7 +230,7 @@ export const SellProductPage = ()=>{
             </div>
             <div className="action flex gap-2 my-2">
                 <CustomButton onClick={sellClickedHandler}>Sell</CustomButton>
-                <CustomButton  onClick={()=>navigate('..')}>Back</CustomButton>
+                <CustomButton  onClick={()=>navigate('..')}>Cancel</CustomButton>
             </div>
         </div>
         <OrderSummary 

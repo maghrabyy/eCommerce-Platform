@@ -43,6 +43,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
                         if(!isNaN(cstPhoneNum) && cstPhoneNum.length > 9 && cstPhoneNum.length < 12){
                             displayAlert("Customer's contact info has updated.",'success');
                             closeCstModifyModal();
+                            //save to database
                         }else{
                             displayAlert('Invalid phone number','warning');
                         }
