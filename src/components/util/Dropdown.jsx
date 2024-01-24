@@ -66,7 +66,7 @@ export const CustomDropdown = ({title, className, options, value,onChange, color
                             <div className="text">{option.text}</div>
                             <div className="suffix">{option.suffix}</div>
                         </div>
-                        <div className="subtitle text-xs text-end text-gray-300">{option.subtitle}</div>
+                        <div className={`subtitle text-xs ${option.leftSubtitle ? 'text-start' : 'text-end'} text-gray-300`}>{option.subtitle}</div>
                 </div>))}   
             </div>}
 

@@ -164,7 +164,7 @@ export const SellProductPage = ()=>{
                     <div className="registered-cst">
                         <div className="cst-selection">
                             <CustomDropdown title='Select Customer' options={dummyCsts.map(cst=>(
-                                {text:cst.name,value:cst.cstId}
+                                {text:cst.name,value:cst.cstId,subtitle:cst.phoneNum,leftSubtitle:true}
                             ))} value={selectedCst} onChange={setSelectedCst} />
                         </div>
                         {selectedCst && <div className="register-cst-info my-2 px-2">
