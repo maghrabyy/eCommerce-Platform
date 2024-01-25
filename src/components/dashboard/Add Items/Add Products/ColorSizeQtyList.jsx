@@ -9,7 +9,7 @@ const captilizeFirstLetter = str =>{
     return firstLetter.toUpperCase()+remainingLetters.toLowerCase();
 };
 
-export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inputtedS,inputtedM,inputtedL,inputtedXL,inputtedXXL,deleteColorSizeQtyCallbk,modifyColorSizeQtyCallbk})=>{
+export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inputtedS,inputtedM,inputtedL,inputtedXL,inputtedXXL,deleteColorSizeQtyCallbk,modifyColorSizeQtyCallbk,isEdittingProd})=>{
     const [isEditing,setIsEditing] = useState(false);
     const [editProdColor,setEditProdColor] = useState(inputtedColor)
     const [editXSQty,setEditXSQty] = useState(inputtedXS)
@@ -37,8 +37,11 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
             setIsEditing(false);
         }
     }
-    const colorList = inputtedList[0].prodColorImgs
-    console.log(colorList)
+    const imgSelectionHandler = (img,color) =>{
+        if(!img.mainImg){
+
+        }
+    }
     return (
         <div className={`added-color-size-qty shadow-md rounded-md px-2  border-2 border-gray-200px-6 py-2 flex flex-col xl:flex-row gap-4 xl:gap-0 justify-between`}>
             <div className={`prodColor flex flex-wrap flex-row xl:flex-col items-center xl:items-start justify-between xl:flew-col`}>
@@ -72,11 +75,11 @@ export const ColorSizeQtyList = ({id, inputtedList, inputtedColor,inputtedXS,inp
                     {isEditing? <input type="number" className='inpt w-12' max="99"  value={editXXLQty} onChange={e=>setEditXXLQty(e.target.value)} /> : <p className={`inpt-label`}>{inputtedXXL}</p>}
                 </div>
             </div>
-            <div className="imgsPreview flex justify-center items-center">
-                {/* {inputtedList.map(color=>color.prodColorImgs.otherImgs.map((img,index)=>{
-                    return <img src={img.src} className={`h-12 cursor-pointer rounded-lg ${index === 0? 'p-1 scale-95 border-2 border-dashed mx-2 border-green-700' : 'hover:p-1 hover:scale-95 hover:border-2 hover:border-dashed hover:mx-2 border-gray-600'} duration-100  `} alt={img.alt} />
-                }))} */}
-            </div>
+            {isEdittingProd && <div className="imgsPreview flex gap-1 justify-center items-center">
+                {inputtedList.map(color=>color.prodColorImgs?.map((img)=>{
+                    return <img onClick={isEditing ? ()=>imgSelectionHandler(img,color): null} key={img.src} src={img.src} className={`h-12 rounded-lg ${img.mainImg? 'p-1 scale-95 border-2 mx-2 border-slate-800' : isEditing && 'hover:p-1 hover:scale-95 hover:border-2 hover:border-dashed hover:mx-2 border-gray-600 cursor-pointer duration-100'}`} alt={img.alt} />
+                }))}
+            </div>}
             {isEditing?
             <div className="edit-delete-container editing flex justify-center xl:justify-start gap-2">
                 <CustomButton onClick={editColorSizeQtyHandler}><FontAwesomeIcon icon={faPenToSquare}/></CustomButton>

@@ -71,8 +71,8 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
             inputtedXL={item.xlQty} 
             inputtedXXL={item.xxlQty}
             deleteColorSizeQtyCallbk={()=>deleteColorCallbkHandler(item.id)}
-            modifyColorSizeQtyCallbk={   modifiedList =>
-                setProdColorSizeQList(modifiedList)} />
+            modifyColorSizeQtyCallbk={   modifiedList => setProdColorSizeQList(modifiedList)} 
+            isEdittingProd={isEditing}   />
         ).reverse()}
         {
             isEditing? 
