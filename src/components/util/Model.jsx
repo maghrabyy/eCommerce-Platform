@@ -29,6 +29,6 @@ export const Modal = ({children, modalTitle,modalActions, showModal,setShowModal
 }
 
 Modal.defaultProps = {
-    onMialogExit:()=>{},
+    onModalExit:()=>{},
     modalActions:[]
 }

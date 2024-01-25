@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import { CustomButton } from '../../../util/Button';
+import AlertContext from '../../../../context/AlertContext';
 
 const captilizeFirstLetter = str =>{
     const firstLetter = str.slice(0,1);
@@ -10,6 +11,7 @@ const captilizeFirstLetter = str =>{
 };
 
 export const ColorSizeQuantityInput = ({submitColorCallbk})=>{
+    const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
     const [prodColor,setProdColor] = useState('');
     const [xsQty,setXSQty] = useState(0);
     const [sQty,setSQty] = useState(0);
@@ -28,7 +30,10 @@ export const ColorSizeQuantityInput = ({submitColorCallbk})=>{
             setLQty(0);
             setXLQty(0);
             setXXLQty(0);
-            setImageList([])
+            setImageList([]);
+            displayAlert("Color added.",'success')
+        }else{
+            emptyFieldAlert();
         }
     }
     return(

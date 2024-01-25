@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { CustomButton } from '../../../util/Button';
 import { ColorSizeQuantityInput } from './ColorSizeQuantityInput';
 import { ColorSizeQtyList } from './ColorSizeQtyList';
 import { CustomDropdown } from '../../../util/Dropdown';
 import { useNavigate } from 'react-router-dom';
 import { categories,brands } from '../../../../data/sectionsData';
+import AlertContext from '../../../../context/AlertContext';
+// import { Modal } from '../../../util/Model';
 
 export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditing})=>{
     const navigate = useNavigate();
+    const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
+    // const [showAddProductModal,setShowAddProductModal] = useState(false);
     const [prodTitle, setProdTitle] = useState(prodTitleState);
     const [prodDesc,setProdDesc] = useState(prodDescState)
     const [prodPrice,setProdPrice] = useState(prodPriceState);
@@ -24,8 +28,75 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
         const colorSizeQtyList = [...prodColorSizeQList];
         setProdColorSizeQList(colorSizeQtyList.filter(i=> i.id !== id))
     }  
+    const modifyProductHandler = ()=>{
+        if(prodTitle && prodDesc && prodPrice && prodCost && prodCat && prodBrand){
+            if(prodTitle !== prodTitleState || 
+                prodDesc !== prodDescState ||
+                prodPrice !== prodPriceState ||
+                prodCost !== prodCostState ||
+                prodCat !== prodCatState ||
+                prodBrand !== prodBrandState ||
+                prodColorSizeQList !== prodColorSizeQListState){
+                    displayAlert('Product has been updated.','success');
+                    navigate('..');
+                }else{
+                    displayAlert('Nothing changed.','primary');
+                    navigate('..');
+                }
+        }else{
+            emptyFieldAlert();
+        }
+    }
+    const addProductHandler = ()=>{
+        if(prodTitle && prodDesc && prodPrice && prodCost && prodCat && prodBrand && prodColorSizeQList.length > 0){
+            confirmAddProductHandler();
+        }else{
+            emptyFieldAlert();
+        }
+    }
+    // const closeAddProductModal = ()=>{
+    //     setShowAddProductModal(false);
+    // }
+    const confirmAddProductHandler = ()=>{
+        // setShowAddProductModal(false);
+        displayAlert(`You've added ${prodBrand.text} ${prodTitle} product to ${prodCat.text} category.`,'success');
+        navigate('..');
+    }
+    // const addProdSummaryModal = <Modal modalTitle='Confirm product info'
+    // modalActions={[
+    //     {title:'Add',onClicked:confirmAddProductHandler},
+    //     {title:'Cancel',onClicked:closeAddProductModal},]}
+    //     showModal={showAddProductModal} setShowModal={setShowAddProductModal}
+    //     onModalExit={closeAddProductModal}>
+    //     <div className="product-title flex gap-2">
+    //         <span className="title font-semibold text-lg">Product Title</span>
+    //         <span className="value font-bold text-lg">{prodTitle}</span>
+    //     </div>
+    //     <div className="product-desc flex gap-2">
+    //         <span className="title font-semibold text-lg">Product Description</span>
+    //         <span className="value font-bold text-lg">{prodDesc}</span>
+    //     </div>
+    //     <div className="product-category flex gap-2">
+    //         <span className="title font-semibold text-lg">Product Category</span>
+    //         <span className="value font-bold text-lg">{prodCat?.text}</span>
+    //     </div>
+    //     <div className="product-brand flex gap-2">
+    //         <span className="title font-semibold text-lg">Product Brand</span>
+    //         <span className="value font-bold text-lg">{prodBrand?.text}</span>
+    //     </div>
+    //     <div className="product-price flex gap-2">
+    //         <span className="title font-semibold text-lg">Product Price</span>
+    //         <span className="value font-bold text-lg">{prodPrice}EGP</span>
+    //     </div>
+    //     <div className="product-cost flex gap-2">
+    //         <span className="title font-semibold text-lg">Product Cost</span>
+    //         <span className="value font-bold text-lg">{prodCost}EGP</span>
+    //     </div>
+    //     <div className="product-colorQtySize"></div>
+    // </Modal>
     return(
     <div className={`addProd-form flex flex-col gap-2`}>
+        {/* {addProdSummaryModal} */}
         <label className='inpt-label'>Product title</label>
         <input type="text" value={prodTitle} onChange={e=>setProdTitle(e.target.value)} placeholder="Enter the product title." className="inpt" />
         <label className='inpt-label'>Product Description</label>
@@ -77,11 +148,11 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
         {
             isEditing? 
             <div className="flex justify-end gap-2">
-                <CustomButton onClick={()=>navigate('..')}>Save</CustomButton>
+                <CustomButton onClick={modifyProductHandler}>Save</CustomButton>
                 <CustomButton onClick={()=>navigate('..')}>Cancel</CustomButton>
             </div>
             :
-            <CustomButton onClick={()=>{}}>Add Product</CustomButton>
+            <CustomButton onClick={addProductHandler}>Add Product</CustomButton>
         }
 
     </div>
