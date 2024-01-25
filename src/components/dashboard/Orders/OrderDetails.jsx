@@ -10,7 +10,12 @@ import AlertContext from "../../../context/AlertContext";
 import { CustomerData } from "../Customers/CustomerData";
 
 const formattedDate = date =>{
-    const currentFullDate = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+    const currentFullDate = 
+    `${date.getHours().toString().length < 2? ('0' + date.getHours()) : date.getHours()}:`+
+    `${date.getMinutes().toString().length < 2? ('0' + date.getMinutes()) : date.getMinutes()} `+
+    `${date.getDate().toString().length < 2? ('0' + date.getDate()) : date.getDate()}`+
+    `/${date.getMonth().toString().length < 2? ('0' + (date.getMonth()+1)) : date.getMonth()+1}`+
+    `/${date.getFullYear()}`;
     return currentFullDate;
 }
 
