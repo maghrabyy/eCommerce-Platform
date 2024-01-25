@@ -12,7 +12,7 @@ export const productColor = color=>{
 const getImgFromId = (prodId,colorId) =>{
     const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
     const colorIndex = productsArray[prodIndex].prodColorQtyList.map(col=>col.id).indexOf(colorId)
-    return productsArray[prodIndex].prodColorQtyList[colorIndex].prodColorImgs.mainImg.src;
+    return productsArray[prodIndex].prodColorQtyList[colorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src;
 }
 export const ordersData = [
     {

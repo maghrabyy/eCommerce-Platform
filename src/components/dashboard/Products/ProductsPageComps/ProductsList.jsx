@@ -15,7 +15,7 @@ export const ProductsList = ({prodsList,searchResultFilter})=>{
                     (searchInpt.length > 0? searchResultFilter : prodsList).map((prod)=> <ProductItem key={prod.prodId} 
                     onClick={()=>navigate(prod.prodId)} 
                     inStock={prod.totalProdQty > 0 ? true : false} 
-                    productImg={prod.prodColorQtyList[0].prodColorImgs.mainImg.src} 
+                    productImg={prod.prodColorQtyList[0].prodColorImgs.filter(img=>img.mainImg)[0].src} 
                     productTitle={`${prod.prodBrand.text} - ${prod.prodTitle}`} 
                     productPrice={prod.prodPrice} 
                     productColors={prod.prodColorQtyList.map(color=>color.prodColor)}/>)}

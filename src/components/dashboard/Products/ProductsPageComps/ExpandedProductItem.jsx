@@ -84,17 +84,17 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                     {prodData.prodColorQtyList.length > 0?                
                     <div className="product-imgs flex flex-col xl:flex-row xl:p-2 gap-2 xl:gap-0">
                         <div className="imgs-list flex flex-row xl:flex-col justify-center xl:justify-start gap-2 h-[40px] xl:w-44 xl:h-[380px] xl:overflow-y-auto px-1 order-2 xl:order-1">
-                            {prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.otherImgs.map((prodImg,index)=><img key={index} onClick={()=>onImgClickHandler(index)} className='cursor-pointer w-6 xl:w-auto hover:scale-105 rounded-lg shadow-xl' src={prodImg.src} alt={prodImg.alt} />)}
+                            {prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.map((prodImg,index)=><img key={index} onClick={()=>onImgClickHandler(index)} className='cursor-pointer w-6 xl:w-auto hover:scale-105 rounded-lg shadow-xl' src={prodImg.src} alt={prodImg.alt} />)}
                         </div>
                         <div className="main-img px-4 xl:order-2 order-1">
                             <img className=' w-[900px] h-[350px] object-cover rounded-lg shadow-xl' 
                             src={selectedImgIndex === 0? 
-                                prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.src
+                                prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src
                                 : 
-                                prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.otherImgs[selectedImgIndex].src} 
+                                prodData.prodColorQtyList[selectedColorIndex].prodColorImgs[selectedImgIndex].src} 
                                 alt={selectedImgIndex === 0? 
-                                    prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.alt
-                                : prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.otherImgs[selectedImgIndex].alt} />
+                                    prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.filter(img=>img.mainImg)[0].alt
+                                : prodData.prodColorQtyList[selectedColorIndex].prodColorImgs[selectedImgIndex].alt} />
                         </div>
                     </div> :
                     null

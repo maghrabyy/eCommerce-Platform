@@ -32,18 +32,14 @@ const greenPnBHoodie = {
     prodCost: 550,
     prodColorQtyList:[{
         id:'COL' + crypto.randomUUID(),prodColor:'green-800', xsQty:0,sQty:1,mQty:3,lQty:4,xlQty:0,xxlQty:0,totalQty:8,
-        prodColorImgs:{
-            mainImg:{src:greenPnBHoodie01,alt:'Green narutu p&b Hoodie'},
-            otherImgs:[
-                {src:greenPnBHoodie01,alt:'Green narutu p&b Hoodie'},
-                {src:greenPnBHoodie02,alt:'Green narutu p&b Hoodie'},
-                {src:greenPnBHoodie03,alt:'Green narutu p&b Hoodie'},
-                {src:greenPnBHoodie04,alt:'Green narutu p&b Hoodie'},
-                {src:greenPnBHoodie05,alt:'Green narutu p&b Hoodie'},
-                {src:greenPnBHoodie06,alt:'Green narutu p&b Hoodie'},
-            ]
-        }
-
+        prodColorImgs:[
+            {src:greenPnBHoodie01,alt:'Green narutu p&b Hoodie',mainImg:true},
+            {src:greenPnBHoodie02,alt:'Green narutu p&b Hoodie'},
+            {src:greenPnBHoodie03,alt:'Green narutu p&b Hoodie'},
+            {src:greenPnBHoodie04,alt:'Green narutu p&b Hoodie'},
+            {src:greenPnBHoodie05,alt:'Green narutu p&b Hoodie'},
+            {src:greenPnBHoodie06,alt:'Green narutu p&b Hoodie'},
+        ]
     }],
     sales:8,
     creationDate: new Date('January 3, 2024 23:15:30'),
@@ -62,15 +58,12 @@ const whitePnBHoodie = {
     prodCost: 550,
     prodColorQtyList:[{
         id:'COL' + crypto.randomUUID(),prodColor:'white', xsQty:0,sQty:1,mQty:4,lQty:4,xlQty:2,xxlQty:0,totalQty:11,
-        prodColorImgs:{
-            mainImg:{src:whitePnBHoodie01,alt:'white p&b Hoodie'},
-            otherImgs:[
-                {src:whitePnBHoodie01,alt:'white p&b Hoodie'},
-                {src:whitePnBHoodie02,alt:'white p&b Hoodie'},
-                {src:whitePnBHoodie03,alt:'white p&b Hoodie'},
-                {src:whitePnBHoodie04,alt:'white p&b Hoodie'},
-            ]
-        }
+        prodColorImgs:[
+            {src:whitePnBHoodie01,alt:'white p&b Hoodie',mainImg:true},
+            {src:whitePnBHoodie02,alt:'white p&b Hoodie'},
+            {src:whitePnBHoodie03,alt:'white p&b Hoodie'},
+            {src:whitePnBHoodie04,alt:'white p&b Hoodie'},
+        ]
     }],
     sales:4,
     creationDate: new Date('January 9, 2024 23:15:30'),
@@ -89,16 +82,13 @@ const blackPnBHoodie01 = {
     prodCost: 550,
     prodColorQtyList:[{
         id:'COL' + crypto.randomUUID(),prodColor:'black', xsQty:0,sQty:1,mQty:2,lQty:2,xlQty:0,xxlQty:0,totalQty:5,
-        prodColorImgs:{
-            mainImg:{src:blackPnBHoodie0101,alt:'black p&b Hoodie'},
-            otherImgs:[
-                {src:blackPnBHoodie0101,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0102,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0103,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0104,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0105,alt:'black p&b Hoodie'},
-            ]
-        }
+        prodColorImgs:[
+            {src:blackPnBHoodie0101,alt:'black p&b Hoodie',mainImg:true},
+            {src:blackPnBHoodie0102,alt:'black p&b Hoodie'},
+            {src:blackPnBHoodie0103,alt:'black p&b Hoodie'},
+            {src:blackPnBHoodie0104,alt:'black p&b Hoodie'},
+            {src:blackPnBHoodie0105,alt:'black p&b Hoodie'},
+        ]
 
     }],
     sales:6,
@@ -118,15 +108,12 @@ const blackPnBHoodie02 = {
     prodCost: 550,
     prodColorQtyList:[{
         id:'COL' + crypto.randomUUID(),prodColor:'black', xsQty:0,sQty:1,mQty:2,lQty:3,xlQty:0,xxlQty:0,totalQty:6,
-        prodColorImgs:{
-            mainImg:{src:blackPnBHoodie0201,alt:'black p&b Hoodie'},
-            otherImgs:[
-                {src:blackPnBHoodie0201,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0202,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0203,alt:'black p&b Hoodie'},
-                {src:blackPnBHoodie0204,alt:'black p&b Hoodie'},
-            ]
-        }
+        prodColorImgs:[
+            {src:blackPnBHoodie0201,alt:'black p&b Hoodie',mainImg:true},
+            {src:blackPnBHoodie0202,alt:'black p&b Hoodie'},
+            {src:blackPnBHoodie0203,alt:'black p&b Hoodie'},
+            {src:blackPnBHoodie0204,alt:'black p&b Hoodie'},
+        ]
     }],
     sales:2,
     creationDate: new Date('January 15, 2024 23:15:30'),   

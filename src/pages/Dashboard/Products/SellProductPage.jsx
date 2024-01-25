@@ -128,7 +128,7 @@ export const SellProductPage = ()=>{
     return <div className=" grid grid-cols-12 gap-2">
         <div className="product md:col-span-3 col-span-12 shadow-md rounded-md px-2 py-2 border-2 border-gray-200">
             <div className="prod-img mb-2 flex justify-center">
-                <img className="rounded-lg shadow-md" src={prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.src} width={280} alt="" />
+                <img className="rounded-lg shadow-md" src={prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src} width={280} alt="" />
             </div>
             <div className="prod-info flex flex-col items-center md:items-start">
                 <div className="font-bold text-center md:text-start text-slate-900 text-2xl">{prodName}</div> 
@@ -252,7 +252,7 @@ export const SellProductPage = ()=>{
                     showOrderSummary={showOrderSummary}
                     setShowOrderSummary={setShowOrderSummary}
                     prodName={prodName}
-                    prodImg={prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.mainImg.src}
+                    prodImg={prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src}
                     prodPrice={prodData.prodPrice}
                     selectedColor={selectedColor}
                     selectedSize={selectedSize}
