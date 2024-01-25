@@ -5,7 +5,7 @@ import { Modal } from "../../../components/util/Model";
 import AlertContext from "../../../context/AlertContext"
 import { dummyCsts } from "../../../data/customersData";
 
-export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,saveDataCheckbox})=>{
+export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCallbk,saveDataCheckbox})=>{
     const { displayAlert, emptyFieldAlert } = useContext(AlertContext);
     const [showCstModifyModal,setShowCstModifyModal] = useState(false);
     const [cstPhoneNum,setCstPhoneNum] = useState('');
@@ -15,7 +15,8 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
     const [streetAddress,setStreetAddress] = useState('');
     const [city,setCity] = useState('');
     const [saveModifiedData,setSaveModifiedData] = useState(false);
-
+    const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
+    const currentCstData = dummyCsts[cstIndex]; 
     useEffect(()=>{
         if(showCstModifyModal){
             setCstPhoneNum(phoneNum);
@@ -26,7 +27,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
             setCity(address?.city);
         }
     },[phoneNum,address,showCstModifyModal]);
-    const isValidePhoneNum = (phoneNum)=>{
+    const isValidePhoneNum = ()=>{
         if(!isNaN(cstPhoneNum) && cstPhoneNum.length === 11 && cstPhoneNum.startsWith("01")){
             return true
         }
@@ -34,8 +35,9 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
             return false;
         }
     }
-    const alreadyRegisteredPhoneNum = (phoneNum)=>{
-        if(dummyCsts.map(cst=>cst.phoneNum).includes(phoneNum)){
+    const alreadyRegisteredPhoneNum = (inputtedPhoneNum)=>{
+        if(dummyCsts.map(cst=>cst.phoneNum).includes(inputtedPhoneNum) && 
+            inputtedPhoneNum !== currentCstData.phoneNum){
             return true;
         }else{
             return false;
@@ -59,7 +61,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
                     buildingNum !== address.buildingNum || 
                     streetAddress !== address.address || 
                     city !== address.city){
-                        if(isValidePhoneNum(cstPhoneNum)){
+                        if(isValidePhoneNum()){
                             if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
                                 displayAlert("Customer's contact info has updated.",'success');
                                 closeCstModifyModal();
@@ -81,7 +83,7 @@ export const ModifyCstData = ({phoneNum,address,phoneNumCallbk,addressCallbk,sav
         else if(phoneNum){
             if(cstPhoneNum){
                 if(cstPhoneNum !== phoneNum){
-                    if(isValidePhoneNum(cstPhoneNum)){
+                    if(isValidePhoneNum()){
                         if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
                             if(saveDataCheckbox){
                                 phoneNumCallbk(cstPhoneNum);

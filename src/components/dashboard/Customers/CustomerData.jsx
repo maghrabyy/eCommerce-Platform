@@ -9,7 +9,7 @@ export const CustomerData = ({cst,showNumOfOrders,navigateToCstPage,className,mo
     }
     return <div onClick={navigateToCstPage && cstClickedHandler} className={className + ` relative cst-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center ${navigateToCstPage && 'cursor-pointer hover:bg-gray-100'}`}>
         <div className="modify-contact-info absolute top-2 right-4">
-            {modifiable && <ModifyCstData  phoneNum={cst.phoneNum} address={cst.cstAddress}/>}
+            {modifiable && <ModifyCstData cstId={cst.cstId} phoneNum={cst.phoneNum} address={cst.cstAddress}/>}
         </div>
         <OrderInfo title='Customer ID' data={cst.cstId} />
         <OrderInfo title='Customer Name' data={cst.name} />

@@ -4,12 +4,12 @@ import { productsArray } from "../../../data/productsData";
 import { useState,useEffect,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faMinus, faUser, faPhone, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { CustomDropdown } from "../../../components/util/Dropdown";
 import { dummyCsts } from "../../../data/customersData";
 import { ModifyCstData } from "../../../components/dashboard/Customers/ModifyCustomerData";
 import { Modal } from "../../../components/util/Model";
 import { productColor } from "../../../data/ordersData";
 import AlertContext from "../../../context/AlertContext";
+import { AutoCompleteInput } from "../../../components/util/AutoComplete";
 
 export const SellProductPage = ()=>{
     const navigate = useNavigate();
@@ -28,6 +28,7 @@ export const SellProductPage = ()=>{
     const [buildingNum,setBuildingNum] = useState('');
     const [streetAddress,setStreetAddress] = useState('');
     const [city,setCity] = useState('');
+    const [regCstName,setRegCstName] = useState('');
     const [regCstPhoneNum,setRegCstPhoneNum] = useState('');
     const [regCstAddress,setRegCstAddress] = useState({});
     const [showOrderSummary,setShowOrderSummary] = useState(false);
@@ -47,10 +48,17 @@ export const SellProductPage = ()=>{
     }
     useEffect(()=>{
         if(selectedCst){
+            setRegCstName(selectedCstData.name);
             setRegCstPhoneNum(selectedCstData.phoneNum);
             setRegCstAddress(selectedCstData.cstAddress);
         }
-    },[selectedCst,selectedCstData?.phoneNum,selectedCstData?.cstAddress])
+    },[selectedCst,selectedCstData])
+    useEffect(()=>{
+        setSelectedCst(null);
+        setRegCstName('');
+        setRegCstPhoneNum('');
+        setRegCstAddress({});
+    },[registeredCst])
     const colors = {
         'green-800':'bg-green-800',
         'black':'bg-black',
@@ -163,21 +171,25 @@ export const SellProductPage = ()=>{
                 {registeredCst ? 
                     <div className="registered-cst">
                         <div className="cst-selection">
-                            <CustomDropdown title='Select Customer' options={dummyCsts.map(cst=>(
+                            <AutoCompleteInput placeholder="Search for a customer." menu={dummyCsts.map(cst=>(
                                 {text:cst.name,value:cst.cstId,subtitle:cst.phoneNum,leftSubtitle:true}
-                            ))} value={selectedCst} onChange={setSelectedCst} />
+                            ))} onSelect={setSelectedCst} />
                         </div>
                         {selectedCst && <div className="register-cst-info my-2 px-2">
+                                <div className="cst-name flex gap-2">
+                                    <span className="text-slate-800 font-semibold">Name</span> 
+                                    <span className="text-slate-800 font-bold">{regCstName}</span>
+                                </div>
                                 <div className="cst-phoneNum flex items-center gap-2 justify-between md:justify-normal">
                                     <div className="phoneNum-data flex gap-2">
                                         <span className="text-slate-800 font-semibold">Phone Number</span> 
                                         <span className="text-slate-800 font-bold">{regCstPhoneNum}</span>
                                     </div>
-                                    <ModifyCstData phoneNum={regCstPhoneNum} phoneNumCallbk={modifiedPhoneNumHandler} saveDataCheckbox/>
+                                    <ModifyCstData cstId={selectedCstData.cstId} phoneNum={regCstPhoneNum} phoneNumCallbk={modifiedPhoneNumHandler} saveDataCheckbox/>
                                 </div>
                                 <div className="cst-address flex gap-2">
                                     <span className="text-slate-800 font-bold">Apt {regCstAddress.aptNum} Floor {regCstAddress.floorNum} Building {regCstAddress.buildingNum}, {regCstAddress.address}, {regCstAddress.city}</span>
-                                    <ModifyCstData address={regCstAddress} addressCallbk={modifiedAddressHandler} saveDataCheckbox/>
+                                    <ModifyCstData cstId={selectedCstData.cstId} address={regCstAddress} addressCallbk={modifiedAddressHandler} saveDataCheckbox/>
                                 </div>
                         </div>}
                     </div>    
@@ -245,7 +257,7 @@ export const SellProductPage = ()=>{
                     selectedColor={selectedColor}
                     selectedSize={selectedSize}
                     selectedQty={selectedQty}
-                    cstName={registeredCst? selectedCstData?.name : cstName}
+                    cstName={registeredCst? regCstName : cstName}
                     cstPhoneNum={registeredCst? regCstPhoneNum : cstPhoneNum}
                     cstAddress={registeredCst? regCstAddress : {aptNum,floorNum,buildingNum,address:streetAddress,city}}
                     shippingFees={shippingFees}
