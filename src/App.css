@@ -70,3 +70,18 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.react-date-picker__wrapper {
+  border: 0 !important;
+}
+.react-calendar__tile{
+  color: #1e293b;
+  font-size: 0.5em !important;
+
+}
+
+.react-calendar__navigation{
+  color: #1E293B;
+  font-size: 0.65em !important;
+}
+

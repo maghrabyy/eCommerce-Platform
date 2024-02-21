@@ -168,7 +168,7 @@ orderStatus:{
             {status:'In Progress',date:(new Date('December 12, 2023 23:15:30'))},
             {status:'Shipped',date:(new Date('December 14, 2023 12:25:34'))},
             {status:'Arrived',date:(new Date('December 14, 2023 15:05:55'))},
-            {status:'Refunded',date:(new Date('December 14, 2023 15:05:55'))},
+            {status:'Refunded',date:(new Date('December 16, 2023 18:25:22'))},
         ],
         currentStatus:function( ){return {...this.statusHistory[this.statusHistory.length-1]}}
     }

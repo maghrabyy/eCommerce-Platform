@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faAngleDown, faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import { Chart } from "react-google-charts";
+import DatePicker from 'react-date-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 
 export const SalesReport = ()=>{
     const monthNum = {
@@ -19,10 +22,20 @@ export const SalesReport = ()=>{
         10:'Nov',
         11:'Dec'
     }
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
+
+    const overallSales = ordersData.length;
+    const arrivedOrders = ordersData.filter(order=>order.orderStatus.currentStatus().status === 'Arrived').length
+    const overallRev = ordersData.map(order=>order.revenue()).reduce((a,b)=>a+b,0);
+    const [monthlySelectedDate, setMonthlySelectedDate] = useState(Date());
+    const [annualSelectedDate, setAnnualSelectedDate] = useState(Date());
     return <div className="sales-reports">
-        <div className="currentyear-reports">
+        <div className="overall-summary bg-slate-300 rounded-lg px-4 py-2 shadow-md mb-2 text-slate-800 text-xl font-semibold flex flex-col gap-2">
+            <h1 className="title self-center font-bold text-2xl">Overall Summary</h1>
+            <h1 className="total-sales">Total Sales: <span className='font-bold'>{overallSales}</span></h1>
+            <h1 className="total-sales">Arrived Orders: <span className='font-bold'>{arrivedOrders}</span></h1>
+            <h1 className="total-rev">Total Revenue: <span className='font-bold'>{overallRev}EGP</span></h1>
+        </div>
+        {/* <div className="currentyear-reports">
             <div className="currentyear-reports-title text-center font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2">
                <span>{currentYear} Reports</span>
             </div>
@@ -30,14 +43,45 @@ export const SalesReport = ()=>{
                 <ReportsContainer year={currentYear} month={monthNum[currentMonth]} />
                 <ReportsContainer year={currentYear}/>
             </div>
-        </div>
-        <div className="prevyear-reports">
+        </div> */}
+        {/* <div className="prevyear-reports">
             <div className="prevyear-reports-title text-center font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2">
                <span>{currentYear-1} Reports</span>
             </div>
             <div className="prevyear-reports-container px-4">
                 <ReportsContainer year={currentYear-1}  />
             </div>
+        </div> */}
+        <div className="monthly-report">
+            <div className="monthly-reports-title font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2 flex sm:flex-row flex-col gap-4 justify-center items-center">
+               <span>Monthly Report</span>
+               <DatePicker
+                className='bg-blue-700 hover:bg-blue-500 text-white rounded-lg text-center shadow-md cursor-pointer px-4'
+                format="y-MM"
+                maxDetail='year'
+                clearIcon = {null}
+                calendarIcon = {null}
+                value={monthlySelectedDate}
+                onChange={setMonthlySelectedDate}
+                />
+            </div>
+            <ReportsContainer year={new Date(monthlySelectedDate).getFullYear()} month={monthNum[new Date(monthlySelectedDate).getMonth()]} />
+        </div>
+        
+        <div className="annual-report">
+            <div className="monthly-reports-title font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2 flex sm:flex-row flex-col gap-4 justify-center items-center">
+               <span>Annual Report</span>
+               <DatePicker 
+                className='bg-blue-700 hover:bg-blue-500 text-white rounded-lg text-center shadow-md cursor-pointer'
+                format="y"
+                maxDetail='decade'
+                clearIcon = {null}
+                calendarIcon = {null}
+                value={annualSelectedDate}
+                onChange={setAnnualSelectedDate}
+                />
+            </div>
+            <ReportsContainer year={new Date(annualSelectedDate).getFullYear()}/>
         </div>
     </div>
 }
@@ -63,14 +107,14 @@ const ReportsContainer = ({month,year})=>{
                     <ReportChart chartType={month? 'Line' : 'Bar'} year={year} month={month && month} revenue 
                         totalValueCallbk={totalRevHandler}/>
                     {!month && <div className="total-value">
-                        Total Revenue {totalRev}EGP
+                        Total Revenue {totalRev??0}EGP
                     </div>}
                 </div>
                 <div className="flex flex-col basis-1/2">
                     <ReportChart chartType={'Bar'} year={year} month={month && month} sales
                         totalValueCallbk={totalRevHandler}/>
                         {!month && <div className="total-value">
-                            Total Sales {totalSales}
+                            Total Sales {totalSales??0}
                         </div>}
                 </div>
             </div>
@@ -79,14 +123,14 @@ const ReportsContainer = ({month,year})=>{
                     <ReportChart chartType={'PieChart'} year={year} month={month && month} revenue
                         totalValueCallbk={totalRevHandler}/>
                     {!month && <div className="total-value">
-                        Total Revenue {totalRev}EGP
+                        Total Revenue {totalRev??0}EGP
                     </div>}
                 </div>
                 <div className="flex flex-col basis-1/2">
                     <ReportChart chartType={'PieChart'} year={year} month={month && month} sales
                         totalValueCallbk={totalRevHandler}/>
                      {!month && <div className="total-value">
-                       Total Sales {totalSales}
+                       Total Sales {totalSales??0}
                     </div>}
                 </div>
             </div>
@@ -137,17 +181,21 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
       }, {})));
     const monthlyDataset = (month,year) =>{
         const monthIndex = ordersPerYear(year).map(annualOrders=>annualOrders.month).indexOf(month);
-        const ordersPerMonth = ordersPerYear(year)[monthIndex].orders;       
-        const salesRevFilter = ordersPerMonth.map(order=>{
-            const manyOrdersPerDay =  ordersPerMonth.filter(monthlyOrder=>monthlyOrder.orderStatus.currentStatus().date.getDate() === order.orderStatus.currentStatus().date.getDate())
-            return {
-                day:order.orderStatus.currentStatus().date.getDate(),
-                sales:manyOrdersPerDay.length,
-                revenue:manyOrdersPerDay.length > 1 ? manyOrdersPerDay.reduce((n, o) => n + o.revenue(), 0) : order.revenue()
-            }}
-        );
-        const undupOrders = salesRevFilter.filter((order,index,self)=>  index === self.findIndex((t) => (t.day === order.day && t.sales === order.sales)));
-        return undupOrders.reverse();
+        if(monthIndex > -1){
+            const ordersPerMonth = ordersPerYear(year)[0].orders;       
+            const salesRevFilter = ordersPerMonth.map(order=>{
+                const manyOrdersPerDay =  ordersPerMonth.filter(monthlyOrder=>monthlyOrder.orderStatus.currentStatus().date.getDate() === order.orderStatus.currentStatus().date.getDate())
+                return {
+                    day:order.orderStatus.currentStatus().date.getDate(),
+                    sales:manyOrdersPerDay.length,
+                    revenue:manyOrdersPerDay.length > 1 ? manyOrdersPerDay.reduce((n, o) => n + o.revenue(), 0) : order.revenue()
+                }}
+            );
+            const undupOrders = salesRevFilter.filter((order,index,self)=>  index === self.findIndex((t) => (t.day === order.day && t.sales === order.sales)));
+            return undupOrders.reverse();
+        }else{
+            return [];
+        }
     } 
 
     const chartOption ={
@@ -157,7 +205,7 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
             [ 
                 ['Days',(sales && 'Sales') || (revenue && 'Revenue')],
                 ...monthlyDataset(month,year).map(data=>
-                    (revenue && [`${month} ${data.day}`,data.revenue]) || (sales && [` ${month} ${data.day}`,data.sales]))
+                    (revenue && [`${month} ${data.day}`,data.revenue]) || (sales && [` ${month} ${data.day}`,data.sales]))    
             ]
             :
             [
@@ -171,7 +219,7 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
             <h1 className='text-center font-bold md:text-4xl text-lg text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2'>
               {month && month + ' - '}  {year} {(sales && 'Sales') || (revenue && 'Revenue')}
             </h1>
-            <Chart
+            {chartOption.chartData.length > 1 ? <Chart
                 chartType={chartOption.chartType}
                 data={chartOption.chartData}
                 options={ {
@@ -190,7 +238,11 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
                         },
                       }]
             }
-            />
+            />:
+            <div className="no-data flex justify-center items-center h-[400px] hover:bg-slate-400">
+                <h1 className='text-2xl font-bold text-slate-800'>No data available</h1>
+            </div>
+            }
         </div>
 </div>
 }
