@@ -23,7 +23,7 @@ export const Sidebar = () =>{
         navigateToHomepage();
     }
     return (
-        <div className={`dashboard-sidebar xl:static fixed top-0 z-50 xl:z-0 w-72 xl:w-auto h-full ${showToggledSidebar?'translate-x-0':'translate-x-[-120%] xl:translate-x-0'} duration-300 ease-in bg-white col-span-2 px-2 overflow-scroll select-none`}>
+        <div className={`dashboard-sidebar xl:static fixed top-0 z-50 xl:z-0 w-72 xl:w-auto h-full shadow-md ${showToggledSidebar?'translate-x-0':'translate-x-[-120%] xl:translate-x-0'} duration-300 ease-in bg-white col-span-2 px-2 overflow-scroll select-none`}>
             <div className='sidebar-content flex flex-col justify-between h-full'>
                 <div>
                     <div className='sidebar-header border-b-2 border-b-gray-500 text-center py-6 flex items-center justify-between'>
