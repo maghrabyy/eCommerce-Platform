@@ -16,9 +16,9 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
 
     return (
         <div ref={dashcontentRef} className={`dashboard-content  bg-white `}>
-            <div className={`navbar fixed top-0 w-full xl:w-[calc(100%-215px)] bg-white z-40`}>
+            <div className={`navbar fixed top-0 w-full xl:w-[calc(100%-220px)] bg-white z-40 xl:shadow-none shadow-md`}>
                 <div className="main-header pt-4 px-4">
-                    <div className="flex justify-between items-center py-5 ">
+                    <div className="flex justify-between items-center py-5">
                         <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">
                             {isHomeage? <MdDashboard/> : <FontAwesomeIcon className='me-2' icon={icon} />}
                             {title}
@@ -28,7 +28,7 @@ export const DashboardContent = ({icon,title,showSearchInput,className,children}
                     </div> 
                 </div>
             </div>
-            <div style={{marginTop:navbarHeight}} className={`px-4 pt-4 h-[calc(100vh-88px)] overflow-scroll ${className}`}>
+            <div style={{marginTop:navbarHeight}} className={`px-4 pt-4 h-[calc(100vh-88px)] overflow-auto ${className}`}>
                 { children}
             </div>
         </div>
