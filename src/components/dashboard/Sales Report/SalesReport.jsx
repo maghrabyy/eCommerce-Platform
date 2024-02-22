@@ -33,25 +33,8 @@ export const SalesReport = ()=>{
             <h1 className="title self-center font-bold text-2xl">Overall Summary</h1>
             <h1 className="total-sales">Total Sales: <span className='font-bold'>{overallSales}</span></h1>
             <h1 className="total-sales">Arrived Orders: <span className='font-bold'>{arrivedOrders}</span></h1>
-            <h1 className="total-rev">Total Revenue: <span className='font-bold'>{overallRev}EGP</span></h1>
+            <h1 className="total-rev">Total Revenue: <span className='font-bold text-green-800'>{overallRev}EGP</span></h1>
         </div>
-        {/* <div className="currentyear-reports">
-            <div className="currentyear-reports-title text-center font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2">
-               <span>{currentYear} Reports</span>
-            </div>
-            <div className="currentyear-reports-container px-4">
-                <ReportsContainer year={currentYear} month={monthNum[currentMonth]} />
-                <ReportsContainer year={currentYear}/>
-            </div>
-        </div> */}
-        {/* <div className="prevyear-reports">
-            <div className="prevyear-reports-title text-center font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2">
-               <span>{currentYear-1} Reports</span>
-            </div>
-            <div className="prevyear-reports-container px-4">
-                <ReportsContainer year={currentYear-1}  />
-            </div>
-        </div> */}
         <div className="monthly-report">
             <div className="monthly-reports-title font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2 flex sm:flex-row flex-col gap-4 justify-center items-center">
                <span>Monthly Report</span>

@@ -95,7 +95,7 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
     //     <div className="product-colorQtySize"></div>
     // </Modal>
     return(
-    <div className={`addProd-form flex flex-col gap-2`}>
+    <div className={`addProd-form flex flex-col gap-2 pb-4`}>
         {/* {addProdSummaryModal} */}
         <label className='inpt-label'>Product title</label>
         <input type="text" value={prodTitle} onChange={e=>setProdTitle(e.target.value)} placeholder="Enter the product title." className="inpt" />
