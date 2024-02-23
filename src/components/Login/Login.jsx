@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { CustomButton } from "../util/Button";
 import AuthContext from "../../context/AuthContext";
 
-export const Login = ({headerHeight})=>{
+export const Login = ()=>{
     const { loginUser } = useContext(AuthContext);
     const loginHandler = event=>{
         event.preventDefault();
@@ -11,8 +11,8 @@ export const Login = ({headerHeight})=>{
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     return (
-        <div style={{height: `calc(100vh - ${headerHeight}px`}} className={`login flex justify-center items-start mx-4`}>
-          <form className='flex flex-col bg-white py-10 px-6 xl:p-12 rounded-lg w-[596px] shadow-lg'>
+        <div className={`login w-5/6 sm:w-4/6 md:w-3/6 lg:w-2/6`}>
+          <form className='flex flex-col px-4 py-3 bg-white rounded-lg shadow-lg'>
             <div className="login-input py-2 flex flex-col">
               <label className='inpt-label'>Username</label>
               <input type="text" autoComplete="username"  value={username} onChange={e=>setUsername(e.target.value)} autoFocus placeholder="Enter your username." required className='inpt' />

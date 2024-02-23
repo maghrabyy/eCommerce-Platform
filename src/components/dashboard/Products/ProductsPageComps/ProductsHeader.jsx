@@ -51,7 +51,7 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
     ]
     return(
         <div className="productsHeader flex flex-col">
-           {showSearchInpt && <div className="py-2 md:hidden">
+           {showSearchInpt && <div className="py-2 xl:hidden">
                 <ProductSearch />
             </div>}
             <div className='flex flex-col xl:flex-row gap-2 justify-between'> 

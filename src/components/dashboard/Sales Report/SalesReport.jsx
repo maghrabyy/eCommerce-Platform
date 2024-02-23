@@ -33,7 +33,7 @@ export const SalesReport = ()=>{
             <h1 className="title self-center font-bold text-2xl">Overall Summary</h1>
             <h1 className="total-sales">Total Sales: <span className='font-bold'>{overallSales}</span></h1>
             <h1 className="total-sales">Arrived Orders: <span className='font-bold'>{arrivedOrders}</span></h1>
-            <h1 className="total-rev">Total Revenue: <span className='font-bold text-green-800'>{overallRev}EGP</span></h1>
+            <h1 className="total-rev">Total Revenue <span className='font-bold bg-green-700 shadow-md rounded-md py-1 px-2 text-white'>{overallRev}EGP</span></h1>
         </div>
         <div className="monthly-report">
             <div className="monthly-reports-title font-bold text-4xl text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2 flex sm:flex-row flex-col gap-4 justify-center items-center">

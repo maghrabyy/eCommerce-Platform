@@ -1,14 +1,13 @@
 import './App.css';
-import { faChartLine, faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import { routes, categoriesRoutes, brandsRoutes } from './data/navigationPaths';
-import { DashboardContent } from './components/dashboard/Dashcontent';
 
 //Pages
 import { MainDashboard } from "./pages/Dashboard/Dashboard Main/MainDashboardPage";
 import { OrdersPage } from "./pages/Dashboard/Orders/OrdersPage";
+import { BusinessDetailsPage } from './pages/Dashboard/Business Details/BusinessDetailsPage';
 import { OrderDetails } from './components/dashboard/Orders/OrderDetails';
 import { CustomersPage } from './pages/Dashboard/Customers/CustomersPage';
 import { CustomerDetails } from './components/dashboard/Customers/CustomerDetails';
@@ -63,21 +62,16 @@ function App() {
       );
 
   const router = createBrowserRouter(createRoutesFromElements(
-      <Route path={routes.homePage} element={authUser? <Dashboard /> : <LoginPage/>} >
-        <Route index element={
-          <DashboardContent title='Dashboard' >
-            <MainDashboard/>
-          </DashboardContent>} />
-        <Route path={routes.orders} element={<OrdersPage/>}>
+      <Route path={routes.homePage.path} element={authUser? <Dashboard /> : <LoginPage/>} >
+        <Route index element={<MainDashboard/>} />
+        <Route path={routes.orders.path} element={<OrdersPage/>}>
             <Route path=':ordersId' element={<OrderDetails/>} />
         </Route>
-        <Route path={routes.customers} element={<CustomersPage/>}>
+        <Route path={routes.customers.path} element={<CustomersPage/>}>
           <Route path=':cstId' element={<CustomerDetails/>} />
         </Route>
-        <Route path={routes.salesReport} element={
-          <DashboardContent title='Sales Report' icon={faChartLine}>
-          <SalesReportPage/>
-        </DashboardContent>} />
+        <Route path={routes.salesReport.path} element={<SalesReportPage/>} />
+        <Route path={routes.business_details.path} element={<BusinessDetailsPage/>} />
         <Route path='products' element={ <BrandsCategoryPage/>} >
           <Route path=':prod' element={ <ProductDetails /> }>
               <Route path='edit-product' element={<ProductEditPage />} />
@@ -90,14 +84,8 @@ function App() {
             {renderedCategoryRoutes}
           </Route>
         </Route>
-        <Route path={routes.addProduct} element={
-              <DashboardContent title='Add Product' icon={faCirclePlus}>
-                <AddProductPage/>
-              </DashboardContent>} />
-        <Route path={routes.activityLog} element={
-          <DashboardContent title='Activity Log' icon={faClipboardList}>
-            <ActivityLogPage/>
-          </DashboardContent>} />
+        <Route path={routes.addProduct.path} element={<AddProductPage/>} />
+        <Route path={routes.activityLog.path} element={<ActivityLogPage/>} />
           <Route path='*' element={<PageNotFound />}/>
       </Route>
   ));
