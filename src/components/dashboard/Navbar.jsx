@@ -12,8 +12,8 @@ export const PrimaryNavbar = ({icon,title,showSearchInput})=>{
     const navigate = useNavigate();
     const {showSidebar} = useContext(SidebarTogglerContext);
     const isHomeage = useLocation().pathname === routes.homePage.path;
-    return <div className={`navbar fixed top-0 w-full xl:w-[calc(100%-230px)] bg-white z-40 xl:shadow-none shadow-md`}>
-    <div className="main-header xl:py-1 px-4">
+    return <div className={`navbar fixed top-0 w-full xl:ms-1 xl:w-[calc(100%-225px)] bg-white z-40 xl:shadow-none shadow-md`}>
+    <div className="main-header px-4">
         <div className="flex justify-between items-center py-5">
             <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">
                 <FontAwesomeIcon onClick={showSidebar} className='text-gray-700 me-1 text-2xl cursor-pointer xl:hidden hover:text-slate-600' icon={faBars} />

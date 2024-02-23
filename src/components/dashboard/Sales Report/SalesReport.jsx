@@ -71,11 +71,17 @@ export const SalesReport = ()=>{
 
 const ReportsContainer = ({month,year})=>{
     const [expandReports,setExpandReports] = useState(true);
-    const [totalRev,setTotalRev] = useState(0);
-    const [totalSales,setTotalSales] = useState(0);
-    const totalRevHandler = value =>{
-        setTotalRev(value.totalRev);
-        setTotalSales(value.totalSales)
+    const [totalAnnualRev,setTotalAnnualRev] = useState(0);
+    const [totalAnnualSales,setTotalAnnualSales] = useState(0);
+    const [totalMonthlyRev,setTotalMonthlyRev] = useState(0);
+    const [totalMonthlySales,setTotalMonthlySales] = useState(0);
+    const totalAnnualValueHandler = value =>{
+        setTotalAnnualRev(value.totalRev);
+        setTotalAnnualSales(value.totalSales)
+    }
+    const totalMonthlyValueHandler = value =>{
+        setTotalMonthlyRev(value.totalRev);
+        setTotalMonthlySales(value.totalSales);
     }
     return <div className="reports">
         <div onClick={()=>setExpandReports(!expandReports)} className="reports-title text-center font-bold md:text-4xl text-lg text-slate-800 bg-slate-300 rounded-lg py-2 shadow-md mb-2 flex justify-between px-4 cursor-pointer select-none hover:bg-slate-200">
@@ -88,40 +94,40 @@ const ReportsContainer = ({month,year})=>{
             <div className="report flex md:flex-row flex-col gap-2 py-2">
                 <div className="flex flex-col  basis-1/2">
                     <ReportChart chartType={month? 'Line' : 'Bar'} year={year} month={month && month} revenue 
-                        totalValueCallbk={totalRevHandler}/>
-                    {!month && <div className="total-value">
-                        Total Revenue {totalRev??0}EGP
-                    </div>}
+                        totalAnnualValueCallbk={totalAnnualValueHandler} totalMonthlyValueCallbk={totalMonthlyValueHandler}/>
+                    <div className="total-value">
+                        Total Revenue {!month? (totalAnnualRev??0): (totalMonthlyRev??0)}EGP
+                    </div>
                 </div>
                 <div className="flex flex-col basis-1/2">
                     <ReportChart chartType={'Bar'} year={year} month={month && month} sales
-                        totalValueCallbk={totalRevHandler}/>
-                        {!month && <div className="total-value">
-                            Total Sales {totalSales??0}
-                        </div>}
+                        totalAnnualValueCallbk={totalAnnualValueHandler} totalMonthlyValueCallbk={totalMonthlyValueHandler}/>
+                        <div className="total-value">
+                            Total Sales {!month? (totalAnnualSales??0) : (totalMonthlySales??0)}
+                        </div>
                 </div>
             </div>
             <div className="pie-report flex md:flex-row flex-col gap-2 py-2">
                 <div className="flex flex-col  basis-1/2">
                     <ReportChart chartType={'PieChart'} year={year} month={month && month} revenue
-                        totalValueCallbk={totalRevHandler}/>
-                    {!month && <div className="total-value">
-                        Total Revenue {totalRev??0}EGP
-                    </div>}
+                        totalAnnualValueCallbk={totalAnnualValueHandler} totalMonthlyValueCallbk={totalMonthlyValueHandler}/>
+                    <div className="total-value">
+                        Total Revenue {!month? (totalAnnualRev??0): (totalMonthlyRev??0)}EGP
+                    </div>
                 </div>
                 <div className="flex flex-col basis-1/2">
                     <ReportChart chartType={'PieChart'} year={year} month={month && month} sales
-                        totalValueCallbk={totalRevHandler}/>
-                     {!month && <div className="total-value">
-                       Total Sales {totalSales??0}
-                    </div>}
+                        totalAnnualValueCallbk={totalAnnualValueHandler} totalMonthlyValueCallbk={totalMonthlyValueHandler}/>
+                        <div className="total-value">
+                            Total Sales {!month? (totalAnnualSales??0) : (totalMonthlySales??0)}
+                        </div>
                 </div>
             </div>
         </div>}
     </div>
 }
 
-const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
+const ReportChart = ({sales,revenue,year,month,chartType,totalAnnualValueCallbk, totalMonthlyValueCallbk})=>{
     const monthlyOrders = (year)=>{
         const resultedOrders = []
         const salesOrders = ordersData.filter(order=>order.revenue() > 0);
@@ -157,7 +163,7 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
         })
         );
     } 
-    (!month && totalValueCallbk(annualDataset(year).reduce((accumulator, dataSet) => {
+    (!month && totalAnnualValueCallbk(annualDataset(year).reduce((accumulator, dataSet) => {
         accumulator.totalSales = (accumulator.totalSales || 0) + dataSet.sales;
         accumulator.totalRev = (accumulator.totalRev || 0) + dataSet.revenue;
         return accumulator;
@@ -180,7 +186,11 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalValueCallbk})=>{
             return [];
         }
     } 
-
+    totalMonthlyValueCallbk(monthlyDataset(month,year).reduce((accumulator, dataSet) => {
+        accumulator.totalSales = (accumulator.totalSales || 0) + dataSet.sales;
+        accumulator.totalRev = (accumulator.totalRev || 0) + dataSet.revenue;
+        return accumulator;
+      }, {}));
     const chartOption ={
         chartType:chartType,
         chartData:
