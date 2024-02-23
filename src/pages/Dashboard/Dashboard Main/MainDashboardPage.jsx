@@ -5,7 +5,7 @@ import { Panel } from '../../../components/util/Panel';
 
 export const MainDashboard = ()=>{
     const navigate = useNavigate();
-    return <div className="grid xl:grid-cols-2 gap-5 xl:px-14 py-2">
+    return <div className="grid xl:grid-cols-2 gap-5 xl:px-14">
         <DashboardItem onClick={()=>navigate(routes.salesReport.path)} icon={routes.salesReport.icon} title={routes.salesReport.title}/>
         <DashboardItem onClick={()=>navigate(routes.orders.path)} icon={routes.orders.icon} title={routes.orders.title}/>
         <DashboardItem onClick={()=>navigate(routes.products.path)} icon={routes.products.icon} title={'Products'}/>
