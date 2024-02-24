@@ -4,23 +4,29 @@ import { productsArray } from "../../../data/productsData";
 import { useState,useEffect,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faMinus, faUser, faPhone, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { dummyCsts } from "../../../data/customersData";
 import { ModifyCstData } from "../../../components/dashboard/Customers/ModifyCustomerData";
 import { Modal } from "../../../components/util/Model";
 import { productColor } from "../../../data/ordersData";
 import AlertContext from "../../../context/AlertContext";
 import { AutoCompleteInput } from "../../../components/util/AutoComplete";
+import CustomersContext from "../../../context/CustomersContext";
+import OrdersContext from "../../../context/OrdersContext";
 
 export const SellProductPage = ()=>{
     const navigate = useNavigate();
     const {prod} = useOutletContext();
+    const { customersData } = useContext(CustomersContext)
     const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
+    //selected order data
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
     const [selectedQty,setSelectedQty] = useState(0);
     const [selectedSize,setSelectedSize] = useState('');
+    //selected registered customer data
     const [registeredCst,setRegisteredCst] = useState(false);
     const [selectedCst,setSelectedCst] = useState(null);
+    //shipping fees
     const [shippingFees,setShippingFees] = useState(0);
+    //unregistered cst data
     const [cstName,setCstName] = useState('');
     const [cstPhoneNum,setCstPhoneNum] = useState('');
     const [aptNum,setAptNum] = useState('');
@@ -28,16 +34,21 @@ export const SellProductPage = ()=>{
     const [buildingNum,setBuildingNum] = useState('');
     const [streetAddress,setStreetAddress] = useState('');
     const [city,setCity] = useState('');
+    //registered cst data
     const [regCstName,setRegCstName] = useState('');
     const [regCstPhoneNum,setRegCstPhoneNum] = useState('');
     const [regCstAddress,setRegCstAddress] = useState({});
+    //order summary modal
     const [showOrderSummary,setShowOrderSummary] = useState(false);
+    //product data
     const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prod);
     const prodData = productsArray[prodIndex];
-    const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(selectedCst?.value);
-    const selectedCstData = dummyCsts[cstIndex];
+
+    const cstIndex = customersData.map(cst=>cst.cstId).indexOf(selectedCst?.value);
+    const selectedCstData = customersData[cstIndex];
     const prodName = `${prodData.prodBrand.text} ${prodData.prodTitle}`;
     const selectedColor = productColor(prodData.prodColorQtyList[selectedColorIndex].prodColor);
+    const selectedColorId = prodData.prodColorQtyList[selectedColorIndex].id;
     const qtyCode = {
         'XS':'xsQty',
         'S':'sQty',
@@ -97,7 +108,7 @@ export const SellProductPage = ()=>{
         }
     }
     const alreadyRegisteredPhoneNum = (phoneNum)=>{
-        if(dummyCsts.map(cst=>cst.phoneNum).includes(phoneNum)){
+        if(customersData.map(cst=>cst.phoneNum).includes(phoneNum)){
             return true;
         }else{
             return false;
@@ -171,7 +182,7 @@ export const SellProductPage = ()=>{
                 {registeredCst ? 
                     <div className="registered-cst">
                         <div className="cst-selection">
-                            <AutoCompleteInput placeholder="Search for a customer." menu={dummyCsts.map(cst=>(
+                            <AutoCompleteInput placeholder="Search for a customer." menu={customersData.map(cst=>(
                                 {text:cst.name,value:cst.cstId,subtitle:cst.phoneNum,leftSubtitle:true}
                             ))} onSelect={setSelectedCst} />
                         </div>
@@ -251,10 +262,13 @@ export const SellProductPage = ()=>{
         <OrderSummary 
                     showOrderSummary={showOrderSummary}
                     setShowOrderSummary={setShowOrderSummary}
+                    prodId = {prod}
+                    selectedRegCstId = {selectedCst?.value}
                     prodName={prodName}
                     prodImg={prodData.prodColorQtyList[selectedColorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src}
                     prodPrice={prodData.prodPrice}
                     selectedColor={selectedColor}
+                    selectedColorId={selectedColorId}
                     selectedSize={selectedSize}
                     selectedQty={selectedQty}
                     cstName={registeredCst? regCstName : cstName}
@@ -265,15 +279,38 @@ export const SellProductPage = ()=>{
     </div>
 }
 
-const OrderSummary =({showOrderSummary,setShowOrderSummary, prodName,prodImg,prodPrice,selectedColor,selectedSize,selectedQty,cstName,cstPhoneNum,cstAddress,shippingFees,totalPrice})=>{
+const OrderSummary =({showOrderSummary,setShowOrderSummary,prodId,selectedRegCstId, prodName,prodImg,prodPrice,selectedColor,selectedColorId,selectedSize,selectedQty,cstName,cstPhoneNum,cstAddress,shippingFees,totalPrice})=>{
     const navigate = useNavigate();
     const {displayAlert} = useContext(AlertContext);
+    const { createNewOrder } = useContext(OrdersContext);
+    const { addNewCustomer,appendCstOrders } = useContext(CustomersContext)
     const closeOrderSummary = ()=>{
         setShowOrderSummary(false);
     }
     const confirmOrderHandler = ()=>{
         navigate('..');
         displayAlert(`${prodName} is purchased to ${cstName}.`,'success');
+        const randCryptoId = crypto.randomUUID();
+        const randOrderId = `ORD${randCryptoId.substring(0,randCryptoId.indexOf('-')).toUpperCase()}`;
+        const selectedProdData = {
+            colorId:selectedColorId,
+            size:selectedSize,
+            qty:selectedQty
+        }
+        const orderContactInfo = {
+            phoneNum:cstPhoneNum,
+            address:cstAddress
+        }
+        if(selectedRegCstId){
+            appendCstOrders(selectedRegCstId,randOrderId);
+            createNewOrder(randOrderId, prodId,selectedRegCstId, selectedProdData,shippingFees,orderContactInfo)
+        }else{
+            const randCryptoId = crypto.randomUUID();
+            const randCstId = `cst${randCryptoId.substring(0,randCryptoId.indexOf('-')).toUpperCase()}`;
+            addNewCustomer(randCstId,cstName,cstPhoneNum,cstAddress,randOrderId);
+            createNewOrder(randOrderId, prodId,randCstId, selectedProdData,shippingFees,orderContactInfo)
+        }
+
     }
     return <Modal modalTitle='Order Summary'
         showModal={showOrderSummary} setShowModal={setShowOrderSummary}

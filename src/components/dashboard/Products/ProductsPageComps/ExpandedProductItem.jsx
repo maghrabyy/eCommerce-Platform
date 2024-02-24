@@ -7,10 +7,10 @@ import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
 import { Modal } from '../../../util/Model';
 import { productsArray } from '../../../../data/productsData';
-import { ordersData } from '../../../../data/ordersData';
 import { CustomDropdown } from '../../../util/Dropdown';
-import { dummyCsts } from '../../../../data/customersData';
 import AlertContext from '../../../../context/AlertContext';
+import CustomersContext from '../../../../context/CustomersContext';
+import OrdersContext from '../../../../context/OrdersContext';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
@@ -174,7 +174,9 @@ const ProdColorQty = ({color,xsQty,sQty,mQty,lQty,xlQty,xxlQty,lightBg})=>{
 } 
 
 const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
+    const { ordersData } = useContext(OrdersContext)
     const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
+    const { customersData } = useContext(CustomersContext);
     const [selectedOrder,setSelectedOrder] = useState(null);
     const [refundConfirmation,setRefundConfirmation] = useState('');
     const arrivedOrdersFilter = ordersData.filter(order=>(order.prodId === prodId && order.orderStatus.currentStatus().status === 'Arrived'));
@@ -190,8 +192,8 @@ const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
         setRefundConfirmation('');
     }
     const getCstFromId = (cstId)=>{
-        const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
-        return dummyCsts[cstIndex];
+        const cstIndex = customersData.map(cst=>cst.cstId).indexOf(cstId);
+        return customersData[cstIndex];
     }
     const refundProdHandler = ()=>{
         if(selectedOrder){

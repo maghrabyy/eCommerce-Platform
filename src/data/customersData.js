@@ -1,4 +1,4 @@
-export const dummyCsts = [
+export const customersArray = [
     {
         cstId:'cst953TJF',
         name:'Mahmoud Deba',
@@ -16,7 +16,7 @@ export const dummyCsts = [
     {
         cstId:'cst94JERINF',
         name:'Leo khaled',
-        phoneNum:'01260343419',
+        phoneNum:'01260343422',
         cstAddress:{aptNum:'21',floorNum:'3', buildingNum:'4', address:'So2 ali Maleka Feisal St',city:'Giza'},
         orders:['orderAS64F','orderA5890']
     },

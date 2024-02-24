@@ -21,7 +21,7 @@ export const PrimaryNavbar = ({icon,title,showSearchInput})=>{
                 {title}
             </span>
             <div className='px-6 xl:basis-1/2 hidden xl:block'>{showSearchInput && <ProductSearch />}</div> 
-            <div onClick={()=>{navigate(routes.business_details.path)}} className="business-logo cursor-pointer hover:opacity-75">
+            <div onClick={()=>{navigate(routes.business_details.path)}} className="business-logo cursor-pointer hover:opacity-75 hover:scale-105 duration-300">
                 <img src={styleSquadLogo} className="rounded-full" width={45} alt="style squad logo" />
             </div>
         </div> 

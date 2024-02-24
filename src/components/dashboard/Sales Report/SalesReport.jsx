@@ -1,9 +1,9 @@
-import { ordersData } from '../../../data/ordersData';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faAngleDown, faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import { Chart } from "react-google-charts";
 import DatePicker from 'react-date-picker';
+import OrdersContext from '../../../context/OrdersContext';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 
@@ -22,7 +22,7 @@ export const SalesReport = ()=>{
         10:'Nov',
         11:'Dec'
     }
-
+    const { ordersData } = useContext(OrdersContext);
     const overallSales = ordersData.length;
     const arrivedOrders = ordersData.filter(order=>order.orderStatus.currentStatus().status === 'Arrived').length
     const overallRev = ordersData.map(order=>order.revenue()).reduce((a,b)=>a+b,0);
@@ -128,6 +128,7 @@ const ReportsContainer = ({month,year})=>{
 }
 
 const ReportChart = ({sales,revenue,year,month,chartType,totalAnnualValueCallbk, totalMonthlyValueCallbk})=>{
+    const { ordersData } = useContext(OrdersContext);
     const monthlyOrders = (year)=>{
         const resultedOrders = []
         const salesOrders = ordersData.filter(order=>order.revenue() > 0);
@@ -171,7 +172,7 @@ const ReportChart = ({sales,revenue,year,month,chartType,totalAnnualValueCallbk,
     const monthlyDataset = (month,year) =>{
         const monthIndex = ordersPerYear(year).map(annualOrders=>annualOrders.month).indexOf(month);
         if(monthIndex > -1){
-            const ordersPerMonth = ordersPerYear(year)[0].orders;       
+            const ordersPerMonth = ordersPerYear(year)[monthIndex].orders;       
             const salesRevFilter = ordersPerMonth.map(order=>{
                 const manyOrdersPerDay =  ordersPerMonth.filter(monthlyOrder=>monthlyOrder.orderStatus.currentStatus().date.getDate() === order.orderStatus.currentStatus().date.getDate())
                 return {

@@ -1,13 +1,16 @@
 import { useParams } from "react-router-dom"
-import { dummyCsts } from "../../../data/customersData";
 import { CustomerData } from "./CustomerData";
 import { DataGrid } from "@mui/x-data-grid";
-import { ordersData } from "../../../data/ordersData";
+import { useContext } from "react";
+import CustomersContext from "../../../context/CustomersContext";
+import OrdersContext from "../../../context/OrdersContext";
 
 export const CustomerDetails = ()=>{
     const {cstId} = useParams();
-    const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
-    const customer = dummyCsts[cstIndex];
+    const {customersData} = useContext(CustomersContext);
+    const { ordersData } = useContext(OrdersContext);
+    const cstIndex = customersData.map(cst=>cst.cstId).indexOf(cstId);
+    const customer = customersData[cstIndex];
     const cstOrders = ordersData.filter(order=>order.cstId === cstId);
     const tableColumns = [  
         { field: 'prodImg', headerName: 'Product', width:80, hideable:false,
@@ -38,7 +41,7 @@ export const CustomerDetails = ()=>{
     colorQty:`${order.colorQty.color} ${order.colorQty.size} x ${order.colorQty.qty}`,
     totalPrice: `${order.totalPrice()}EGP`,
     orderStatus:order.orderStatus.currentStatus().status,
-}));
+})).reverse();
     return <div className="py-4 grid xl:grid-cols-6 gap-2">
         <CustomerData className='xl:col-span-2 col-span-6' cst={customer} showNumOfOrders modifiable />
         <DataGrid

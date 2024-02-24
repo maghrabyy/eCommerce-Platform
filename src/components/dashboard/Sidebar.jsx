@@ -26,7 +26,7 @@ export const Sidebar = () =>{
         <div className={`dashboard-sidebar xl:static py-2 fixed top-0 z-50 xl:z-0 w-72 xl:w-auto h-full shadow-md ${showToggledSidebar?'translate-x-0':'translate-x-[-120%] xl:translate-x-0'} duration-300 ease-in bg-white col-span-2 px-2 overflow-auto select-none`}>
             <div className='sidebar-content flex flex-col justify-between h-full'>
                 <div>
-                    <div className='sidebar-header border-b-2 border-b-gray-500 text-center px-3 py-6 flex items-center justify-between xl:justify-center'>
+                    <div className='sidebar-header shadow-md rounded-md text-center my-6 p-3 flex items-center justify-between xl:justify-center'>
                         <div onClick={navigateToHomepage} className='dashboard-logo flex items-center gap-2 cursor-pointer hover:opacity-80 text-2xl font-bold text-slate-800'>
                             <MdDashboard/>
                             <div>Dashboard</div>

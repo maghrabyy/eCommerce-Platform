@@ -1,13 +1,13 @@
-import { dummyCsts } from "../../../data/customersData";
 import { CustomButton } from "../../util/Button";
 import { CustomDropdown } from "../../util/Dropdown";
 import { useParams } from "react-router-dom";
-import { ordersData } from "../../../data/ordersData";
 import { useNavigate } from "react-router-dom";
 import { useState,useContext } from "react";
 import { Modal } from '../../util/Model';
 import AlertContext from "../../../context/AlertContext";
 import { CustomerData } from "../Customers/CustomerData";
+import CustomersContext from "../../../context/CustomersContext";
+import OrdersContext from "../../../context/OrdersContext";
 
 const formattedDate = date =>{
     const currentFullDate = 
@@ -21,6 +21,8 @@ const formattedDate = date =>{
 
 export const OrderDetails = ()=>{
     const {emptyFieldAlert,displayAlert, incorrectConfirmationTxtAlert} = useContext(AlertContext);
+    const { customersData } = useContext(CustomersContext);
+    const { ordersData, modifyOrderStatus } = useContext(OrdersContext);
     const navigate = useNavigate();
     const {ordersId} = useParams();
     const orderIndex = ordersData.map(order=>order.orderId).indexOf(ordersId);
@@ -35,8 +37,8 @@ export const OrderDetails = ()=>{
         setShowModal(true);
     }
     const getCstFromId = (cstId)=>{
-        const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
-        return dummyCsts[cstIndex];
+        const cstIndex = customersData.map(cst=>cst.cstId).indexOf(cstId);
+        return customersData[cstIndex];
     }
     const bgColor = {
         'In Progress': 'bg-gray-500',
@@ -59,6 +61,10 @@ export const OrderDetails = ()=>{
             if(selectedStatus){
                 if((order.orderStatus.currentStatus().status !== selectedStatus.text)){
                     displayAlert('Order status updated to ' + selectedStatus.text + '.','success');
+                    const newStatus = {
+                        status:selectedStatus.text,date:new Date()
+                    }
+                    modifyOrderStatus(ordersId,newStatus);
                     closeModalHandler();
                 }else{
                     displayAlert("Nothing changed.",'primary')
@@ -86,6 +92,10 @@ export const OrderDetails = ()=>{
                 if(cancelConfirmationTxt === `Cancel ${order.prodName}`){
                     closeModalHandler();
                     displayAlert('Order cancelled.','success');
+                    const newStatus = {
+                        status:'Cancelled',date:new Date()
+                    }
+                    modifyOrderStatus(ordersId,newStatus);
                 }
                 else{
                     incorrectConfirmationTxtAlert();
@@ -111,6 +121,10 @@ export const OrderDetails = ()=>{
                 if(refundConfirmationTxt === `Refund ${order.prodName}`){
                     closeModalHandler();
                     displayAlert('Order refunded.','success');
+                    const newStatus = {
+                        status:'Refunded',date:new Date()
+                    }
+                    modifyOrderStatus(ordersId,newStatus);
                 }
                 else{
                     incorrectConfirmationTxtAlert();
@@ -170,7 +184,7 @@ export const OrderDetails = ()=>{
                 </div>
                 <OrderInfo title='Revenue' data={order.revenue()+'EGP'} />
             </div>
-            <CustomerData cst={getCstFromId(order.cstId)} navigateToCstPage />
+            <CustomerData cst={getCstFromId(order.cstId)} modifiable orderContactInfo={order.cstContactInfo} orderId={order.orderId}/>
         </div>
     </div>
 }

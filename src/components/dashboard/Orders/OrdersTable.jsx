@@ -1,12 +1,15 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { ordersData } from '../../../data/ordersData';
-import { dummyCsts } from '../../../data/customersData';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { SearchBar } from '../../util/SearchBar';
 import emptyBox from '../../../assets/emptyBox.svg'
+import CustomersContext from '../../../context/CustomersContext';
+import { useContext } from 'react';
+import OrdersContext from '../../../context/OrdersContext';
 
 export const OrdersTable = ()=>{
+    const { ordersData } = useContext(OrdersContext);
+    const { customersData } = useContext(CustomersContext);
     const [searchValue,setSearchValue] = useState('');
     const [ordersArray,setOrdersArray] = useState([...ordersData]);
     const navigate = useNavigate();
@@ -14,8 +17,8 @@ export const OrdersTable = ()=>{
         navigate(params.id)
     }
     const getCstFromId = (cstId)=>{
-        const cstIndex = dummyCsts.map(cst=>cst.cstId).indexOf(cstId);
-        return dummyCsts[cstIndex];
+        const cstIndex = customersData.map(cst=>cst.cstId).indexOf(cstId);
+        return customersData[cstIndex];
     }
     const tableColumns = [  
         { field: 'prodImg', headerName: 'Product', width:80, hideable:false,
@@ -26,12 +29,7 @@ export const OrdersTable = ()=>{
         { field: 'colorQty', headerName: 'Color Quanity', width: 100, hideable: false},
         { field: 'cstName', headerName: 'Customer Name',width: 200, hideable: false },
         { field: 'totalPrice', headerName: 'Total Price',width: 100, hideable: false },
-        { field: 'revenue', headerName: 'Revenue',width: 100, valueGetter:param=>{
-           if( param.row.orderStatus === 'Cancelled' || param.row.orderStatus === 'Refunded')
-             return   0 + ' EGP'
-               else
-               return param.row.revenue;
-        } },
+        { field: 'revenue', headerName: 'Revenue',width: 100 },
         { field: 'orderStatus', headerName: 'Order Status',width: 120, hideable: false, align:'center',
         renderCell: param =>{
             const bgColor = {
@@ -55,7 +53,7 @@ export const OrdersTable = ()=>{
     cstName: getCstFromId(order.cstId).name,
     totalPrice: `${order.totalPrice()}EGP`,
     revenue: `${order.revenue()}EGP`,
-    orderStatus:order.orderStatus.currentStatus().status,}));
+    orderStatus:order.orderStatus.currentStatus().status,})).reverse();
 
     const valueChangeHandler = e =>{
         const searchInputText = e.target.value;

@@ -1,13 +1,15 @@
 import { DataGrid } from "@mui/x-data-grid"
 import { useNavigate } from "react-router-dom";
-import { dummyCsts } from "../../../data/customersData";
 import { SearchBar } from "../../util/SearchBar";
 import { useState } from "react";
 import emptyBox from '../../../assets/emptyBox.svg'
+import { useContext } from "react";
+import CustomersContext from "../../../context/CustomersContext";
 
 export const CustomersTable = ()=>{
+    const {customersData} = useContext(CustomersContext);
     const [searchValue,setSearchValue] = useState('');
-    const [cstArray,setCstArray] = useState([...dummyCsts])
+    const [cstArray,setCstArray] = useState([...customersData])
     const navigate = useNavigate();
     const handleRowSelection = params =>{
         navigate(params.id)
@@ -26,12 +28,12 @@ export const CustomersTable = ()=>{
     cstPhoneNum:cst.phoneNum,
     cstAddress:`Apt ${cst.cstAddress.aptNum}, Floor ${cst.cstAddress.floorNum}, Building ${cst.cstAddress.buildingNum}, ${cst.cstAddress.address}, ${cst.cstAddress.city}`,
     ordersNum:cst.orders.length,
-    }));
+    })).reverse();
 
     const valueChangeHandler = e =>{
         const searchInputText = e.target.value;
         setSearchValue(searchInputText);
-        const searchFilter = dummyCsts.filter(cst=>
+        const searchFilter = customersData.filter(cst=>
             cst.cstId.toLowerCase().includes(searchInputText.toLowerCase()) ||
             cst.name.toLowerCase().includes(searchInputText.toLowerCase()) ||
             cst.phoneNum.toLowerCase().includes(searchInputText.toLowerCase()) ||
@@ -40,7 +42,7 @@ export const CustomersTable = ()=>{
         if(searchInputText.length > 0){
             setCstArray([...searchFilter]);
         }else{
-            setCstArray(dummyCsts);
+            setCstArray(customersData);
         }
     }
 
