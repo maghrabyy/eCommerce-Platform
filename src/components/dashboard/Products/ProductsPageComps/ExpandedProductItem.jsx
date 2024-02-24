@@ -174,7 +174,7 @@ const ProdColorQty = ({color,xsQty,sQty,mQty,lQty,xlQty,xxlQty,lightBg})=>{
 } 
 
 const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
-    const { ordersData } = useContext(OrdersContext)
+    const { ordersData, modifyOrderStatus } = useContext(OrdersContext)
     const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     const { customersData } = useContext(CustomersContext);
     const [selectedOrder,setSelectedOrder] = useState(null);
@@ -201,6 +201,10 @@ const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
                 if(refundConfirmation === `Refund ${orderDatafromId(selectedOrder?.value).prodName}`){
                     exitRefundModal();
                     productRefundAlert();
+                    const newStatus = {
+                        status:'Refunded',date:new Date()
+                    }
+                    modifyOrderStatus(selectedOrder.value,newStatus);
                 }
                 else
                     incorrectConfirmationTxtAlert();
@@ -246,7 +250,7 @@ const RefundProductModal = ({prodId,showRefundModal,setShowRefundModal})=>{
                 suffix:`${order.prodPrice}EGP`,
                 subtitle:formattedDate(order.orderStatus.currentStatus().date)
             }
-            ))}/>
+            )).reverse()}/>
         {selectedOrder && 
         <div className="refund-confirmation mt-2 flex flex-col gap-1 px-2">
             <p>Type the following to confirm refund of amount <span className='font-bold'>{orderDatafromId(selectedOrder?.value).prodPrice}EGP</span>.</p>
