@@ -45,7 +45,7 @@ export const OrdersProvider = ({children}) => {
         const orderHistory = [...ordArray[orderIndex].orderStatus.statusHistory];
         ordArray[orderIndex].orderStatus.statusHistory = [...orderHistory,newStatus];
         if(newStatus.status === 'Arrived'){
-            const prodId = ordersArray[orderIndex].prodId;
+            const prodId = ordersData[orderIndex].prodId;
             const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId) 
             ordArray[orderIndex].revenue = ()=>  ordArray[orderIndex].totalPrice() - productsArray[prodIndex].prodCost;
         }else{
