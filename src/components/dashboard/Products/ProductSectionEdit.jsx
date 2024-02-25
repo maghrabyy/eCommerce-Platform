@@ -1,8 +1,12 @@
 import { useState,useEffect, useContext } from "react";
 import { Modal } from "../../util/Model";
 import AlertContext from "../../../context/AlertContext";
+import SectionsContext from "../../../context/SectionsContext";
+import { useNavigate } from "react-router-dom";
 
 export const ProductsSectionEditModal = ({category,brand,showEditSectionTitle,setShowEditSectionTitle})=>{
+    const navigate = useNavigate();
+    const { modifyCategory, modifyBrand } = useContext(SectionsContext); 
     const [sectionTitle,setSectionTitle] = useState(category?.title || brand?.title);
     const {displayAlert,emptyFieldAlert} = useContext(AlertContext); 
     const closeEditSectionTitleModal = ()=>{
@@ -14,6 +18,13 @@ export const ProductsSectionEditModal = ({category,brand,showEditSectionTitle,se
             if(sectionTitle !== (category?.title || brand?.title)){
                 displayAlert(((category && 'Category') || (brand && 'Brand')) + ' title changed','success');
                 closeEditSectionTitleModal();
+                navigate('..');
+                if(category){
+                   modifyCategory(category.id,category?.title,sectionTitle);
+                }
+                if(brand){
+                    modifyBrand(brand.id,brand?.title,sectionTitle);
+                }
             }
             else{
                 displayAlert('Nothing changed.','primary');

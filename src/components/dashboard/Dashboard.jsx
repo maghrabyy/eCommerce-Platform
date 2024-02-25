@@ -4,28 +4,15 @@ import { SearchInputProvider } from "../../context/SearchInputContext";
 import SidebarTogglerContext from "../../context/SidebarTogglerContext";
 import { Outlet, useLocation } from "react-router-dom";
 import { DashboardContent } from "./Dashcontent";
-import { routes, categoriesRoutes, brandsRoutes } from "../../data/navigationPaths";
+import { routes } from "../../data/navigationPaths";
 import { UseLargerScreen } from '../../components/UseLargerScreen';
+import SectionsContext from "../../context/SectionsContext";
 
 export const Dashboard = ()=>{
+  const { categorySection, brandsSection } = useContext(SectionsContext);
   function getKeyByValue( value) {
   return Object.keys(routes).find(key => routes[key].path === value);
 }
-  const productBrands = [
-    {path:brandsRoutes.pullNBear,title:"Pull & Bear"},
-    {path:brandsRoutes.bershka,title:"Bershka"},
-    {path:brandsRoutes.americanEagle,title:"American Eagle"},
-    {path:brandsRoutes.zara,title:"Zara"},
-    {path:brandsRoutes.defacto,title:"Defacto"},
-    {path:brandsRoutes.hollister,title:"Hollister"}
-  ]
-  const productCategories = [
-    {path:categoriesRoutes.all,title:"All"},
-    {path:categoriesRoutes.hoodiesNSweatshirt,title:"Hoodies and Sweatshirts"},
-    {path:categoriesRoutes.coatsNJackets,title:"Coats and Jackets"},
-    {path:categoriesRoutes.denims,title:"Denims"},
-    {path:categoriesRoutes.trousers,title:"Trousers"}
-  ]
   const location = useLocation().pathname;
   const getRoutePath = (path)=>{
     if(path !== routes.homePage.path){
@@ -38,13 +25,13 @@ export const Dashboard = ()=>{
   }
 
   const isProdsCatRoute = () =>{
-    for (const category of productCategories) {
+    for (const category of categorySection) {
         if(location === '/products/categories/' + category.path)
             return true
     }
   }
   const isProdsBrandRoute = () =>{
-      for (const brand of productBrands) {
+      for (const brand of brandsSection) {
           if(location === '/products/brands/' + brand.path)
               return true
       }

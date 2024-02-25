@@ -9,6 +9,8 @@ import { BusinessProvider } from './context/BusinessContext';
 import { CustomersProvider } from './context/CustomersContext';
 import { EmployeesProvider } from './context/EmployeesContext';
 import { OrdersProvider } from './context/OrdersContext'; 
+import { SectionsProvider } from './context/SectionsContext'; 
+import { ProductsProvider } from './context/ProductsContext';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -22,9 +24,13 @@ root.render(
                     <BusinessProvider>
                         <CustomersProvider>
                             <EmployeesProvider>
-                                <OrdersProvider>
-                                    <App />
-                                </OrdersProvider>
+                                <ProductsProvider>
+                                    <SectionsProvider>
+                                        <OrdersProvider>
+                                            <App />
+                                        </OrdersProvider>
+                                    </SectionsProvider>
+                                </ProductsProvider>
                             </EmployeesProvider>
                         </CustomersProvider>
                     </BusinessProvider>

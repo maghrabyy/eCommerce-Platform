@@ -4,13 +4,14 @@ import { ColorSizeQuantityInput } from './ColorSizeQuantityInput';
 import { ColorSizeQtyList } from './ColorSizeQtyList';
 import { CustomDropdown } from '../../../util/Dropdown';
 import { useNavigate } from 'react-router-dom';
-import { categories,brands } from '../../../../data/sectionsData';
 import AlertContext from '../../../../context/AlertContext';
+import SectionsContext from '../../../../context/SectionsContext';
 // import { Modal } from '../../../util/Model';
 
 export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditing})=>{
     const navigate = useNavigate();
     const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
+    const { categorySection,brandsSection } = useContext(SectionsContext);
     // const [showAddProductModal,setShowAddProductModal] = useState(false);
     const [prodTitle, setProdTitle] = useState(prodTitleState);
     const [prodDesc,setProdDesc] = useState(prodDescState)
@@ -116,7 +117,7 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
                 <label className='inpt-label'>Product Category</label>
                 <CustomDropdown title='Select Category' value={prodCat} onChange={setProdCat} width={240}
                 options={[
-                    ...categories.filter(category=>category.id !== 'cat01').map(category=>(
+                    ...categorySection.filter(category=>category.id !== 'cat01').map(category=>(
                         {value:category.path, text:category.title}
                     ))]}/>
             </div>
@@ -124,7 +125,7 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
                 <label className='inpt-label'>Product Brand</label>
                 <CustomDropdown title='Select Brand' value={prodBrand} onChange={setProdBrand} width={180}
                     options={[
-                        ...brands.map(category=>(
+                        ...brandsSection.map(category=>(
                             {value:category.path, text:category.title}))]} />
             </div>
 

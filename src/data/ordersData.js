@@ -1,4 +1,4 @@
-import { productsArray } from "./productsData";
+import { productsList } from "./productsData";
 import { customersArray } from "./customersData";
 
 export const productColor = color=>{
@@ -10,28 +10,28 @@ export const productColor = color=>{
 }
 
 export const getImgFromId = (prodId,colorId) =>{
-    const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
-    const colorIndex = productsArray[prodIndex].prodColorQtyList.map(col=>col.id).indexOf(colorId)
-    return productsArray[prodIndex].prodColorQtyList[colorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src;
+    const prodIndex = productsList.map(prod=>prod.prodId).indexOf(prodId);
+    const colorIndex = productsList[prodIndex].prodColorQtyList.map(col=>col.id).indexOf(colorId)
+    return productsList[prodIndex].prodColorQtyList[colorIndex].prodColorImgs.filter(img=>img.mainImg)[0].src;
 }
 export const ordersArray = [
 {
     orderId:'order6984CT',
-    prodId:productsArray[0].prodId,
-    prodName:`${productsArray[0].prodBrand.text} ${productsArray[0].prodTitle}`,
+    prodId:productsList[0].prodId,
+    prodName:`${productsList[0].prodBrand.text} ${productsList[0].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
-        colorId:productsArray[0].prodColorQtyList[0].id,
-        color:productColor(productsArray[0].prodColorQtyList[0].prodColor),
+        colorId:productsList[0].prodColorQtyList[0].id,
+        color:productColor(productsList[0].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[0].cstId,
     cstContactInfo:{phoneNum:'01282807419',address:{aptNum:'11', floorNum:'2', buildingNum:'17' ,address:'eishreen St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[0].prodPrice,
+    prodPrice: productsList[0].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
-    revenue:function() {return this.totalPrice() - productsArray[0].prodCost},
+    revenue:function() {return this.totalPrice() - productsList[0].prodCost},
     orderStatus:{
         statusHistory:[
             {status:'In Progress',date:(new Date('November 16, 2023 23:15:30'))},
@@ -43,19 +43,19 @@ export const ordersArray = [
 },
 {
     orderId:'order465H4R',
-    prodId:productsArray[2].prodId,
-    prodName:`${productsArray[2].prodBrand.text} ${productsArray[2].prodTitle}`,
+    prodId:productsList[2].prodId,
+    prodName:`${productsList[2].prodBrand.text} ${productsList[2].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
-        colorId:productsArray[2].prodColorQtyList[0].id,
-        color:productColor(productsArray[2].prodColorQtyList[0].prodColor),
+        colorId:productsList[2].prodColorQtyList[0].id,
+        color:productColor(productsList[2].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[0].cstId,
     cstContactInfo:{phoneNum:'01282807419',address:{aptNum:'11', floorNum:'2', buildingNum:'17' ,address:'eishreen St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[2].prodPrice,
+    prodPrice: productsList[2].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
     revenue:function() {return 0},
     orderStatus:{
@@ -70,21 +70,21 @@ export const ordersArray = [
 },
 {
     orderId:'order23VRSTQ',
-    prodId:productsArray[1].prodId,
-    prodName:`${productsArray[1].prodBrand.text} ${productsArray[1].prodTitle}`,
+    prodId:productsList[1].prodId,
+    prodName:`${productsList[1].prodBrand.text} ${productsList[1].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
-        colorId:productsArray[1].prodColorQtyList[0].id,
-        color:productColor(productsArray[1].prodColorQtyList[0].prodColor),
+        colorId:productsList[1].prodColorQtyList[0].id,
+        color:productColor(productsList[1].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[0].cstId,
     cstContactInfo:{phoneNum:'01282807419',address:{aptNum:'11', floorNum:'2', buildingNum:'17' ,address:'eishreen St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[1].prodPrice,
+    prodPrice: productsList[1].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
-    revenue:function() {return this.totalPrice() -productsArray[1].prodCost},
+    revenue:function() {return this.totalPrice() -productsList[1].prodCost},
     orderStatus:{
         statusHistory:[
             {status:'In Progress',date:(new Date('December 6, 2023 23:15:30'))},
@@ -96,19 +96,19 @@ export const ordersArray = [
 },
 {
     orderId:'order9GDF9F',
-    prodId:productsArray[3].prodId,
-    prodName:`${productsArray[3].prodBrand.text} ${productsArray[3].prodTitle}`,
+    prodId:productsList[3].prodId,
+    prodName:`${productsList[3].prodBrand.text} ${productsList[3].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)},
     colorQty:{
-        colorId:productsArray[3].prodColorQtyList[0].id,
-        color:productColor(productsArray[3].prodColorQtyList[0].prodColor),
+        colorId:productsList[3].prodColorQtyList[0].id,
+        color:productColor(productsList[3].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[1].cstId,
     cstContactInfo:{phoneNum:'01003007419',address:{aptNum:'38', floorNum:'8', buildingNum:'2' ,address:'Hassan Mohamed Alhram St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[3].prodPrice,
+    prodPrice: productsList[3].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
     revenue:function() {return 0},
     orderStatus:{
@@ -120,19 +120,19 @@ export const ordersArray = [
 },
 {
     orderId:'order0GOWF',
-    prodId:productsArray[2].prodId,
-    prodName:`${productsArray[2].prodBrand.text} ${productsArray[2].prodTitle}`,
+    prodId:productsList[2].prodId,
+    prodName:`${productsList[2].prodBrand.text} ${productsList[2].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)},
     colorQty:{
-        colorId:productsArray[2].prodColorQtyList[0].id,
-        color:productColor(productsArray[2].prodColorQtyList[0].prodColor),
+        colorId:productsList[2].prodColorQtyList[0].id,
+        color:productColor(productsList[2].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[1].cstId,
     cstContactInfo:{phoneNum:'01003007419',address:{aptNum:'38', floorNum:'8', buildingNum:'2' ,address:'Hassan Mohamed Alhram St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[2].prodPrice,
+    prodPrice: productsList[2].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
     revenue:function() {return 0},
     orderStatus:{
@@ -147,21 +147,21 @@ export const ordersArray = [
 },
 {
     orderId:'orderVPSKLE3',
-    prodId:productsArray[0].prodId,
-    prodName:`${productsArray[0].prodBrand.text} ${productsArray[0].prodTitle}`,
+    prodId:productsList[0].prodId,
+    prodName:`${productsList[0].prodBrand.text} ${productsList[0].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)},
     colorQty:{
-        colorId:productsArray[0].prodColorQtyList[0].id,
-        color:productColor(productsArray[0].prodColorQtyList[0].prodColor),
+        colorId:productsList[0].prodColorQtyList[0].id,
+        color:productColor(productsList[0].prodColorQtyList[0].prodColor),
         size:'s'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[3].cstId,
     cstContactInfo:{phoneNum:'01003439439',address:{aptNum:'15',floorNum:'2',buildingNum:'6',address:'Awel Feisal St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[0].prodPrice,
+    prodPrice: productsList[0].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
-    revenue:function() {return this.totalPrice()-productsArray[0].prodCost},
+    revenue:function() {return this.totalPrice()-productsList[0].prodCost},
     orderStatus:{
     statusHistory:[
         {status:'In Progress',date:(new Date('January 3, 2024 13:49:45'))},
@@ -173,21 +173,21 @@ export const ordersArray = [
 },
 {
     orderId:'orderA5890',
-    prodId:productsArray[3].prodId,
-    prodName:`${productsArray[3].prodBrand.text} ${productsArray[3].prodTitle}`,
+    prodId:productsList[3].prodId,
+    prodName:`${productsList[3].prodBrand.text} ${productsList[3].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
-        colorId:productsArray[3].prodColorQtyList[0].id,
-        color:productColor(productsArray[3].prodColorQtyList[0].prodColor),
+        colorId:productsList[3].prodColorQtyList[0].id,
+        color:productColor(productsList[3].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[2].cstId,
     cstContactInfo:{phoneNum:'01260343419',address:{aptNum:'21',floorNum:'3', buildingNum:'4', address:'So2 ali Maleka Feisal St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[3].prodPrice,
+    prodPrice: productsList[3].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
-    revenue:function() {return this.totalPrice()-productsArray[0].prodCost},
+    revenue:function() {return this.totalPrice()-productsList[0].prodCost},
     orderStatus:{
         statusHistory:[
             {status:'In Progress',date:(new Date('January 7, 2024 20:49:40'))},
@@ -199,21 +199,21 @@ export const ordersArray = [
 },
 {
     orderId:'orderAS64F',
-    prodId:productsArray[1].prodId,
-    prodName:`${productsArray[1].prodBrand.text} ${productsArray[1].prodTitle}`,
+    prodId:productsList[1].prodId,
+    prodName:`${productsList[1].prodBrand.text} ${productsList[1].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
-        colorId:productsArray[1].prodColorQtyList[0].id,
-        color:productColor(productsArray[1].prodColorQtyList[0].prodColor),
+        colorId:productsList[1].prodColorQtyList[0].id,
+        color:productColor(productsList[1].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[2].cstId,
     cstContactInfo:{phoneNum:'01260343419',address:{aptNum:'21',floorNum:'3', buildingNum:'4', address:'So2 ali Maleka Feisal St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[1].prodPrice,
+    prodPrice: productsList[1].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
-    revenue:function() {return this.totalPrice()-productsArray[0].prodCost},
+    revenue:function() {return this.totalPrice()-productsList[0].prodCost},
     orderStatus:{
         statusHistory:[
             {status:'In Progress',date:(new Date('January 7, 2024 17:29:40'))},
@@ -225,21 +225,21 @@ export const ordersArray = [
 },
 {
     orderId:'order9TI39F',
-    prodId:productsArray[0].prodId,
-    prodName:`${productsArray[0].prodBrand.text} ${productsArray[0].prodTitle}`,
+    prodId:productsList[0].prodId,
+    prodName:`${productsList[0].prodBrand.text} ${productsList[0].prodTitle}`,
     prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
     colorQty:{
-        colorId:productsArray[0].prodColorQtyList[0].id,
-        color:productColor(productsArray[0].prodColorQtyList[0].prodColor),
+        colorId:productsList[0].prodColorQtyList[0].id,
+        color:productColor(productsList[0].prodColorQtyList[0].prodColor),
         size:'l'.toUpperCase(),
         qty:1
     },
     cstId:customersArray[0].cstId,
     cstContactInfo:{phoneNum:'01282807419',address:{aptNum:'11', floorNum:'2', buildingNum:'17' ,address:'eishreen St',city:'Giza'}},
     shippingFees:40,
-    prodPrice: productsArray[0].prodPrice,
+    prodPrice: productsList[0].prodPrice,
     totalPrice:function() {return (this.colorQty.qty*this.prodPrice)+this.shippingFees},
-    revenue:function() {return this.totalPrice()-productsArray[0].prodCost},
+    revenue:function() {return this.totalPrice()-productsList[0].prodCost},
     orderStatus:{
         statusHistory:[
             {status:'In Progress',date:(new Date('January 9, 2024 23:15:30'))},

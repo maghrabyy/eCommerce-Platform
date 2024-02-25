@@ -1,8 +1,9 @@
 import './App.css';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
+import SectionsContext from './context/SectionsContext';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import { routes, categoriesRoutes, brandsRoutes } from './data/navigationPaths';
+import { routes } from './data/navigationPaths';
 
 //Pages
 import { MainDashboard } from "./pages/Dashboard/Dashboard Main/MainDashboardPage";
@@ -27,14 +28,9 @@ import { PageNotFound } from './pages/PageNotFound';
 
 function App() {
   const {authUser} = useContext(AuthContext);
-  const productCategories = [
-    {path:categoriesRoutes.all,title:"All"},
-    {path:categoriesRoutes.hoodiesNSweatshirt,title:"Hoodies and Sweatshirts"},
-    {path:categoriesRoutes.coatsNJackets,title:"Coats and Jackets"},
-    {path:categoriesRoutes.denims,title:"Denims"},
-    {path:categoriesRoutes.trousers,title:"Trousers"}
-  ]
-  const renderedCategoryRoutes = productCategories.map(category =>
+  const { categorySection,brandsSection } = useContext(SectionsContext);
+
+  const renderedCategoryRoutes = categorySection.map(category =>
     <Route key={category.path} path={category.path} element={<ProductsPage category={category}/>}>
         <Route path=':prod'
           element={<ProductDetails category={category}/>}>
@@ -43,15 +39,7 @@ function App() {
         </Route>
       </Route>
     );
-    const productBrands = [
-      {path:brandsRoutes.pullNBear,title:"Pull & Bear"},
-      {path:brandsRoutes.bershka,title:"Bershka"},
-      {path:brandsRoutes.americanEagle,title:"American Eagle"},
-      {path:brandsRoutes.zara,title:"Zara"},
-      {path:brandsRoutes.defacto,title:"Defacto"},
-      {path:brandsRoutes.hollister,title:"Hollister"}
-    ]
-    const renderedBrandRoutes = productBrands.map(brand =>
+    const renderedBrandRoutes = brandsSection.map(brand =>
       <Route key={brand.path} path={brand.path} element={<ProductsPage brand={brand}/>} >
         <Route path=':prod'
           element={<ProductDetails brand={brand}/>}>

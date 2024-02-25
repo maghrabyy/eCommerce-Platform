@@ -123,4 +123,4 @@ blackPnBHoodie02.totalProdQty = blackPnBHoodie02.prodColorQtyList.reduce((a,b)=>
 blackPnBHoodie02.totalProdCost = parseInt(blackPnBHoodie02.prodCost*blackPnBHoodie02.totalProdQty);
 
 
-export const productsArray = [greenPnBHoodie,whitePnBHoodie,blackPnBHoodie01,blackPnBHoodie02]
+export const productsList = [greenPnBHoodie,whitePnBHoodie,blackPnBHoodie01,blackPnBHoodie02]

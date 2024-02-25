@@ -2,7 +2,7 @@ import { faBuilding, faBasketShopping, faUserGroup, faChartLine,faShirt, faCircl
 
     export const categoriesRoutes = {
         all:'all',
-        hoodiesNSweatshirt:'hoodiesNSweatshirt',
+        hoodiesNSweatshirt:'hoodiesNSweatshirts',
         coatsNJackets:'coatsNJackets',
         denims:'denims',
         trousers:'trousers',

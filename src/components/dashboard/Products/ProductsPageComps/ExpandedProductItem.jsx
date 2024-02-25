@@ -6,14 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
 import { Modal } from '../../../util/Model';
-import { productsArray } from '../../../../data/productsData';
 import { CustomDropdown } from '../../../util/Dropdown';
 import AlertContext from '../../../../context/AlertContext';
 import CustomersContext from '../../../../context/CustomersContext';
 import OrdersContext from '../../../../context/OrdersContext';
+import { contentRef } from '../../Dashcontent';
+import ProductsContext from '../../../../context/ProductsContext';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
+    const { productsData } = useContext(ProductsContext);
     const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     const [showProdQtyList,setShowProdQtyList] = useState(false);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
@@ -21,11 +23,19 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const [showDeleteConfirmation,setShowDeleteConfirmation] = useState(false);
     const [deleteConfirmationInpt,setDeleteConfirmationInpt] = useState('');
     const [showRefundModal,setShowRefundModal] = useState(false);
-    const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
-    const prodData = productsArray[prodIndex];
+    const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prodId);
+    const prodData = productsData[prodIndex];
 
     const showProdQtyListHandler = ()=>{
         setShowProdQtyList(!showProdQtyList);
+        if(!showProdQtyList){
+            setTimeout(()=>{
+                contentRef.current.scrollTo({
+                    top: contentRef.current.scrollHeight,
+                    behavior: 'smooth',
+                  });
+            },50)
+        }
     }
     const onColorClickHandler = index =>{
         setSelectedColorIndex(index);

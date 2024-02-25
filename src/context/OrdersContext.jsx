@@ -1,33 +1,33 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import { ordersArray } from "../data/ordersData";
-import { productsArray} from "../data/productsData";
 import { productColor,getImgFromId } from "../data/ordersData";
+import ProductsContext from "./ProductsContext";
 
 const OrdersContext = createContext();
 
 export const OrdersProvider = ({children}) => {
+    const { productsData } = useContext(ProductsContext);
     const [ ordersData, setOrdersData ] = useState([...ordersArray]);
-
 
     const createNewOrder = (orderId, prodId,cstId, selectedProdData,shippingFees,orderContactInfo) =>{
         //prod Data 
-        const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId);
-        const colorIndex = productsArray[prodIndex].prodColorQtyList.map(colorQty=>colorQty.id).indexOf(selectedProdData.colorId)
+        const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prodId);
+        const colorIndex = productsData[prodIndex].prodColorQtyList.map(colorQty=>colorQty.id).indexOf(selectedProdData.colorId)
         const newOrder = {
             orderId:orderId,
             prodId:prodId,
-            prodName:`${productsArray[prodIndex].prodBrand.text} ${productsArray[prodIndex].prodTitle}`,
+            prodName:`${productsData[prodIndex].prodBrand.text} ${productsData[prodIndex].prodTitle}`,
             prodImg: function() { return getImgFromId(this.prodId, this.colorQty.colorId)}, 
             colorQty:{
-                colorId:productsArray[prodIndex].prodColorQtyList[colorIndex].id,
-                color:productColor(productsArray[prodIndex].prodColorQtyList[colorIndex].prodColor),
+                colorId:productsData[prodIndex].prodColorQtyList[colorIndex].id,
+                color:productColor(productsData[prodIndex].prodColorQtyList[colorIndex].prodColor),
                 size:selectedProdData.size.toUpperCase(),
                 qty:selectedProdData.qty
             },
             cstId:cstId,
             cstContactInfo:{phoneNum:orderContactInfo.phoneNum,address:orderContactInfo.address},
             shippingFees:shippingFees,
-            prodPrice: productsArray[prodIndex].prodPrice,
+            prodPrice: productsData[prodIndex].prodPrice,
             totalPrice:function() {return parseInt(this.colorQty.qty*this.prodPrice)+parseInt(this.shippingFees)},
             revenue:function() {return 0},
             orderStatus:{
@@ -46,8 +46,8 @@ export const OrdersProvider = ({children}) => {
         ordArray[orderIndex].orderStatus.statusHistory = [...orderHistory,newStatus];
         if(newStatus.status === 'Arrived'){
             const prodId = ordersData[orderIndex].prodId;
-            const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prodId) 
-            ordArray[orderIndex].revenue = ()=>  ordArray[orderIndex].totalPrice() - productsArray[prodIndex].prodCost;
+            const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prodId) 
+            ordArray[orderIndex].revenue = ()=>  ordArray[orderIndex].totalPrice() - productsData[prodIndex].prodCost;
         }else{
             ordArray[orderIndex].revenue = ()=> 0; 
         }

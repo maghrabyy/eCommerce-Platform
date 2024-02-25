@@ -1,13 +1,13 @@
 import { PrimaryNavbar } from "./Navbar";
 import { useLocation } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export const dashcontentRef = { current: null };
+export const contentRef = { current: null };
 
 export const DashboardContent = ({icon,title,showSearchInput,className,children})=>{
     const navbarHeight = '85px'
     const location = useLocation().pathname;
-    const contentRef = useRef();
     useEffect(()=>{
         contentRef.current.scrollTo(0,0);
     },[location])

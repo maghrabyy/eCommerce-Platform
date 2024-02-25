@@ -1,15 +1,26 @@
 import { useState, useContext } from "react";
 import { Modal } from "../../util/Model";
 import AlertContext from "../../../context/AlertContext";
+import SectionsContext from "../../../context/SectionsContext";
+import { useNavigate } from "react-router-dom";
 
 export const DeleteSectionModal = ({brand,category,showDeleteSectionModal,setShowDeleteSectionModal})=>{
+    const navigate = useNavigate();
     const [deleteConfirmationText,setDeleteConfirmationText] = useState('');
+    const { deleteCategorySection, deleteBrandSection } = useContext(SectionsContext);
     const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     const deleteSectionHandler = ()=>{
         if(deleteConfirmationText.length > 0){
             if(deleteConfirmationText === confirmationText){
                 sectionDeletionAlert();
                 closeDeleteSectionModal();
+                navigate('..');
+                if(category){
+                    deleteCategorySection(category.id);
+                }
+                if(brand){
+                    deleteBrandSection(brand.id);
+                }
             }
             else{
                 incorrectConfirmationTxtAlert();

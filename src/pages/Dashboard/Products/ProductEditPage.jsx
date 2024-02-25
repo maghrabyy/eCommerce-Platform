@@ -1,12 +1,14 @@
 import { useOutletContext } from "react-router-dom";
 import { AddProductForum } from "../../../components/dashboard/Add Items/Add Products/AddProductForm";
 import { ProductNotFound } from "../../../components/dashboard/Products/ProductsPageComps/ProductNotFoundError";
-import { productsArray } from "../../../data/productsData";
+import { useContext } from "react";
+import ProductsContext from "../../../context/ProductsContext";
 
 export const ProductEditPage = ()=>{
     const { prod } = useOutletContext();
-    const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prod);
-    const prodData = productsArray[prodIndex];
+    const { productsData } = useContext(ProductsContext);
+    const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prod);
+    const prodData = productsData[prodIndex];
     return prodData ?
          <div className='expanded-product-edit'>
              <AddProductForum

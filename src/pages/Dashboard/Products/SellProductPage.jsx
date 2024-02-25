@@ -1,6 +1,5 @@
 import { useOutletContext,useNavigate } from "react-router-dom"
 import { CustomButton } from "../../../components/util/Button";
-import { productsArray } from "../../../data/productsData";
 import { useState,useEffect,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faMinus, faUser, faPhone, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +10,13 @@ import AlertContext from "../../../context/AlertContext";
 import { AutoCompleteInput } from "../../../components/util/AutoComplete";
 import CustomersContext from "../../../context/CustomersContext";
 import OrdersContext from "../../../context/OrdersContext";
+import ProductsContext from "../../../context/ProductsContext";
 
 export const SellProductPage = ()=>{
     const navigate = useNavigate();
     const {prod} = useOutletContext();
-    const { customersData } = useContext(CustomersContext)
+    const { customersData } = useContext(CustomersContext);
+    const { productsData } = useContext(ProductsContext);
     const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
     //selected order data
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
@@ -41,8 +42,8 @@ export const SellProductPage = ()=>{
     //order summary modal
     const [showOrderSummary,setShowOrderSummary] = useState(false);
     //product data
-    const prodIndex = productsArray.map(prod=>prod.prodId).indexOf(prod);
-    const prodData = productsArray[prodIndex];
+    const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prod);
+    const prodData = productsData[prodIndex];
 
     const cstIndex = customersData.map(cst=>cst.cstId).indexOf(selectedCst?.value);
     const selectedCstData = customersData[cstIndex];

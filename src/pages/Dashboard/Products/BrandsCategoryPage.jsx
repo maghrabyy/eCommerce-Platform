@@ -4,14 +4,15 @@ import { ProductsList } from '../../../components/dashboard/Products/ProductsPag
 import { useContext, useState } from "react";
 import SearchInptContext from "../../../context/SearchInputContext";
 import { ProductsHeader } from "../../../components/dashboard/Products/ProductsPageComps/ProductsHeader";
-import { productsArray } from "../../../data/productsData";
+import ProductsContext from "../../../context/ProductsContext";
 
 export const BrandsCategoryPage = ()=>{
    const navigate = useNavigate();
    const outlet = useOutlet();
    const {prod} = useParams();
-   const [searchInpt] = useContext(SearchInptContext)
-   const [allProdsItems,setAllProdsItems] = useState([...productsArray]);
+   const [searchInpt] = useContext(SearchInptContext);
+   const { productsData } = useContext(ProductsContext);
+   const [allProdsItems,setAllProdsItems] = useState([...productsData]);
    const searchResultFilter = allProdsItems.filter(prod=> 
         prod.prodBrand.text.toUpperCase().includes(searchInpt.toUpperCase()) ||
         prod.prodTitle.toUpperCase().includes(searchInpt.toUpperCase()) ||
@@ -32,7 +33,7 @@ export const BrandsCategoryPage = ()=>{
             searchResultFilter={searchResultFilter} 
             showProdsNav={false}
             showActionBtns={false}
-            initialprodsList={productsArray} />
+            initialprodsList={productsData} />
         <ProductsList prodsList={allProdsItems} searchResultFilter={searchResultFilter} />
     </div>
 }

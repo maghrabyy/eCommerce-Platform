@@ -7,11 +7,12 @@ import AuthContext from '../../context/AuthContext';
 import SidebarTogglerContext from '../../context/SidebarTogglerContext';
 import { PageLink } from './PageLink'; 
 import { useNavigate } from "react-router-dom";
-import { categories,brands } from '../../data/sectionsData';
 import { MdDashboard } from "react-icons/md";
+import SectionsContext from '../../context/SectionsContext';
 
 export const Sidebar = () =>{
     const {logoutUser} = useContext(AuthContext);
+    const { categorySection,brandsSection } = useContext(SectionsContext);
     const {showToggledSidebar, hideSidebar} = useContext(SidebarTogglerContext);
     const navigate = useNavigate();
     const navigateToHomepage = ()=>{
@@ -42,12 +43,12 @@ export const Sidebar = () =>{
                         <li>
                             <ExpandableMenu title='Products' menuIcon={routes.products.icon} menuList={[{subMenu: true}]} > 
                                 <ExpandableMenu title='Categories'  menuList={[
-                                    ...categories.map(category=>(
+                                    ...categorySection.map(category=>(
                                         {path:'products/categories/' + category.path ,title: category.title}
                                     )),
                                     ]} /> 
                                 <ExpandableMenu title='Brands'  menuList={[
-                                    ...brands.map(brand=>(
+                                    ...brandsSection.map(brand=>(
                                         {path:'products/brands/' + brand.path, title: brand.title}
                                     ))
                                 ]} /> 
