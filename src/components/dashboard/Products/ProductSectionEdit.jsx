@@ -1,5 +1,5 @@
 import { useState,useEffect, useContext } from "react";
-import { Modal } from "../../util/Model";
+import { Modal } from "../../util/Modal";
 import AlertContext from "../../../context/AlertContext";
 import SectionsContext from "../../../context/SectionsContext";
 import { useNavigate } from "react-router-dom";

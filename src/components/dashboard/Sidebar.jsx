@@ -9,9 +9,11 @@ import { PageLink } from './PageLink';
 import { useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import SectionsContext from '../../context/SectionsContext';
+import BusinessContext from '../../context/BusinessContext';
 
 export const Sidebar = () =>{
     const {logoutUser} = useContext(AuthContext);
+    const { businessInfo } = useContext(BusinessContext);
     const { categorySection,brandsSection } = useContext(SectionsContext);
     const {showToggledSidebar, hideSidebar} = useContext(SidebarTogglerContext);
     const navigate = useNavigate();
@@ -41,7 +43,7 @@ export const Sidebar = () =>{
                         <PageLink pageTitle={routes.orders.title} pagePath={routes.orders.path} icon={routes.orders.icon}/>
                         <PageLink pageTitle={routes.customers.title} pagePath={routes.customers.path} icon={routes.customers.icon}/>
                         <li>
-                            <ExpandableMenu title='Products' menuIcon={routes.products.icon} menuList={[{subMenu: true}]} > 
+                            <ExpandableMenu title='Products' menuIcon={businessInfo.businessCategory.value.pageIcon} menuList={[{subMenu: true}]} > 
                                 <ExpandableMenu title='Categories'  menuList={[
                                     ...categorySection.map(category=>(
                                         {path:'products/categories/' + category.path ,title: category.title}

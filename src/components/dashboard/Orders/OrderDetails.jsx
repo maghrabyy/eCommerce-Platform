@@ -3,7 +3,7 @@ import { CustomDropdown } from "../../util/Dropdown";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState,useContext } from "react";
-import { Modal } from '../../util/Model';
+import { Modal } from '../../util/Modal';
 import AlertContext from "../../../context/AlertContext";
 import { CustomerData } from "../Customers/CustomerData";
 import CustomersContext from "../../../context/CustomersContext";

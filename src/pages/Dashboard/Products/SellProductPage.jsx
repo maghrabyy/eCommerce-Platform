@@ -4,7 +4,7 @@ import { useState,useEffect,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faMinus, faUser, faPhone, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ModifyCstData } from "../../../components/dashboard/Customers/ModifyCustomerData";
-import { Modal } from "../../../components/util/Model";
+import { Modal } from "../../../components/util/Modal";
 import { productColor } from "../../../data/ordersData";
 import AlertContext from "../../../context/AlertContext";
 import { AutoCompleteInput } from "../../../components/util/AutoComplete";

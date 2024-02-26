@@ -1,5 +1,5 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from '../../../util/Model';
+import { Modal } from '../../../util/Modal';
 import { useState, useContext } from 'react';
 import AlertContext from '../../../../context/AlertContext';
 import { FloatingActionButton } from '../../../util/FloatingActionButton';

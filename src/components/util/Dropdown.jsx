@@ -61,7 +61,7 @@ export const CustomDropdown = ({title, className, options, value,onChange, color
             <div ref={optionRef} className={optionMenuClass}>
                 <div onClick={()=>optionSelectionHandler(null)} className={optionItemsClass}>{title}</div>
                 {options.map((option=>
-                <div key={option.value} onClick={()=>optionSelectionHandler(option)} className={optionItemsClass}>
+                <div key={`${option.text}-${option.value}`} onClick={()=>optionSelectionHandler(option)} className={optionItemsClass}>
                         <div className="title flex justify-between">
                             <div className="text">{option.text}</div>
                             <div className="suffix">{option.suffix}</div>

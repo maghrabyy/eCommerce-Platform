@@ -5,7 +5,7 @@ import { CustomButton } from '../../../util/Button';
 import { useNavigate } from 'react-router-dom';
 import { ProductsNavs } from './ProductNavs';
 import { ProductNotFound } from './ProductNotFoundError';
-import { Modal } from '../../../util/Model';
+import { Modal } from '../../../util/Modal';
 import { CustomDropdown } from '../../../util/Dropdown';
 import AlertContext from '../../../../context/AlertContext';
 import CustomersContext from '../../../../context/CustomersContext';

@@ -1,4 +1,6 @@
-
+body{
+  @apply font-ubuntu;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 8px;

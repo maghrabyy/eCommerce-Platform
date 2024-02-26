@@ -1,4 +1,4 @@
-import { faBuilding, faBasketShopping, faUserGroup, faChartLine,faShirt, faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faBasketShopping, faUserGroup, faChartLine, faCirclePlus, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 
     export const categoriesRoutes = {
         all:'all',
@@ -22,7 +22,7 @@ import { faBuilding, faBasketShopping, faUserGroup, faChartLine,faShirt, faCircl
         customers:{path:'customers', title:'Customers', icon:faUserGroup},
         employees:{path:'employees', title:'Employees', icon:''},
         salesReport:{path:'sales-report', title:'Sales Report', icon:faChartLine},
-        products:{path:'products', categoriesRoutes,brandsRoutes, title:'Clothes', icon:faShirt},
+        products:{path:'products', categoriesRoutes,brandsRoutes, title:'Products'},
         addProduct: {path:'addProduct', title:'Add Product', icon:faCirclePlus},
         activityLog: {path:'activityLog', title:'Activity Log', icon:faClipboardList},
     }

@@ -7,9 +7,11 @@ import { DashboardContent } from "./Dashcontent";
 import { routes } from "../../data/navigationPaths";
 import { UseLargerScreen } from '../../components/UseLargerScreen';
 import SectionsContext from "../../context/SectionsContext";
+import BusinessContext from "../../context/BusinessContext";
 
 export const Dashboard = ()=>{
   const { categorySection, brandsSection } = useContext(SectionsContext);
+  const { businessInfo } = useContext(BusinessContext);
   function getKeyByValue( value) {
   return Object.keys(routes).find(key => routes[key].path === value);
 }
@@ -36,6 +38,10 @@ export const Dashboard = ()=>{
               return true
       }
   }
+  const isProductRoute = () =>{
+    if(location.includes('/products'))
+      return true;
+  }
   const isProdsListRoute = location === `/${routes.products.path}` || isProdsCatRoute() || isProdsBrandRoute();
   const { showToggledSidebar, hideSidebar } = useContext(SidebarTogglerContext);
     return (
@@ -44,7 +50,10 @@ export const Dashboard = ()=>{
         <div className='dashboard grid grid-cols-12 h-screen '>
           <div onClick={hideSidebar} className={`${showToggledSidebar? 'block xl:hidden' : 'hidden'} overlay w-screen h-screen top-0 right-0 bg-black opacity-75 z-50 fixed`}></div>
           <Sidebar />
-          <DashboardContent title={routes[getKeyByValue(getRoutePath(location))]?.title} icon={routes[getKeyByValue(getRoutePath(location))]?.icon} showSearchInput={isProdsListRoute}>
+          <DashboardContent 
+          title={isProductRoute()? businessInfo.businessCategory.value.pageTitle : routes[getKeyByValue(getRoutePath(location))]?.title} 
+          icon={isProductRoute()? businessInfo.businessCategory.value.pageIcon : routes[getKeyByValue(getRoutePath(location))]?.icon} 
+          showSearchInput={isProdsListRoute}>
             <Outlet />
           </DashboardContent> 
       </div>

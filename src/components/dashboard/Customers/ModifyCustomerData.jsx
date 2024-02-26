@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "../../../components/util/Model";
+import { Modal } from "../../util/Modal";
 import AlertContext from "../../../context/AlertContext"
 import CustomersContext from "../../../context/CustomersContext";
 import OrdersContext from "../../../context/OrdersContext";
