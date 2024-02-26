@@ -113,7 +113,7 @@ const BusinessModifyModal = ({showModal,setShowModal})=>{
                 {text:'Other',value:{pageTitle:'Other',pageIcon:faBox}},
             ]} />
             {businessCategory?.text === 'Other' && 
-                <input type="text" value={otherCategoryTitle} placeholder="Business Category" onChange={e=>setOtherCategoryTItle(e.target.value)} className="inpt text-slate-800 font-semibold w-full mt-2" />
+                <input type="text" value={otherCategoryTitle} placeholder="Other Business Category" onChange={e=>setOtherCategoryTItle(e.target.value)} className="inpt text-slate-800 font-semibold w-full mt-2" />
             }
     </Modal>
 }

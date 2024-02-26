@@ -27,6 +27,7 @@ export const SellProductPage = ()=>{
     const [selectedCst,setSelectedCst] = useState(null);
     //shipping fees
     const [shippingFees,setShippingFees] = useState(0);
+    const [freeShipping, setFreeShipping] = useState(false);
     //unregistered cst data
     const [cstName,setCstName] = useState('');
     const [cstPhoneNum,setCstPhoneNum] = useState('');
@@ -71,6 +72,11 @@ export const SellProductPage = ()=>{
         setRegCstPhoneNum('');
         setRegCstAddress({});
     },[registeredCst])
+    useEffect(()=>{
+        if(freeShipping){
+            setShippingFees(0);
+        }
+    },[freeShipping])
     const colors = {
         'green-800':'bg-green-800',
         'black':'bg-black',
@@ -116,7 +122,7 @@ export const SellProductPage = ()=>{
         }
     }
     const sellClickedHandler = ()=>{
-        if(selectedSize && selectedQty  && shippingFees){
+        if(selectedSize && selectedQty  && (freeShipping || parseInt(shippingFees))){
             if(registeredCst && selectedCst){
                 setShowOrderSummary(true);
             }
@@ -244,7 +250,11 @@ export const SellProductPage = ()=>{
             <div className="invoice-detail flex md:flex-row flex-col md:items-center justify-between my-2 shadow-md rounded-md px-4 py-2 border-2 border-gray-200">
                 <div className="shipping-fees flex flex-col">
                     <label className="inpt-label">Shipping Fees</label>
-                    <input type="number" value={shippingFees} onChange={e=>setShippingFees(e.target.value)} placeholder="Shipping Fees" className="inpt" />
+                    <input type="number" value={shippingFees} disabled={freeShipping} onChange={e=>setShippingFees(e.target.value)} placeholder="Shipping Fees" className="inpt" />
+                    <div className="free-shipping pt-2 flex gap-2 items-center">
+                        <input type="checkbox" checked={freeShipping} onChange={e=>setFreeShipping(e.target.checked)} />
+                        <label className="inpt-label">Free Shipping?</label>
+                    </div>
                 </div>
                 <div className="invoice flex flex-col py-2 pe-2 items-end">
                     <div className="price-shipping flex flex-col items-end border-b-2 border-dotted border-b-slate-800 pb-1">
