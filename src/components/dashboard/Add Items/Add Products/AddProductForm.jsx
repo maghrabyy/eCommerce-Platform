@@ -6,12 +6,14 @@ import { CustomDropdown } from '../../../util/Dropdown';
 import { useNavigate } from 'react-router-dom';
 import AlertContext from '../../../../context/AlertContext';
 import SectionsContext from '../../../../context/SectionsContext';
+import ProductsContext from '../../../../context/ProductsContext';
 // import { Modal } from '../../../util/Model';
 
-export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditing})=>{
+export const AddProductForum = ({prodId, prodTitleState,prodDescState,prodPriceState,prodCostState,prodCatState,prodBrandState,prodColorSizeQListState,isEditing})=>{
     const navigate = useNavigate();
     const {emptyFieldAlert,displayAlert} = useContext(AlertContext);
     const { categorySection,brandsSection } = useContext(SectionsContext);
+    const { modifyProduct } = useContext(ProductsContext);
     // const [showAddProductModal,setShowAddProductModal] = useState(false);
     const [prodTitle, setProdTitle] = useState(prodTitleState);
     const [prodDesc,setProdDesc] = useState(prodDescState)
@@ -40,6 +42,15 @@ export const AddProductForum = ({prodTitleState,prodDescState,prodPriceState,pro
                 prodColorSizeQList !== prodColorSizeQListState){
                     displayAlert('Product has been updated.','success');
                     navigate('..');
+                    modifyProduct(prodId,{
+                        prodTitle,
+                        prodDesc,
+                        prodPrice,
+                        prodCost,
+                        prodCat,
+                        prodBrand,
+                        prodColorQtyList:prodColorSizeQList
+                    })
                 }else{
                     displayAlert('Nothing changed.','primary');
                     navigate('..');

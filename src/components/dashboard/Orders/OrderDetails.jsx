@@ -176,7 +176,7 @@ export const OrderDetails = ()=>{
             </div>
             <div className="invoice-info  border-2 border-gray-200 shadow-md rounded-lg p-3 flex-1  flex flex-col gap-2 justify-center items-center">
                 <div className="prodPrice border-b-2 border-b-slate-400 border-dotted pb-2 flex flex-col items-center">
-                    <OrderInfo title='Price' data={order.prodPrice+'EGP'} />
+                    <OrderInfo title='Price' data={`${order.prodPrice}EGP x ${order.colorQty.qty}`} />
                     <OrderInfo title='Shipping Fees' data={order.shippingFees+'EGP'} />
                 </div>
                 <div className="totalPrice border-b-2 border-b-slate-400 border-dotted pb-2 flex justify-center">

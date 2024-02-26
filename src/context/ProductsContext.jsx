@@ -9,11 +9,16 @@ export const ProductsProvider = ({children}) =>{
     const addNewProduct = ()=>{
 
     }
-    const modifyProduct = ()=>{
-
+    const modifyProduct = (prodId,modifiedData)=>{
+        const prodsArray = [...productsData];
+        const prodIndex = prodsArray.map(prod=>prod.prodId).indexOf(prodId);
+        prodsArray[prodIndex] = {...prodsArray[prodIndex],...modifiedData};
+        setProductsData(prodsArray);
+        console.log(prodsArray);
     }
-    const deleteProduct = ()=>{
-
+    const deleteProduct = (prodId)=>{
+        const prodsArray = [...productsData];
+        setProductsData(prodsArray.filter(prod=>prod.prodId !== prodId));
     }
 
     const valurToShare = {

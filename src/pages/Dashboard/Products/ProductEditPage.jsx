@@ -12,6 +12,7 @@ export const ProductEditPage = ()=>{
     return prodData ?
          <div className='expanded-product-edit'>
              <AddProductForum
+                prodId={prod}
                 prodTitleState={prodData.prodTitle}
                 prodDescState={prodData.prodDesc}
                 prodPriceState={prodData.prodPrice}

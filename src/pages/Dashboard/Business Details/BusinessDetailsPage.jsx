@@ -18,7 +18,7 @@ export const BusinessDetailsPage = ()=>{
     return <div className="flex flex-col gap-2">
         <div className="business-info flex items-center justify-between p-4 border-2 border-gray-200 rounded-md shadow-md">
             <div className="text-slate-800">
-                <div className="business-name font-bold text-lg flex gap-2 items-center">
+                <div className="business-name font-bold text-2xl text-yellow-700 flex gap-2 items-center">
                     {businessInfo.businessName}
                 </div>
                 <div className="business-foundationDate font-semibold">

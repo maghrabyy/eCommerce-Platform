@@ -236,7 +236,7 @@ export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCal
         </div>}
         {saveDataCheckbox && <div className="save-modified-Data flex gap-2 mt-2">
                 <input type="checkbox" value={saveModifiedData} onChange={e=>setSaveModifiedData(e.target.checked)} />
-                <label className="inpt-label-dark">Save modified {((phoneNum && 'phone number') || (address && 'address'))}?</label>
+                <label className="inpt-label-dark">Save modified {(((phoneNum && address) && 'contact details') || (phoneNum && 'phone number') || (address && 'address'))}?</label>
         </div>}
     </div> 
     return <div className="modify-cst-data">

@@ -15,7 +15,8 @@ import ProductsContext from '../../../../context/ProductsContext';
 
 export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const navigate = useNavigate();
-    const { productsData } = useContext(ProductsContext);
+    const { productsData,deleteProduct } = useContext(ProductsContext);
+    const { ordersData } = useContext(OrdersContext)
     const {displayAlert,incorrectConfirmationTxtAlert,emptyFieldAlert} = useContext(AlertContext);
     const [showProdQtyList,setShowProdQtyList] = useState(false);
     const [selectedColorIndex,setSelectedColorIndex] = useState(0);
@@ -48,8 +49,15 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
     const handleProductDeletion = ()=>{
         if(deleteConfirmationInpt){
             if(deleteConfirmationInpt === ('Delete ' + prodName)){
-                exitDeleteModal();
-                productDeletionAlert();
+                const ordersStatus = ordersData.filter(order=>order.prodId === prodId).map(order=>order.orderStatus.currentStatus().status);
+                if((!ordersStatus.includes('In Progress')) && (!ordersStatus.includes('Shipped'))){
+                    exitDeleteModal();
+                    productDeletionAlert();
+                    navigate('..');
+                    deleteProduct(prodId);
+                }else{
+                    displayAlert("You can't delete a product that has in-progress/shipped order.",'warning');
+                }
             }
             else{
                 incorrectConfirmationTxtAlert()

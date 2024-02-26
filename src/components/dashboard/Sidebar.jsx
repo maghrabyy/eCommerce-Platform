@@ -58,7 +58,7 @@ export const Sidebar = () =>{
                         <PageLink pageTitle={routes.activityLog.title} pagePath={routes.activityLog.path} icon={routes.activityLog.icon}/>
                     </ul>
                 </div>
-                <div onClick={logoutHandler} className='sidebar-logout sidebar-btn'><FontAwesomeIcon className='me-2' icon={faRightFromBracket} /> Logout</div>
+                <div onClick={logoutHandler} className='sidebar-btn logout'><FontAwesomeIcon className='me-2' icon={faRightFromBracket} /> Logout</div>
             </div>
       </div>
     );
