@@ -14,7 +14,6 @@ export const ProductsProvider = ({children}) =>{
         const prodIndex = prodsArray.map(prod=>prod.prodId).indexOf(prodId);
         prodsArray[prodIndex] = {...prodsArray[prodIndex],...modifiedData};
         setProductsData(prodsArray);
-        console.log(prodsArray);
     }
     const deleteProduct = (prodId)=>{
         const prodsArray = [...productsData];
