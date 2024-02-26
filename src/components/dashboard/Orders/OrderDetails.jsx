@@ -67,7 +67,7 @@ export const OrderDetails = ()=>{
                     modifyOrderStatus(ordersId,newStatus);
                     closeModalHandler();
                 }else{
-                    displayAlert("Nothing changed.",'primary')
+                    displayAlert("Nothing changed.",'primary');
                     closeModalHandler();
                 }
 
@@ -169,7 +169,7 @@ export const OrderDetails = ()=>{
                 <OrderInfo title='Date' data={formattedDate(order.orderStatus.currentStatus().date)} />
                 <div className="order-action flex gap-2 w-full">
                     {order.orderStatus.currentStatus().status === 'Arrived' &&<CustomButton onClick={refundItemHandler} className={'text-xs sm:text-base'}>Refund</CustomButton>}
-                    {order.orderStatus.currentStatus().status === 'In Progress' && <CustomButton onClick={cancelOrderHandler} className={'text-xs sm:text-base'}>Cancel</CustomButton>}
+                    {(order.orderStatus.currentStatus().status === 'In Progress' || order.orderStatus.currentStatus().status === 'Shipped') && <CustomButton onClick={cancelOrderHandler} className={'text-xs sm:text-base'}>Cancel</CustomButton>}
                     <CustomButton onClick={modifyStatusHandler} className={'text-xs sm:text-base'}>Modify Status</CustomButton>
                     <CustomButton onClick={orderHistoryHandler} className={'text-xs sm:text-base'}>Order History</CustomButton>
                 </div>
@@ -223,11 +223,17 @@ const ModifyStatusModal = ({orderStatus,selectedStatusCallbk})=>{
         <CustomDropdown title='Modify Status'
         value={status}
         onChange={onChangeHandler}
-        options={[
+        options={
+        (orderStatus === 'Cancelled' || orderStatus === 'Refunded') ?
+        [
             {value:'InProgress', text:'In Progress'},
+        ]
+        :
+        [
             {value:'shipped', text:'Shipped'},
             {value:'arrived', text:'Arrived'},
-        ]} />
+        ]
+        } />
     </div>
 }
 
@@ -237,7 +243,7 @@ const CancelOrderModal = ({cstName,prodName,cancelConfirmationTextCallbk})=>{
     cancelConfirmationTextCallbk(cancelConfirmationText);
     return <div>
         <p>Are you sure you want to cancel <span className="font-semibold">{cstName}'s {prodName}</span> order?</p>
-        <p>Type the following to confirm cancelation.</p>
+        <p>Type the following to confirm cancellation.</p>
         <p className="ms-2">{confirmationText}</p>
         <input type="text" value={cancelConfirmationText} onChange={e=>setCancelConfirmationText(e.target.value)} className="inpt w-full text-slate-900" placeholder="Enter the cancel confirmation text here." />
     </div>

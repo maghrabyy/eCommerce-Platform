@@ -6,7 +6,7 @@ import ProductsContext from "./ProductsContext";
 const OrdersContext = createContext();
 
 export const OrdersProvider = ({children}) => {
-    const { productsData } = useContext(ProductsContext);
+    const { productsData,modifyProduct } = useContext(ProductsContext);
     const [ ordersData, setOrdersData ] = useState([...ordersArray]);
 
     const createNewOrder = (orderId, prodId,cstId, selectedProdData,shippingFees,orderContactInfo) =>{
@@ -38,17 +38,41 @@ export const OrdersProvider = ({children}) => {
             }
         }
         setOrdersData(ordersList=>[...ordersList,newOrder]);
+        const colSizeQtyList = [...productsData[prodIndex].prodColorQtyList];
+        colSizeQtyList[colorIndex][`${selectedProdData.size.toLowerCase()}Qty`] -=selectedProdData.qty;
+        modifyProduct(prodId,{
+            prodColorQtyList:colSizeQtyList,
+            totalProdQty:productsData[prodIndex].totalProdQty-=selectedProdData.qty
+        });
     }
     const modifyOrderStatus = (orderId,newStatus)=>{
         const ordArray = [...ordersData];
         const orderIndex = ordArray.map(order=>order.orderId).indexOf(orderId);
         const orderHistory = [...ordArray[orderIndex].orderStatus.statusHistory];
         ordArray[orderIndex].orderStatus.statusHistory = [...orderHistory,newStatus];
+        //prod data
+        const prodIndex = productsData.map(prod=>prod.prodId).indexOf(ordArray[orderIndex].prodId);
+        const colorIndex = productsData[prodIndex].prodColorQtyList.map(colorQty=>colorQty.id).indexOf(ordArray[orderIndex].colorQty.colorId)
+        const colSizeQtyList = [...productsData[prodIndex].prodColorQtyList];
         if(newStatus.status === 'Arrived'){
             const prodId = ordersData[orderIndex].prodId;
             const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prodId) 
             ordArray[orderIndex].revenue = ()=>  ordArray[orderIndex].totalPrice() - productsData[prodIndex].prodCost;
         }else{
+            if(newStatus.status === 'Cancelled' || newStatus.status === 'Refunded'){
+                colSizeQtyList[colorIndex][`${ordArray[orderIndex].colorQty.size.toLowerCase()}Qty`] +=ordArray[orderIndex].colorQty.qty;
+                modifyProduct(ordArray[orderIndex].prodId,{
+                    prodColorQtyList:colSizeQtyList,
+                    totalProdQty:productsData[prodIndex].totalProdQty+=ordArray[orderIndex].colorQty.qty
+                });
+            }
+            if(newStatus.status === 'In Progress'){
+                colSizeQtyList[colorIndex][`${ordArray[orderIndex].colorQty.size.toLowerCase()}Qty`] -=ordArray[orderIndex].colorQty.qty;
+                modifyProduct(ordArray[orderIndex].prodId,{
+                    prodColorQtyList:colSizeQtyList,
+                    totalProdQty:productsData[prodIndex].totalProdQty-=ordArray[orderIndex].colorQty.qty
+                });
+            }
             ordArray[orderIndex].revenue = ()=> 0; 
         }
         setOrdersData(ordArray);
