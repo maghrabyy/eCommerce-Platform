@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBuilding, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ProductSearch } from './Products/ProductSearch';
 import { MdDashboard } from "react-icons/md";
 import { useLocation, useNavigate} from 'react-router-dom';
@@ -7,8 +7,17 @@ import { useContext } from 'react';
 import SidebarTogglerContext from '../../context/SidebarTogglerContext';
 import { routes } from '../../data/navigationPaths';
 import styleSquadLogo from '../../assets/style-squad-logo.jpg';
+import { useState } from 'react';
+import { Menu } from '../util/Menu';
 
-export const PrimaryNavbar = ({icon,title,showSearchInput})=>{
+export const PrimaryNavbar = ({icon,title,showSearchInput})=>{  
+    const [ showMenu, setShowMenu ] = useState(false);
+    const hoverHandler = ()=>{
+        setShowMenu(true);
+    }
+    const menuCloseHandler = ()=>{
+        setShowMenu(false);
+    }
     const navigate = useNavigate();
     const {showSidebar} = useContext(SidebarTogglerContext);
     const isHomeage = useLocation().pathname === routes.homePage.path;
@@ -21,8 +30,13 @@ export const PrimaryNavbar = ({icon,title,showSearchInput})=>{
                 {title}
             </span>
             <div className='px-6 xl:basis-1/2 hidden xl:block'>{showSearchInput && <ProductSearch />}</div> 
-            <div onClick={()=>{navigate(routes.business_details.path)}} className="business-logo cursor-pointer hover:opacity-75 hover:scale-105 duration-300">
-                <img src={styleSquadLogo} className="rounded-full" width={45} alt="style squad logo" />
+            <div onMouseEnter={hoverHandler} onMouseLeave={menuCloseHandler} className="business-logo relative">
+                <img src={styleSquadLogo} className="rounded-full hover:scale-105 duration-300 pb-1" width={45} alt="style squad logo" />
+                <Menu menuList={[
+                    {text:'My business', icon:faBuilding,onClick:()=>{navigate(routes.business_details.path)}},
+                    {text:'About', icon:faUser,onClick:()=>{}},
+                    {isLogout:true}
+                ]} showMenu={showMenu} setShowMenu={setShowMenu} />
             </div>
         </div> 
     </div>
