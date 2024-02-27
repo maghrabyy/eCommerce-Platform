@@ -45,10 +45,6 @@ export const OrdersProvider = ({children}) => {
             prodColorQtyList:colSizeQtyList,
             totalProdQty:productsData[prodIndex].totalProdQty-=selectedProdData.qty
         });
-        //increment Sales
-        modifyProduct(prodId,{
-            sales:productsData[prodIndex].sales+selectedProdData.qty
-        });
     }
     const modifyOrderStatus = (orderId,newStatus)=>{
         const ordArray = [...ordersData];
@@ -69,10 +65,6 @@ export const OrdersProvider = ({children}) => {
                     prodColorQtyList:colSizeQtyList,
                     totalProdQty:productsData[prodIndex].totalProdQty+=ordArray[orderIndex].colorQty.qty
                 });
-                //decrement Sales
-                modifyProduct(ordArray[orderIndex].prodId,{
-                    sales:productsData[prodIndex].sales-ordArray[orderIndex].colorQty.qty
-                });
             }
             if(newStatus.status === 'In Progress'){
                 //decrement Qty
@@ -80,10 +72,6 @@ export const OrdersProvider = ({children}) => {
                 modifyProduct(ordArray[orderIndex].prodId,{
                     prodColorQtyList:colSizeQtyList,
                     totalProdQty:productsData[prodIndex].totalProdQty-=ordArray[orderIndex].colorQty.qty
-                });
-                //increment Sales
-                modifyProduct(ordArray[orderIndex].prodId,{
-                    sales:productsData[prodIndex].sales+ordArray[orderIndex].colorQty.qty
                 });
             }
             ordArray[orderIndex].revenue = ()=> 0; 

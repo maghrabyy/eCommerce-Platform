@@ -127,7 +127,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                         </div>
                         <div className={`prodCat ${lightBg? 'text-slate-800' :'text-white'} font-semibold`}>Category: {prodData.prodCat.text}</div>
                         <div className="prodSalesNTotalQty flex gap-4">
-                            <div className={`prodQty ${lightBg? 'text-slate-800' :'text-white'} font-semibold border-r-2 border-r-gray-500 pe-4`}>Sales: {prodData.sales}</div>
+                            <div className={`prodQty ${lightBg? 'text-slate-800' :'text-white'} font-semibold border-r-2 border-r-gray-500 pe-4`}>Sales: {prodData.initialTotalProdQty - prodData.totalProdQty}</div>
                             <div className={`prodQty ${lightBg? 'text-slate-800' :'text-white'} font-semibold`}>Quantity: {prodData.totalProdQty} / {prodData.initialTotalProdQty}</div>  
                         </div>
                         <div className={`prodCost ${lightBg? 'text-slate-800' :'text-white'} font-semibold`}>Cost: {prodData.prodCost} EGP</div>

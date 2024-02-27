@@ -41,7 +41,6 @@ const greenPnBHoodie = {
             {src:greenPnBHoodie06,alt:'Green narutu p&b Hoodie'},
         ]
     }],
-    sales:8,
     creationDate: new Date('January 3, 2024 23:15:30'),
     initialTotalProdQty:16
 }
@@ -65,7 +64,6 @@ const whitePnBHoodie = {
             {src:whitePnBHoodie04,alt:'white p&b Hoodie'},
         ]
     }],
-    sales:4,
     creationDate: new Date('January 9, 2024 23:15:30'),
     initialTotalProdQty:15
 }
@@ -91,7 +89,6 @@ const blackPnBHoodie01 = {
         ]
 
     }],
-    sales:6,
     creationDate: new Date('January 11, 2024 23:15:30'),
     initialTotalProdQty:11
 }
@@ -115,7 +112,6 @@ const blackPnBHoodie02 = {
             {src:blackPnBHoodie0204,alt:'black p&b Hoodie'},
         ]
     }],
-    sales:2,
     creationDate: new Date('January 15, 2024 23:15:30'),   
     initialTotalProdQty:8
 }
