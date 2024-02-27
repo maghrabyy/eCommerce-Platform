@@ -34,7 +34,7 @@ export const PrimaryNavbar = ({icon,title,showSearchInput})=>{
                 <img src={styleSquadLogo} className="rounded-full hover:scale-105 duration-300 pb-1" width={45} alt="style squad logo" />
                 <Menu menuList={[
                     {text:'My business', icon:faBuilding,onClick:()=>{navigate(routes.business_details.path)}},
-                    {text:'About', icon:faUser,onClick:()=>{}},
+                    {text:'About', icon:faUser,onClick:()=>{navigate(routes.about.path)}},
                     {isLogout:true}
                 ]} showMenu={showMenu} setShowMenu={setShowMenu} />
             </div>

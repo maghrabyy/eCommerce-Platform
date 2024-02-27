@@ -4,7 +4,8 @@ import styleSquadLogo from '../../../assets/style-squad-logo.jpg';
 import { useContext, useState } from "react";
 import BusinessContext from "../../../context/BusinessContext";
 import EmployeesContext from "../../../context/EmployeesContext";
-import { BusinessModifyModal, EmployeeModifyModal } from "../../../components/dashboard/Business Details/ModifyBusiness";
+import { BusinessModifyModal } from "../../../components/dashboard/Business Details/ModifyBusiness";
+import { EmployeeModifyModal } from "../../../components/dashboard/Employees/EmployeeModify";
 
 export const BusinessDetailsPage = ()=>{
     const {businessInfo} = useContext(BusinessContext);

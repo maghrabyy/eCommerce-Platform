@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        'ubuntu':['Ubuntu','sans-serif']
+        'ubuntu':['Ubuntu','sans-serif'],
+        'righteous':['Righteous','sans-serif']
       }
     },
   },

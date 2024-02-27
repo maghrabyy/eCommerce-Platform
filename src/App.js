@@ -24,6 +24,7 @@ import { ProductEditPage } from './pages/Dashboard/Products/ProductEditPage';
 import { SellProductPage } from './pages/Dashboard/Products/SellProductPage';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { LoginPage } from './pages/Auth/LoginPage';
+import { AboutPage } from './pages/Dashboard/About/AboutPage';
 import { PageNotFound } from './pages/PageNotFound';
 
 function App() {
@@ -74,7 +75,8 @@ function App() {
         </Route>
         <Route path={routes.addProduct.path} element={<AddProductPage/>} />
         <Route path={routes.activityLog.path} element={<ActivityLogPage/>} />
-          <Route path='*' element={<PageNotFound />}/>
+        <Route path={routes.about.path} element={<AboutPage/>}/>
+        <Route path='*' element={<PageNotFound />}/>
       </Route>
   ));
 
