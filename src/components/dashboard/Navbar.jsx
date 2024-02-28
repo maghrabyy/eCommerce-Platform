@@ -25,7 +25,7 @@ export const PrimaryNavbar = ({icon,title,showSearchInput, showNavbarShadow})=>{
     return <div className={`navbar fixed top-0 w-full xl:w-[calc(100%-225px)] bg-white z-40 ${showNavbarShadow && 'shadow-md xl:shadow-sm'}`}>
     <div className="main-header px-4">
         <div className="flex justify-between items-center pb-3 pt-4">
-            <span className="font-bold text-gray-700 text-2xl flex items-center gap-2">
+            <span className="font-bold text-gray-700 text-2xl flex items-center gap-2 select-none">
                 <FontAwesomeIcon onClick={showSidebar} className='text-gray-700 me-1 text-2xl cursor-pointer xl:hidden hover:text-slate-600' icon={faBars} />
                 {isHomeage? <MdDashboard/> : <FontAwesomeIcon className='me-2' icon={icon} />}
                 {title}
