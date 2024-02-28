@@ -20,7 +20,7 @@ export const AboutPage = ()=>{
             </div>
             <div className="dev-name text-2xl sm:text-3xl text-slate-900 font-bold font-righteous text-center uppercase">Mahmoud Elmaghraby</div>
             <div className="dev-title text-md sm:text-lg text-slate-700 font-semibold text-center font-righteous">Software Engineer / <span className='text-green-700'>MaghTech</span> Founder</div>
-            <div className="skills-contact-container bg-white py-3 px-4 rounded-md mt-2">
+            <div className="skills-contact-container bg-white bg-opacity-60 backdrop-blur-sm py-3 px-4 rounded-md mt-2">
                 <div className="dev-skills">
                     <div className="section-title font-bold text-2xl text-slate-800">Skills</div>
                     <div className="skills-list text-4xl sm:text-5xl grid grid-cols-6 sm:grid-cols-8 md:grid-cols-11 lg:grid-cols-12 pt-3 gap-3 py-2">

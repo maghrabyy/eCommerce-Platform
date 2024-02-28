@@ -1,6 +1,5 @@
 import {  faEdit, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styleSquadLogo from '../../../assets/style-squad-logo.jpg';
 import { useContext, useState } from "react";
 import BusinessContext from "../../../context/BusinessContext";
 import EmployeesContext from "../../../context/EmployeesContext";
@@ -42,7 +41,7 @@ export const BusinessDetailsPage = ()=>{
                 </div>
             </div>
             <div className="business-logo">
-                <img src={styleSquadLogo} className="rounded-full" width={90} alt="style squad logo" />
+                <img src={businessInfo.businessLogo} className="rounded-full" width={90} alt="style squad logo" />
             </div>
         </div>
         <div className="business-employees p-4 border-2 border-gray-200 rounded-md shadow-md">
