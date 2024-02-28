@@ -1,17 +1,24 @@
 import { OrderInfo } from "../Orders/OrderDetails";
 import { useNavigate } from "react-router-dom";
 import { ModifyCstData } from "./ModifyCustomerData";
-import { useState } from "react";
+import { useState, useEffect,useContext } from "react";
+import OrdersContext from "../../../context/OrdersContext";
 
 export const CustomerData = ({cst,showNumOfOrders,navigateToCstPage,className,modifiable, orderContactInfo, orderId})=>{
-    const [ orderPhoneNum,setOrderPhoneNum ] = useState(orderContactInfo?.phoneNum);
-    const [ orderAddress, setOrderAddress ] = useState({
-        aptNum:orderContactInfo?.address.aptNum,
-        floorNum:orderContactInfo?.address.floorNum,
-        buildingNum:orderContactInfo?.address.buildingNum,
-        address:orderContactInfo?.address.address,
-        city:orderContactInfo?.address.city
-    });
+    const [ orderPhoneNum,setOrderPhoneNum ] = useState('');
+    const [ orderAddress, setOrderAddress ] = useState({});
+    const {ordersData} = useContext(OrdersContext);
+    const ordersLength = ordersData.filter(order=>order.cstId === cst.cstId).length;
+    useEffect(()=>{
+        setOrderPhoneNum(orderContactInfo?.phoneNum);
+        setOrderAddress({
+            aptNum:orderContactInfo?.address.aptNum,
+            floorNum:orderContactInfo?.address.floorNum,
+            buildingNum:orderContactInfo?.address.buildingNum,
+            address:orderContactInfo?.address.address,
+            city:orderContactInfo?.address.city
+        });
+    },[orderContactInfo])
     const navigate = useNavigate();
     const cstClickedHandler = ()=>{
         navigate(`/customers/${cst.cstId}`);
@@ -40,6 +47,6 @@ export const CustomerData = ({cst,showNumOfOrders,navigateToCstPage,className,mo
             {orderContactInfo? orderAddress.address : cst.cstAddress.address},
             {orderContactInfo? orderAddress.city : cst.cstAddress.city}</div>} />
         </div>
-        {showNumOfOrders && <OrderInfo title='Number Of orders' data={<div>{cst.orders.length}</div>} />}
+        {showNumOfOrders && <OrderInfo title='Number Of orders' data={<div>{ordersLength}</div>} />}
     </div>
 }

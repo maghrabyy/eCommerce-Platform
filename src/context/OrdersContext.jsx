@@ -1,11 +1,12 @@
 import { createContext, useState, useContext } from "react";
-import { ordersArray } from "../data/ordersData";
 import { productColor,getImgFromId } from "../data/ordersData";
 import ProductsContext from "./ProductsContext";
+import { useOrdersArray } from "../data/ordersData";
 
 const OrdersContext = createContext();
 
 export const OrdersProvider = ({children}) => {
+    const ordersArray = useOrdersArray();
     const { productsData,modifyProduct } = useContext(ProductsContext);
     const [ ordersData, setOrdersData ] = useState([...ordersArray]);
 
@@ -25,7 +26,7 @@ export const OrdersProvider = ({children}) => {
                 qty:selectedProdData.qty
             },
             cstId:cstId,
-            cstContactInfo:{phoneNum:orderContactInfo.phoneNum,address:orderContactInfo.address},
+            cstContactInfo:()=>({phoneNum:orderContactInfo.phoneNum,address:orderContactInfo.address}),
             shippingFees:shippingFees,
             prodPrice: productsData[prodIndex].prodPrice,
             totalPrice:function() {return parseInt(this.colorQty.qty*this.prodPrice)+parseInt(this.shippingFees)},
@@ -81,7 +82,7 @@ export const OrdersProvider = ({children}) => {
     const modifyOrderContactInfo = (orderId,modifiedContactInfo)=>{
         const ordArray = [...ordersData];
         const orderIndex = ordArray.map(order=>order.orderId).indexOf(orderId);
-        ordArray[orderIndex].cstContactInfo = modifiedContactInfo;
+        ordArray[orderIndex].cstContactInfo = ()=>modifiedContactInfo;
         setOrdersData(ordArray);
     }
 

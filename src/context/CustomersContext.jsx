@@ -5,21 +5,13 @@ const CustomersContext = createContext();
 
 export const CustomersProvider = ({children})=>{
     const [ customersData, setCustomersData ] = useState([...customersArray]);
-
-    const addNewCustomer = (cstId,cstName,phoneNum,cstAddress,orderId)=>{
+    const addNewCustomer = (cstId,cstName,phoneNum,cstAddress)=>{
         setCustomersData(prevArray => [...prevArray,{
             cstId:cstId,
             name:cstName,
             phoneNum,
             cstAddress,
-            orders:[orderId]
         }])
-    }
-    const appendCstOrders = (cstId,orderId)=>{
-        const cstArray = [...customersData];
-        const cstIndex = cstArray.map(cst=>cst.cstId).indexOf(cstId);
-        cstArray[cstIndex].orders = [...cstArray[cstIndex].orders,orderId]
-        setCustomersData(cstArray);
     }
     const modifyPhoneNum = (cstId,newPhoneNum)=>{
         const cstArray = [...customersData];
@@ -36,7 +28,6 @@ export const CustomersProvider = ({children})=>{
     const valueToShare = {
         customersData,
         addNewCustomer,
-        appendCstOrders,
         modifyPhoneNum,
         modifyAddress
     }

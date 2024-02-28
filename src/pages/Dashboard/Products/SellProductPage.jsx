@@ -294,7 +294,7 @@ const OrderSummary =({showOrderSummary,setShowOrderSummary,prodId,selectedRegCst
     const navigate = useNavigate();
     const {displayAlert} = useContext(AlertContext);
     const { createNewOrder } = useContext(OrdersContext);
-    const { addNewCustomer,appendCstOrders } = useContext(CustomersContext)
+    const { addNewCustomer } = useContext(CustomersContext)
     const closeOrderSummary = ()=>{
         setShowOrderSummary(false);
     }
@@ -313,12 +313,11 @@ const OrderSummary =({showOrderSummary,setShowOrderSummary,prodId,selectedRegCst
             address:cstAddress
         }
         if(selectedRegCstId){
-            appendCstOrders(selectedRegCstId,randOrderId);
             createNewOrder(randOrderId, prodId,selectedRegCstId, selectedProdData,shippingFees,orderContactInfo)
         }else{
             const randCryptoId = crypto.randomUUID();
             const randCstId = `cst${randCryptoId.substring(0,randCryptoId.indexOf('-')).toUpperCase()}`;
-            addNewCustomer(randCstId,cstName,cstPhoneNum,cstAddress,randOrderId);
+            addNewCustomer(randCstId,cstName,cstPhoneNum,cstAddress);
             createNewOrder(randOrderId, prodId,randCstId, selectedProdData,shippingFees,orderContactInfo)
         }
 

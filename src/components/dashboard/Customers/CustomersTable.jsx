@@ -5,9 +5,11 @@ import { useState } from "react";
 import emptyBox from '../../../assets/emptyBox.svg'
 import { useContext } from "react";
 import CustomersContext from "../../../context/CustomersContext";
+import OrdersContext from "../../../context/OrdersContext";
 
 export const CustomersTable = ()=>{
     const {customersData} = useContext(CustomersContext);
+    const {ordersData} = useContext(OrdersContext);
     const [searchValue,setSearchValue] = useState('');
     const [cstArray,setCstArray] = useState([...customersData])
     const navigate = useNavigate();
@@ -22,13 +24,17 @@ export const CustomersTable = ()=>{
         { field: 'id', headerName: 'Customer ID', width: 130, hideable: false },
 
   ];
-  const tableRows = cstArray.map(cst=>({
-    id:cst.cstId,   
-    cstName:cst.name,
-    cstPhoneNum:cst.phoneNum,
-    cstAddress:`Apt ${cst.cstAddress.aptNum}, Floor ${cst.cstAddress.floorNum}, Building ${cst.cstAddress.buildingNum}, ${cst.cstAddress.address}, ${cst.cstAddress.city}`,
-    ordersNum:cst.orders.length,
-    })).reverse();
+  const tableRows = cstArray.map(cst=>
+    {
+    const ordersLength = ordersData.filter(order=>order.cstId === cst.cstId).length;
+    return {
+        id:cst.cstId,   
+        cstName:cst.name,
+        cstPhoneNum:cst.phoneNum,
+        cstAddress:`Apt ${cst.cstAddress.aptNum}, Floor ${cst.cstAddress.floorNum}, Building ${cst.cstAddress.buildingNum}, ${cst.cstAddress.address}, ${cst.cstAddress.city}`,
+        ordersNum:ordersLength,
+    }}
+    ).reverse();
 
     const valueChangeHandler = e =>{
         const searchInputText = e.target.value;

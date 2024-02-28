@@ -17,7 +17,7 @@ export const OrdersTable = ()=>{
         navigate(params.id)
     }
     const getCstFromId = (cstId)=>{
-        const cstIndex = customersData.map(cst=>cst.cstId).indexOf(cstId);
+        const cstIndex =  customersData.map(cst=>cst.cstId).indexOf(cstId);
         return customersData[cstIndex];
     }
     const tableColumns = [  

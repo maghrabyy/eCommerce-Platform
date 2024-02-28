@@ -1,3 +1,23 @@
+// import axios from "axios";
+
+// const getCstData = ()=> axios.get('https://dummyjson.com/users')
+
+// export const cstArray = () => Promise.resolve(getCstData()).then(response=>{
+//     const cstData = response.data.users.map(user=>{
+//         const phonePreffix = ['010','011','012','015']
+//         const cstPhoneNum = phonePreffix[Math.floor(Math.random()*phonePreffix.length)] + user.phone.substring(6).replace(/\s/g, '')
+//         const randBuildingNum = Math.floor(Math.random()*99);
+//         const randCryptoId = crypto.randomUUID();
+//         const randCSTId = `CST${randCryptoId.substring(0,randCryptoId.indexOf('-')).toUpperCase()}`;
+//         return {
+//         cstId:randCSTId,
+//         name:`${user.firstName} ${user.lastName}`,
+//         phoneNum:cstPhoneNum,
+//         cstAddress:{aptNum:'11', floorNum:'2', buildingNum:randBuildingNum ,address:user.address.address,city:user.address.city},
+//     }})
+//     return cstData
+// })
+
 export const customersArray = [
     {
         cstId:'cst953TJF',

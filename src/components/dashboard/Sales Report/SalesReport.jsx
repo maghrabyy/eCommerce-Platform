@@ -35,7 +35,7 @@ export const SalesReport = ()=>{
         <div className="overall-summary bg-slate-300 rounded-lg px-4 py-2 shadow-md mb-2 text-slate-800 text-xl font-semibold flex flex-col gap-2">
             <h1 className="title self-center font-bold text-2xl">Overall Summary</h1>
             <h1 className="total-sales text-2xl">Total Orders: <span className='font-bold'>{overallSales}</span></h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 ms-2 rounded-md bg-slate-200 px-4 sm:py-2 py-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 ms-2 rounded-md bg-white shadow-md px-4 sm:py-2 py-1">
                 <h1 className="cancelled-orders"><span className='font-bold'>{cancelledOrders}</span> Cancelled Order{cancelledOrders > 1 && 's'}</h1>
                 <h1 className="refunded-orders"><span className='font-bold'>{refundedOrders}</span> Refunded Order{refundedOrders > 1 && 's'}</h1>
                 <h1 className="arrived-orders"><span className='font-bold'>{arrivedOrders}</span> Arrived Order{arrivedOrders > 1 && 's'}</h1>

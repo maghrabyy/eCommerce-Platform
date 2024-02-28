@@ -10,8 +10,8 @@ export const Modal = ({children, modalTitle,modalActions, showModal,setShowModal
     }
     return ReactDOM.createPortal(
     showModal && <div className='Model'>
-        <div onClick={modalExitHandler} className={`modal-overlay fixed w-screen h-screen top-0 bg-black opacity-75 z-40`}></div>
-        <div className={`modal-body p-4 overflow-visible fixed w-11/12 md:w-8/12 ${width?? 'xl:w-auto'} top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-2xl bg-gray-800 z-50`}>
+        <div onClick={modalExitHandler} className={`modal-overlay fixed w-screen h-screen top-0 bg-black opacity-75 z-[90]`}></div>
+        <div className={`modal-body p-4 overflow-visible fixed w-11/12 md:w-8/12 ${width?? 'xl:w-auto'} top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-2xl bg-gray-800 z-[100]`}>
             <div className="modal-header flex justify-between items-center pb-2 text-lg text-white">
                 <span className='font-semibold'>{modalTitle}</span>
                 <FontAwesomeIcon onClick={modalExitHandler} className='cursor-pointer hover:text-gray-400 ms-auto' icon={faXmark} />
