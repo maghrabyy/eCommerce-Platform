@@ -26,9 +26,21 @@ export const ProductsHeader = ({brand,category,initialprodsList,searchResultFilt
                 setProdsList([...prodsList.sort((a,b)=>a.totalProdQty - b.totalProdQty)])
             }
             else if(sortBy?.value === 'salesHToL'){
-                setProdsList([...prodsList.sort((a,b)=>b.sales - a.sales)])
+                setProdsList([...prodsList.sort((a,b)=>
+                    {
+                    const aSales = a.initialTotalProdQty - a.totalProdQty;
+                    const bSales = b.initialTotalProdQty - b.totalProdQty;
+                    return bSales - aSales
+                }
+            )])
             }else if(sortBy?.value === 'salesLToH'){
-                setProdsList([...prodsList.sort((a,b)=>a.sales - b.sales)])
+                setProdsList([...prodsList.sort((a,b)=>
+                {
+                    const aSales = a.initialTotalProdQty - a.totalProdQty;
+                    const bSales = b.initialTotalProdQty - b.totalProdQty;
+                   return aSales - bSales
+                }
+            )])
             }
             else if(sortBy?.value === 'newToOld'){
                 setProdsList([...prodsList.sort((a,b)=>b.creationDate - a.creationDate)])

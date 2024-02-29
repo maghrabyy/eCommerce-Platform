@@ -171,7 +171,7 @@ export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCal
         <div>
             <div className="phoneNum-input">
                 <label className="inpt-label-dark">Customer Phone Number</label>
-                <input type="text" className="inpt text-slate-900 w-full" value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)} placeholder="Customer's phone num." />
+                <input type="tel" className="inpt text-slate-900 w-full" value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)} placeholder="Customer's phone num." />
             </div>
             <div className="adress-detail-input grid sm:grid-cols-3 grid-cols-2 gap-2">
                 <div className="aptNum">
@@ -203,7 +203,7 @@ export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCal
                     </div>
                     <div className="phoneNum-input">
                         <label className="inpt-label-dark">Customer Phone Number</label>
-                        <input type="text" className="inpt text-slate-900 w-full" value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)} placeholder="Customer's phone num." />
+                        <input type="tel" className="inpt text-slate-900 w-full" value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)} placeholder="Customer's phone num." />
                     </div>
                 </div>}
             {address && <div className="adddress-modify flex flex-col gap-2">

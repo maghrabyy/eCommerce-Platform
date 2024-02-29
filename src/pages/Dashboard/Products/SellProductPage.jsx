@@ -219,7 +219,7 @@ export const SellProductPage = ()=>{
                         </div>
                         <div className="cst-phoneNum">
                             <label className="inpt-label">Customer Phone Number</label>
-                            <input type="text" className="inpt w-full" placeholder="customer's phone number." value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)}/>
+                            <input type="tel" className="inpt w-full" placeholder="customer's phone number." value={cstPhoneNum} onChange={e=>setCstPhoneNum(e.target.value)}/>
                         </div>
                         <div className="adress-detail-input grid sm:grid-cols-3 grid-cols-2 gap-2">
                             <div className="aprt">

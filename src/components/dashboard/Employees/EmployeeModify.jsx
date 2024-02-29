@@ -97,7 +97,7 @@ export const EmployeeModifyModal = ({empId,showModal,setShowModal}) =>{
                 <p className="inpt-label-dark">Email</p>
                 <input type="text" value={employeeEmail} placeholder="Employee Email" onChange={e=>setEmployeeEmail(e.target.value)} className="inpt text-slate-800 font-semibold w-full" />
                 <p className="inpt-label-dark">Phone Number</p>
-                <input type="text" value={employeePhoneNum} placeholder="Employee Phone Number" onChange={e=>setEmployeePhoneNum(e.target.value)} className="inpt text-slate-800 font-semibold w-full" />
+                <input type="tel" value={employeePhoneNum} placeholder="Employee Phone Number" onChange={e=>setEmployeePhoneNum(e.target.value)} className="inpt text-slate-800 font-semibold w-full" />
             </div>
         </Modal>
 }

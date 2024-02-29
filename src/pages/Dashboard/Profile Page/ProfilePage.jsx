@@ -93,7 +93,7 @@ export const EditUserProfile = ()=>{
         <label className="inpt-label">Email</label>
         <input type="text" className="inpt" value={userEmail} onChange={e=>setUserEmail(e.target.value)}/>
         <label className="inpt-label">Phone Number</label>
-        <input type="text" className="inpt" value={userPhoneNum} onChange={e=>setUserPhoneNum(e.target.value)}/>
+        <input type="tel" className="inpt" value={userPhoneNum} onChange={e=>setUserPhoneNum(e.target.value)}/>
         <div className="edit-profile-actions flex gap-2 pt-2 ">
             <CustomButton onClick={saveProfileHandler}>Save</CustomButton>
             <CustomButton onClick={()=>navigate('..')}>Cancel</CustomButton>
