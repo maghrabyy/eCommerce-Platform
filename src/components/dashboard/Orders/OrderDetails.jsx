@@ -8,6 +8,7 @@ import AlertContext from "../../../context/AlertContext";
 import { CustomerData } from "../Customers/CustomerData";
 import CustomersContext from "../../../context/CustomersContext";
 import OrdersContext from "../../../context/OrdersContext";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const formattedDate = date =>{
     const currentFullDate = 
@@ -184,7 +185,13 @@ export const OrderDetails = ()=>{
                 </div>
                 <OrderInfo title='Revenue' data={order.revenue()+'EGP'} />
             </div>
-            {order.cstId && <CustomerData cst={getCstFromId(order.cstId)} modifiable orderContactInfo={order.cstContactInfo()} orderId={order.orderId}/>}
+            {order.cstId ? 
+            <CustomerData cst={getCstFromId(order.cstId)} modifiable orderContactInfo={order.cstContactInfo()} orderId={order.orderId}/>
+                :
+            <div className="is-loading-indicator flex items-center justify-center h-[148px]">
+                <CircularProgress/>
+            </div>
+        }
         </div>
     </div>
 }

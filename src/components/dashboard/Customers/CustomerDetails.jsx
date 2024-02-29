@@ -45,6 +45,7 @@ export const CustomerDetails = ()=>{
     return customer && <div className="py-4 grid xl:grid-cols-6 gap-2">
         <CustomerData className='xl:col-span-2 col-span-6' cst={customer} showNumOfOrders modifiable />
         <DataGrid
+        sx={{height: cstOrders.length > 0? 'auto' : '200px'}}
         className='shadow-md xl:col-span-4 col-span-6'
         rows={tableRows}
         columns={tableColumns}

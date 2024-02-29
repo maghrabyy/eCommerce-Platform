@@ -6,9 +6,10 @@ import emptyBox from '../../../assets/emptyBox.svg'
 import { useContext } from "react";
 import CustomersContext from "../../../context/CustomersContext";
 import OrdersContext from "../../../context/OrdersContext";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const CustomersTable = ()=>{
-    const {customersData,initialCustomersData} = useContext(CustomersContext);
+    const {customersData,initialCustomersData, isCustomersLoading, isCusomtersError} = useContext(CustomersContext);
     const {ordersData} = useContext(OrdersContext);
     const [searchValue,setSearchValue] = useState('');
     const [cstArray,setCstArray] = useState([])
@@ -17,8 +18,15 @@ export const CustomersTable = ()=>{
         navigate(params.id)
     }
     useEffect(()=>{
-        setCstArray(initialCustomersData);
+        setCstArray(customersData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[initialCustomersData])
+    if(isCustomersLoading) return <div className="is-loading-indicator h-[325px] w-full flex justify-center items-center"> 
+        <CircularProgress /> 
+    </div>
+    if(isCusomtersError) return <div className="h-full w-full flex justify-center items-center text-2xl font-bold text-red-600">
+        Error fetching data...
+    </div>
     const tableColumns = [  
         { field: 'cstName', headerName: 'Customer Name', width:150, hideable:false,},
         { field: 'cstPhoneNum', headerName: 'Phone Number', width: 150, hideable: false},

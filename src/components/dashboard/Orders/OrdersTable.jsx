@@ -13,7 +13,8 @@ export const OrdersTable = ()=>{
     const [searchValue,setSearchValue] = useState('');
     const [ordersArray,setOrdersArray] = useState([]);
     useEffect(()=>{
-        setOrdersArray(initialOrdersData);
+        setOrdersArray(ordersData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[initialOrdersData])
     const navigate = useNavigate();
     const handleRowSelection = params =>{
