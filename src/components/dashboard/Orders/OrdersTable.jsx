@@ -4,14 +4,17 @@ import { useState } from 'react';
 import { SearchBar } from '../../util/SearchBar';
 import emptyBox from '../../../assets/emptyBox.svg'
 import CustomersContext from '../../../context/CustomersContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import OrdersContext from '../../../context/OrdersContext';
 
 export const OrdersTable = ()=>{
-    const { ordersData } = useContext(OrdersContext);
+    const { ordersData,initialOrdersData } = useContext(OrdersContext);
     const { customersData } = useContext(CustomersContext);
     const [searchValue,setSearchValue] = useState('');
-    const [ordersArray,setOrdersArray] = useState([...ordersData]);
+    const [ordersArray,setOrdersArray] = useState([]);
+    useEffect(()=>{
+        setOrdersArray(initialOrdersData);
+    },[initialOrdersData])
     const navigate = useNavigate();
     const handleRowSelection = params =>{
         navigate(params.id)
@@ -50,7 +53,7 @@ export const OrdersTable = ()=>{
     prodImg:order.prodImg(),
     prodName:order.prodName,
     colorQty:`${order.colorQty.color} ${order.colorQty.size} x ${order.colorQty.qty}`,
-    cstName: getCstFromId(order.cstId).name,
+    cstName: getCstFromId(order.cstId)? getCstFromId(order.cstId).name : 'Loading...',
     totalPrice: `${order.totalPrice()}EGP`,
     revenue: `${order.revenue()}EGP`,
     orderStatus:order.orderStatus.currentStatus().status,})).reverse();
@@ -61,7 +64,7 @@ export const OrdersTable = ()=>{
         const searchFilter = ordersData.filter(order=>
             order.orderId.toLowerCase().includes(searchInputText.toLowerCase()) ||
             order.prodName.toLowerCase().includes(searchInputText.toLowerCase()) ||
-            getCstFromId(order.cstId).name.toLowerCase().includes(searchInputText.toLowerCase()) ||
+            getCstFromId(order.cstId)?.name.toLowerCase().includes(searchInputText.toLowerCase()) ||
             order.colorQty.color.toLowerCase().includes(searchInputText.toLowerCase()) ||
             order.colorQty.size.toLowerCase().includes(searchInputText.toLowerCase()) ||
             order.totalPrice().toString().toLowerCase().includes(searchInputText.toLowerCase()) ||

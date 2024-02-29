@@ -42,7 +42,7 @@ export const CustomerDetails = ()=>{
     totalPrice: `${order.totalPrice()}EGP`,
     orderStatus:order.orderStatus.currentStatus().status,
 })).reverse();
-    return <div className="py-4 grid xl:grid-cols-6 gap-2">
+    return customer && <div className="py-4 grid xl:grid-cols-6 gap-2">
         <CustomerData className='xl:col-span-2 col-span-6' cst={customer} showNumOfOrders modifiable />
         <DataGrid
         className='shadow-md xl:col-span-4 col-span-6'

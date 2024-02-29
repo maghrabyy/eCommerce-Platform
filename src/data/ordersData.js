@@ -1,6 +1,4 @@
 import { productsList } from "./productsData";
-import { useContext } from "react";
-import CustomersContext from "../context/CustomersContext";
 
 export const getImgFromId = (prodId,colorId) =>{
     const prodIndex = productsList.map(prod=>prod.prodId).indexOf(prodId);
@@ -16,8 +14,7 @@ export const productColor = color=>{
     return firstLetter + RemianingLetters
 }
 
-export const useOrdersArray = ()=>{
-    const {customersData} = useContext(CustomersContext);
+export const useOrdersArray = (cstData)=>{
     return [
     {
         orderId:'order6984CT',
@@ -30,17 +27,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -69,17 +66,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -109,17 +106,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -148,17 +145,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -185,17 +182,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -225,17 +222,17 @@ export const useOrdersArray = ()=>{
             size:'s'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -264,17 +261,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -303,17 +300,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -342,17 +339,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -381,17 +378,17 @@ export const useOrdersArray = ()=>{
             size:'m'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -420,17 +417,17 @@ export const useOrdersArray = ()=>{
             size:'m'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -459,17 +456,17 @@ export const useOrdersArray = ()=>{
             size:'xl'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -497,17 +494,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -536,17 +533,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -575,17 +572,17 @@ export const useOrdersArray = ()=>{
             size:'xl'.toUpperCase(),
             qty:2
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}
@@ -614,17 +611,17 @@ export const useOrdersArray = ()=>{
             size:'l'.toUpperCase(),
             qty:1
         },
-        cstId:customersData[Math.floor(Math.random()*customersData.length)]?.cstId,
+        cstId:cstData[Math.floor(Math.random()*cstData.length)]?.cstId,
         cstContactInfo:function() {
-            const cstIndex = customersData.map(cst=>cst.cstId).indexOf(this.cstId);
+            const cstIndex = cstData.map(cst=>cst.cstId).indexOf(this.cstId);
             const cstContactInfo ={
-                phoneNum:customersData[cstIndex].phoneNum,
+                phoneNum:cstData[cstIndex].phoneNum,
                 address:{
-                    aptNum:customersData[cstIndex].cstAddress.aptNum, 
-                    floorNum:customersData[cstIndex].cstAddress.floorNum, 
-                    buildingNum:customersData[cstIndex].cstAddress.buildingNum,
-                    address:customersData[cstIndex].cstAddress.address,
-                    city:customersData[cstIndex].cstAddress.city
+                    aptNum:cstData[cstIndex].cstAddress.aptNum, 
+                    floorNum:cstData[cstIndex].cstAddress.floorNum, 
+                    buildingNum:cstData[cstIndex].cstAddress.buildingNum,
+                    address:cstData[cstIndex].cstAddress.address,
+                    city:cstData[cstIndex].cstAddress.city
                 }
             }
             return {...cstContactInfo}

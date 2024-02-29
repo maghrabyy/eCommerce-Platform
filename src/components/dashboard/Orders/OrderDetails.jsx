@@ -184,7 +184,7 @@ export const OrderDetails = ()=>{
                 </div>
                 <OrderInfo title='Revenue' data={order.revenue()+'EGP'} />
             </div>
-            <CustomerData cst={getCstFromId(order.cstId)} modifiable orderContactInfo={order.cstContactInfo()} orderId={order.orderId}/>
+            {order.cstId && <CustomerData cst={getCstFromId(order.cstId)} modifiable orderContactInfo={order.cstContactInfo()} orderId={order.orderId}/>}
         </div>
     </div>
 }

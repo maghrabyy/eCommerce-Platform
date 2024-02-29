@@ -1,21 +1,24 @@
 import { DataGrid } from "@mui/x-data-grid"
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../../util/SearchBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emptyBox from '../../../assets/emptyBox.svg'
 import { useContext } from "react";
 import CustomersContext from "../../../context/CustomersContext";
 import OrdersContext from "../../../context/OrdersContext";
 
 export const CustomersTable = ()=>{
-    const {customersData} = useContext(CustomersContext);
+    const {customersData,initialCustomersData} = useContext(CustomersContext);
     const {ordersData} = useContext(OrdersContext);
     const [searchValue,setSearchValue] = useState('');
-    const [cstArray,setCstArray] = useState([...customersData])
+    const [cstArray,setCstArray] = useState([])
     const navigate = useNavigate();
     const handleRowSelection = params =>{
         navigate(params.id)
     }
+    useEffect(()=>{
+        setCstArray(initialCustomersData);
+    },[initialCustomersData])
     const tableColumns = [  
         { field: 'cstName', headerName: 'Customer Name', width:150, hideable:false,},
         { field: 'cstPhoneNum', headerName: 'Phone Number', width: 150, hideable: false},

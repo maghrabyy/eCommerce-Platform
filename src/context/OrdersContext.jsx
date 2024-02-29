@@ -1,15 +1,23 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { productColor,getImgFromId } from "../data/ordersData";
 import ProductsContext from "./ProductsContext";
 import { useOrdersArray } from "../data/ordersData";
+import CustomersContext from "./CustomersContext";
 
 const OrdersContext = createContext();
 
 export const OrdersProvider = ({children}) => {
-    const ordersArray = useOrdersArray();
+    const {initialCustomersData} = useContext(CustomersContext)
     const { productsData,modifyProduct } = useContext(ProductsContext);
-    const [ ordersData, setOrdersData ] = useState([...ordersArray]);
+    const [ ordersData, setOrdersData ] = useState([]);
+    const [ initialOrdersData, setInitialOrdersData] = useState([]);
+    const ordersArray = useOrdersArray(initialCustomersData);
 
+    useEffect(()=>{
+        setOrdersData(ordersArray) ;
+        setInitialOrdersData(ordersArray) ;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[initialCustomersData])
     const createNewOrder = (orderId, prodId,cstId, selectedProdData,shippingFees,orderContactInfo) =>{
         //prod Data 
         const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prodId);
@@ -88,6 +96,7 @@ export const OrdersProvider = ({children}) => {
 
     const valueToShare = {
         ordersData,
+        initialOrdersData,
         createNewOrder,
         modifyOrderStatus,
         modifyOrderContactInfo
