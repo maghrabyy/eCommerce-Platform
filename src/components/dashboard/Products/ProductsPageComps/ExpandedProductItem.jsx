@@ -54,7 +54,7 @@ export const ExpandedProductItem = ({prodId, category,brand, lightBg})=>{
                     exitDeleteModal();
                     productDeletionAlert();
                     navigate('..');
-                    deleteProduct(prodId);
+                    deleteProduct(prodId,prodName);
                 }else{
                     displayAlert("You can't delete a product that has in-progress/shipped order.",'warning');
                 }

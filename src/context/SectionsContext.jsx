@@ -1,10 +1,12 @@
 import { createContext, useState, useContext } from "react";
 import { categoriesList,brandsList } from "../data/sectionsData";
 import ProductsContext from "./ProductsContext";
+import { useActivityContext } from "./ActivityContext";
 
 const SectionsContext = createContext();
 
 export const SectionsProvider = ({children}) =>{
+    const {addNewActivity} = useActivityContext();
     const { productsData,setProductsData } = useContext(ProductsContext);
     const [ categorySection, setCategorySection ] = useState([...categoriesList]);
     const [ brandsSection, setBrandsSection ] = useState([...brandsList]);
@@ -28,6 +30,7 @@ export const SectionsProvider = ({children}) =>{
             prod.prodCat.value = newSectionPath;
         });
         setProductsData(prodsArray);
+        addNewActivity('modifySeciton',`Modified ${oldCatName} category's name to ${modifiedName}`);
     }
 
     const modifyBrand = (brandId,oldBrandName,modifiedName) =>{
@@ -45,15 +48,20 @@ export const SectionsProvider = ({children}) =>{
             prod.prodBrand.value = newSectionPath;
         });
         setProductsData(prodsArray);
+        addNewActivity('modifySeciton',`Modified ${oldBrandName} brand's name to ${modifiedName}`);
     }
 
     const deleteCategorySection = (catId) => {
         const catArray = [...categorySection];
+        const catIndex = catArray.map(cat=>cat.id).indexOf(catId);
         setCategorySection(catArray.filter(cat=>cat.id !== catId));
+        addNewActivity('deleteSection',`Deleted ${catArray[catIndex].title} category.`);
     }
     const deleteBrandSection = (brandId) => {
         const brandArray = [...brandsSection];
+        const brandIndex = brandArray.map(brand=>brand.id).indexOf(brandId);
         setBrandsSection(brandArray.filter(brand=>brand.id !== brandId));
+        addNewActivity('deleteSection',`Deleted ${brandArray[brandIndex].title} brand.`);
     } 
     const valueToShare = {
         categorySection,

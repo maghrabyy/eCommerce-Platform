@@ -7,24 +7,27 @@ import { EmployeesProvider } from './EmployeesContext';
 import { OrdersProvider } from './OrdersContext'; 
 import { SectionsProvider } from './SectionsContext'; 
 import { ProductsProvider } from './ProductsContext';
+import { ActivityProvider } from './ActivityContext';
 
 export const ContextProvider = ({children})=>{
-    return         <AuthProvider>
+    return <AuthProvider>
     <AlertProvider>
         <SidebarTogglerProvider>
-            <BusinessProvider>
-                <CustomersProvider>
-                    <EmployeesProvider>
-                        <ProductsProvider>
-                            <SectionsProvider>
-                                <OrdersProvider>
-                                    {children}
-                                </OrdersProvider>
-                            </SectionsProvider>
-                        </ProductsProvider>
-                    </EmployeesProvider>
-                </CustomersProvider>
-            </BusinessProvider>
+            <ActivityProvider>
+                <BusinessProvider>
+                    <CustomersProvider>
+                        <EmployeesProvider>
+                            <ProductsProvider>
+                                <SectionsProvider>
+                                    <OrdersProvider>
+                                        {children}
+                                    </OrdersProvider>
+                                </SectionsProvider>
+                            </ProductsProvider>
+                        </EmployeesProvider>
+                    </CustomersProvider>
+                </BusinessProvider>
+            </ActivityProvider>
         </SidebarTogglerProvider>
     </AlertProvider>
 </AuthProvider>

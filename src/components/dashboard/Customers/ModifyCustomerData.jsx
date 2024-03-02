@@ -9,7 +9,7 @@ import OrdersContext from "../../../context/OrdersContext";
 
 export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCallbk,saveDataCheckbox,orderId})=>{
     const { displayAlert, emptyFieldAlert } = useContext(AlertContext);
-    const { customersData, modifyPhoneNum, modifyAddress } = useContext(CustomersContext);
+    const { customersData, modifyCstContactInfo, modifyPhoneNum, modifyAddress } = useContext(CustomersContext);
     const { modifyOrderContactInfo } = useContext(OrdersContext);
     const [showCstModifyModal,setShowCstModifyModal] = useState(false);
     const [cstPhoneNum,setCstPhoneNum] = useState('');
@@ -56,6 +56,29 @@ export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCal
         setStreetAddress(address?.address);
         setCity(address?.city);
     }
+    const modifyCustomerContactInfo = ()=>{
+        if(cstPhoneNum !== phoneNum && 
+            (aptNum !== address.aptNum || 
+            floorNum !== address.floorNum || 
+            buildingNum !== address.buildingNum || 
+            streetAddress !== address.address || 
+            city !== address.city)){
+                displayAlert("Customer's phone number and address have updated.",'success');
+                modifyCstContactInfo(cstId,cstPhoneNum,{aptNum,floorNum,buildingNum,address:streetAddress,city})
+            }
+            else if(cstPhoneNum !== phoneNum){
+                displayAlert("Customer's phone number has updated.",'success');
+                modifyPhoneNum(cstId,cstPhoneNum);
+            }
+            else if(aptNum !== address.aptNum || 
+                floorNum !== address.floorNum || 
+                buildingNum !== address.buildingNum || 
+                streetAddress !== address.address || 
+                city !== address.city){
+                    displayAlert("Customer's address has updated.",'success');
+                    modifyAddress(cstId,{aptNum,floorNum,buildingNum,address:streetAddress,city});
+                }
+    }
     const updateHandler = ()=>{
         if((address && phoneNum)){
             if(cstPhoneNum && aptNum && floorNum && buildingNum && streetAddress && city){
@@ -67,7 +90,6 @@ export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCal
                     city !== address.city){
                         if(isValidePhoneNum()){
                             if(!alreadyRegisteredPhoneNum(cstPhoneNum)){
-                                displayAlert("Customer's contact info has updated.",'success');
                                 closeCstModifyModal();
                                 if(saveDataCheckbox){
                                     phoneNumCallbk(cstPhoneNum);
@@ -81,16 +103,15 @@ export const ModifyCstData = ({cstId, phoneNum,address,phoneNumCallbk,addressCal
                                                 aptNum,floorNum,buildingNum,address:streetAddress,city
                                             }
                                     });
+                                    displayAlert("Order's contact info has updated.",'success');
                                     if(saveModifiedData){
                                         //save to database
-                                        modifyPhoneNum(cstId,cstPhoneNum);
-                                        modifyAddress(cstId,{aptNum,floorNum,buildingNum,address:streetAddress,city});
+                                        modifyCustomerContactInfo();
                                     }
                                 }
                                 else{
                                     //save to database
-                                    modifyPhoneNum(cstId,cstPhoneNum);
-                                    modifyAddress(cstId,{aptNum,floorNum,buildingNum,address:streetAddress,city});
+                                    modifyCustomerContactInfo();
                                 }
                             }else{
                                 displayAlert("There's a registered customer with this phone number.",'warning');

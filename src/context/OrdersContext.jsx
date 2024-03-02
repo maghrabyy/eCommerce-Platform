@@ -3,10 +3,12 @@ import { productColor,getImgFromId } from "../data/ordersData";
 import ProductsContext from "./ProductsContext";
 import { useOrdersArray } from "../data/ordersData";
 import CustomersContext from "./CustomersContext";
+import { useActivityContext } from "./ActivityContext";
 
 const OrdersContext = createContext();
 
 export const OrdersProvider = ({children}) => {
+    const {addNewActivity} = useActivityContext();
     const {initialCustomersData} = useContext(CustomersContext)
     const { productsData,modifyProduct } = useContext(ProductsContext);
     const [ ordersData, setOrdersData ] = useState([]);
@@ -18,7 +20,7 @@ export const OrdersProvider = ({children}) => {
         setInitialOrdersData(ordersArray) ;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[initialCustomersData])
-    const createNewOrder = (orderId, prodId,cstId, selectedProdData,shippingFees,orderContactInfo) =>{
+    const createNewOrder = (orderId, prodId,cstId,cstName, selectedProdData,shippingFees,orderContactInfo) =>{
         //prod Data 
         const prodIndex = productsData.map(prod=>prod.prodId).indexOf(prodId);
         const colorIndex = productsData[prodIndex].prodColorQtyList.map(colorQty=>colorQty.id).indexOf(selectedProdData.colorId)
@@ -54,6 +56,7 @@ export const OrdersProvider = ({children}) => {
             prodColorQtyList:colSizeQtyList,
             totalProdQty:productsData[prodIndex].totalProdQty-=selectedProdData.qty
         });
+        addNewActivity('newOrder',`Made a new ${productsData[prodIndex].prodBrand.text} ${productsData[prodIndex].prodTitle} order to ${cstName} with an id of ${orderId}.`)
     }
     const modifyOrderStatus = (orderId,newStatus)=>{
         const ordArray = [...ordersData];
@@ -86,12 +89,14 @@ export const OrdersProvider = ({children}) => {
             ordArray[orderIndex].revenue = ()=> 0; 
         }
         setOrdersData(ordArray);
+        addNewActivity('orderModify',`Modified ${ordArray[orderIndex].prodName} order [${orderId}]'s status to ${newStatus.status}.`);
     }
     const modifyOrderContactInfo = (orderId,modifiedContactInfo)=>{
         const ordArray = [...ordersData];
         const orderIndex = ordArray.map(order=>order.orderId).indexOf(orderId);
         ordArray[orderIndex].cstContactInfo = ()=>modifiedContactInfo;
         setOrdersData(ordArray);
+        addNewActivity('orderModify',`Modified order ${ordArray[orderIndex].prodName} [${orderId}]'s contact info.`);
     }
 
     const valueToShare = {

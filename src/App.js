@@ -26,7 +26,7 @@ import { Dashboard } from './components/dashboard/Dashboard';
 import { LoginPage } from './pages/Auth/LoginPage';
 import { AboutPage } from './pages/Dashboard/About/AboutPage';
 import { ProfilePage } from './pages/Dashboard/Profile Page/ProfilePage';
-import { EditUserProfile } from './pages/Dashboard/Profile Page/ProfilePage';
+import { EditUserProfile } from './pages/Dashboard/Profile Page/editUserProfile';
 import { PageNotFound } from './pages/PageNotFound';
 
 function App() {

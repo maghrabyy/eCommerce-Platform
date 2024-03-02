@@ -313,12 +313,12 @@ const OrderSummary =({showOrderSummary,setShowOrderSummary,prodId,selectedRegCst
             address:cstAddress
         }
         if(selectedRegCstId){
-            createNewOrder(randOrderId, prodId,selectedRegCstId, selectedProdData,shippingFees,orderContactInfo)
+            createNewOrder(randOrderId, prodId,selectedRegCstId,cstName, selectedProdData,shippingFees,orderContactInfo)
         }else{
             const randCryptoId = crypto.randomUUID();
             const randCstId = `cst${randCryptoId.substring(0,randCryptoId.indexOf('-')).toUpperCase()}`;
             addNewCustomer(randCstId,cstName,cstPhoneNum,cstAddress);
-            createNewOrder(randOrderId, prodId,randCstId, selectedProdData,shippingFees,orderContactInfo)
+            createNewOrder(randOrderId, prodId,randCstId,cstName, selectedProdData,shippingFees,orderContactInfo)
         }
 
     }
