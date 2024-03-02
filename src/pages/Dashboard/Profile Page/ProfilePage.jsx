@@ -15,6 +15,7 @@ export const ProfilePage = () =>{
     const navigate = useNavigate();
     const {userData} = useContext(AuthContext);
     const {activityList} = useActivityContext();
+    const displayedActivityItems = 3;
     return <div className="profile-page relative text-slate-700">
         <div onClick={()=>navigate('edit-profile')} className="edit-profile absolute right-0 cursor-pointer hover:text-slate-500 flex gap-2 items-center select-none">
             <FontAwesomeIcon icon={faEdit}/> Edit
@@ -33,8 +34,8 @@ export const ProfilePage = () =>{
         {outlet ||  
         <div className={`bg-gray-200 rounded-sm shadow-md p-2 h-auto mt-4`}>
             <div className="activity-list flex flex-col gap-2">
-                <ActivityList maxItems={3} />
-                {activityList > 0 && <CustomButton onClick={()=>navigate(`/${routes.activityLog.path}`)}>Activity Log</CustomButton>}
+                <ActivityList maxItems={displayedActivityItems} />
+                {activityList.length > displayedActivityItems && <CustomButton onClick={()=>navigate(`/${routes.activityLog.path}`)}>Activity Log</CustomButton>}
             </div>
         </div>}
     </div>
